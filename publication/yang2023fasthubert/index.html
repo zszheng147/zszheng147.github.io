@@ -275,12 +275,12 @@
 
   
 
-<meta name="description" content="The excellent generalization ability of self-supervised learning (SSL) for speech foundation models has garnered significant attention. HuBERT is a successful example that utilizes offline clustering to convert speech features into discrete units for a masked language modeling pretext task. However, simply clustering features as targets by k-means does not fully inspire the model’s performance. In this work, we present an unsupervised method to improve SSL targets. Two models are proposed, MonoBERT and PolyBERT, which leverage contextindependent and context-dependent phoneme-based units for pre-training. Our models outperform other SSL models significantly on the LibriSpeech benchmark without the need for iterative re-clustering and re-training. Furthermore, our models equipped with context-dependent units even outperform targetimprovement models that use labeled data during pre-training. How we progressively improve the unit discovery process is demonstrated through experiments." />
+<meta name="description" content="Recent years have witnessed significant advancements in self-supervised learning (SSL) methods for speech-processing tasks. Various speech-based SSL models have been developed and present promising performance on a range of downstream tasks including speech recognition. However, existing speech-based SSL models face a common dilemma in terms of computational cost, which might hinder their potential application and in-depth academic research. To address this issue, we first analyze the computational cost of different modules during HuBERT pre-training and then introduce a stack of efficiency optimizations, which is named Fast-HuBERT in this paper. The proposed Fast-HuBERT can be trained in 1.1 days with 8 V100 GPUs on the Librispeech 960h benchmark, without performance degradation, resulting in a 5.2x speedup, compared to the original implementation. Moreover, we explore two well-studied techniques in the Fast-HuBERT and demonstrate consistent improvements as reported in previous work." />
 
 
 
-<link rel="alternate" hreflang="en-us" href="https://zszheng147.github.io/publication/ma2023tribert/" />
-<link rel="canonical" href="https://zszheng147.github.io/publication/ma2023tribert/" />
+<link rel="alternate" hreflang="en-us" href="https://zszheng147.github.io/publication/yang2023fasthubert/" />
+<link rel="canonical" href="https://zszheng147.github.io/publication/yang2023fasthubert/" />
 
 
 
@@ -310,20 +310,20 @@
 
 
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:image" content="https://zszheng147.github.io/publication/ma2023tribert/featured.png" />
+<meta property="twitter:image" content="https://zszheng147.github.io/publication/yang2023fasthubert/featured.png" />
 <meta property="og:site_name" content="Zhisheng Zheng" />
-<meta property="og:url" content="https://zszheng147.github.io/publication/ma2023tribert/" />
-<meta property="og:title" content="Pushing the Limits of Unsupervised Unit Discovery for SSL Speech Representation | Zhisheng Zheng" />
-<meta property="og:description" content="The excellent generalization ability of self-supervised learning (SSL) for speech foundation models has garnered significant attention. HuBERT is a successful example that utilizes offline clustering to convert speech features into discrete units for a masked language modeling pretext task. However, simply clustering features as targets by k-means does not fully inspire the model’s performance. In this work, we present an unsupervised method to improve SSL targets. Two models are proposed, MonoBERT and PolyBERT, which leverage contextindependent and context-dependent phoneme-based units for pre-training. Our models outperform other SSL models significantly on the LibriSpeech benchmark without the need for iterative re-clustering and re-training. Furthermore, our models equipped with context-dependent units even outperform targetimprovement models that use labeled data during pre-training. How we progressively improve the unit discovery process is demonstrated through experiments." /><meta property="og:image" content="https://zszheng147.github.io/publication/ma2023tribert/featured.png" /><meta property="og:locale" content="en-us" />
+<meta property="og:url" content="https://zszheng147.github.io/publication/yang2023fasthubert/" />
+<meta property="og:title" content="Fast-HuBERT: An Efficient Training Framework for Self-Supervised Speech Representation Learning | Zhisheng Zheng" />
+<meta property="og:description" content="Recent years have witnessed significant advancements in self-supervised learning (SSL) methods for speech-processing tasks. Various speech-based SSL models have been developed and present promising performance on a range of downstream tasks including speech recognition. However, existing speech-based SSL models face a common dilemma in terms of computational cost, which might hinder their potential application and in-depth academic research. To address this issue, we first analyze the computational cost of different modules during HuBERT pre-training and then introduce a stack of efficiency optimizations, which is named Fast-HuBERT in this paper. The proposed Fast-HuBERT can be trained in 1.1 days with 8 V100 GPUs on the Librispeech 960h benchmark, without performance degradation, resulting in a 5.2x speedup, compared to the original implementation. Moreover, we explore two well-studied techniques in the Fast-HuBERT and demonstrate consistent improvements as reported in previous work." /><meta property="og:image" content="https://zszheng147.github.io/publication/yang2023fasthubert/featured.png" /><meta property="og:locale" content="en-us" />
 
   
     <meta
       property="article:published_time"
-      content="2023-06-15T00:00:00&#43;00:00"
+      content="2023-10-05T00:00:00&#43;00:00"
     />
   
   
-    <meta property="article:modified_time" content="2023-03-09T00:00:00&#43;00:00">
+    <meta property="article:modified_time" content="2023-07-24T00:00:00&#43;00:00">
   
 
 
@@ -347,20 +347,20 @@
   "@type": "Article",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://zszheng147.github.io/publication/ma2023tribert/"
+    "@id": "https://zszheng147.github.io/publication/yang2023fasthubert/"
   },
-  "headline": "Pushing the Limits of Unsupervised Unit Discovery for SSL Speech Representation",
+  "headline": "Fast-HuBERT: An Efficient Training Framework for Self-Supervised Speech Representation Learning",
   
   "image": [
-    "https://zszheng147.github.io/publication/ma2023tribert/featured.png"
+    "https://zszheng147.github.io/publication/yang2023fasthubert/featured.png"
   ],
   
-  "datePublished": "2023-06-15T00:00:00Z",
-  "dateModified": "2023-03-09T00:00:00Z",
+  "datePublished": "2023-10-05T00:00:00Z",
+  "dateModified": "2023-07-24T00:00:00Z",
   
   "author": {
     "@type": "Person",
-    "name": "Ziyang Ma"
+    "name": "Guanrou Yang"
   },
   
   "publisher": {
@@ -371,7 +371,7 @@
       "url": "https://zszheng147.github.io/media/icon_hucb59738334712558e8efbb6e6969a95e_368560_192x192_fill_lanczos_center_3.png"
     }
   },
-  "description": "The excellent generalization ability of self-supervised learning (SSL) for speech foundation models has garnered significant attention. HuBERT is a successful example that utilizes offline clustering to convert speech features into discrete units for a masked language modeling pretext task. However, simply clustering features as targets by k-means does not fully inspire the model’s performance. In this work, we present an unsupervised method to improve SSL targets. Two models are proposed, MonoBERT and PolyBERT, which leverage contextindependent and context-dependent phoneme-based units for pre-training. Our models outperform other SSL models significantly on the LibriSpeech benchmark without the need for iterative re-clustering and re-training. Furthermore, our models equipped with context-dependent units even outperform targetimprovement models that use labeled data during pre-training. How we progressively improve the unit discovery process is demonstrated through experiments."
+  "description": "Recent years have witnessed significant advancements in self-supervised learning (SSL) methods for speech-processing tasks. Various speech-based SSL models have been developed and present promising performance on a range of downstream tasks including speech recognition. However, existing speech-based SSL models face a common dilemma in terms of computational cost, which might hinder their potential application and in-depth academic research. To address this issue, we first analyze the computational cost of different modules during HuBERT pre-training and then introduce a stack of efficiency optimizations, which is named Fast-HuBERT in this paper. The proposed Fast-HuBERT can be trained in 1.1 days with 8 V100 GPUs on the Librispeech 960h benchmark, without performance degradation, resulting in a 5.2x speedup, compared to the original implementation. Moreover, we explore two well-studied techniques in the Fast-HuBERT and demonstrate consistent improvements as reported in previous work."
 }
 </script>
 
@@ -393,7 +393,7 @@
 
 
   
-  <title>Pushing the Limits of Unsupervised Unit Discovery for SSL Speech Representation | Zhisheng Zheng</title>
+  <title>Fast-HuBERT: An Efficient Training Framework for Self-Supervised Speech Representation Learning | Zhisheng Zheng</title>
 
   
   
@@ -413,7 +413,7 @@
 </head>
 
 
-<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="2d279b88919167cb5e6404513ee933c1" >
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="6c482e08a63b4b01d2c275a8972b7b77" >
 
   
   
@@ -796,7 +796,7 @@
 
 
 <div class="article-container pt-3">
-  <h1>Pushing the Limits of Unsupervised Unit Discovery for SSL Speech Representation</h1>
+  <h1>Fast-HuBERT: An Efficient Training Framework for Self-Supervised Speech Representation Learning</h1>
 
   
 
@@ -813,11 +813,11 @@
     
 
   <span >
+      Guanrou Yang</span>, <span >
       Ziyang Ma</span>, <span class="author-highlighted">
       Zhisheng Zheng</span>, <span >
-      Guanrou Yang</span>, <span >
-      Yu Wang</span>, <span >
-      Chao Zhang</span>, <span >
+      Yakun Song</span>, <span >
+      Zhikang Niu</span>, <span >
       Xie Chen</span>
   </div>
   
@@ -829,7 +829,7 @@
     
       
     
-    March, 2023
+    July, 2023
   </span>
   
 
@@ -869,17 +869,20 @@
 
 
 
-<a class="btn btn-outline-primary btn-page-header" href="https://arxiv.org/abs/2306.08920" target="_blank" rel="noopener">
+<a class="btn btn-outline-primary btn-page-header" href="https://arxiv.org/pdf/2309.13860v2.pdf" target="_blank" rel="noopener">
   PDF
 </a>
 
 
 
-<a href="#" class="btn btn-outline-primary btn-page-header js-cite-modal"
-        data-filename="/publication/ma2023tribert/cite.bib">
-  Cite
-</a>
 
+  
+  
+    
+  
+<a class="btn btn-outline-primary btn-page-header" href="https://github.com/yanghaha0908/FastHuBERT" target="_blank" rel="noopener">
+  Code
+</a>
 
 
 
@@ -904,10 +907,10 @@
 </div>
 
 
-<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 374px;">
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 550px; max-height: 630px;">
   <div style="position: relative">
-    <img src="/publication/ma2023tribert/featured_hu763a5104a0e289618a5599d13aa3f954_169051_720x2500_fit_q75_h2_lanczos_3.webp" width="720" height="374" alt="" class="featured-image">
-    <span class="article-header-caption">TriBERT</span>
+    <img src="/publication/yang2023fasthubert/featured_hued7d698aee8e95b9ba0e16c7fcb04610_70667_720x2500_fit_q75_h2_lanczos_3.webp" width="550" height="630" alt="" class="featured-image">
+    <span class="article-header-caption">Fast-HuBERT</span>
   </div>
 </div>
 
@@ -917,7 +920,7 @@
 
     
     <h3>Abstract</h3>
-    <p class="pub-abstract">The excellent generalization ability of self-supervised learning (SSL) for speech foundation models has garnered significant attention. HuBERT is a successful example that utilizes offline clustering to convert speech features into discrete units for a masked language modeling pretext task. However, simply clustering features as targets by k-means does not fully inspire the model’s performance. In this work, we present an unsupervised method to improve SSL targets. Two models are proposed, MonoBERT and PolyBERT, which leverage contextindependent and context-dependent phoneme-based units for pre-training. Our models outperform other SSL models significantly on the LibriSpeech benchmark without the need for iterative re-clustering and re-training. Furthermore, our models equipped with context-dependent units even outperform targetimprovement models that use labeled data during pre-training. How we progressively improve the unit discovery process is demonstrated through experiments.</p>
+    <p class="pub-abstract">Recent years have witnessed significant advancements in self-supervised learning (SSL) methods for speech-processing tasks. Various speech-based SSL models have been developed and present promising performance on a range of downstream tasks including speech recognition. However, existing speech-based SSL models face a common dilemma in terms of computational cost, which might hinder their potential application and in-depth academic research. To address this issue, we first analyze the computational cost of different modules during HuBERT pre-training and then introduce a stack of efficiency optimizations, which is named Fast-HuBERT in this paper. The proposed Fast-HuBERT can be trained in 1.1 days with 8 V100 GPUs on the Librispeech 960h benchmark, without performance degradation, resulting in a 5.2x speedup, compared to the original implementation. Moreover, we explore two well-studied techniques in the Fast-HuBERT and demonstrate consistent improvements as reported in previous work.</p>
     
 
     
@@ -945,7 +948,7 @@
       <div class="col-md-10">
         <div class="row">
           <div class="col-12 col-md-3 pub-row-heading">Publication</div>
-          <div class="col-12 col-md-9">In <em>INTERSPEECH</em> 2023</div>
+          <div class="col-12 col-md-9">In <em>ASRU</em> 2023</div>
         </div>
       </div>
       <div class="col-md-1"></div>
@@ -956,16 +959,6 @@
     <div class="space-below"></div>
 
     <div class="article-style"><!--
-
-
-
-<div class="alert alert-note">
-  <div>
-    Click the <em>Cite</em> button above to demo the feature to enable visitors to import publication metadata into their reference management software.
-  </div>
-</div>
-
-
 
 
 <div class="alert alert-note">
@@ -1012,7 +1005,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fzszheng147.github.io%2Fpublication%2Fma2023tribert%2F&amp;text=Pushing&#43;the&#43;Limits&#43;of&#43;Unsupervised&#43;Unit&#43;Discovery&#43;for&#43;SSL&#43;Speech&#43;Representation" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fzszheng147.github.io%2Fpublication%2Fyang2023fasthubert%2F&amp;text=Fast-HuBERT%3A&#43;An&#43;Efficient&#43;Training&#43;Framework&#43;for&#43;Self-Supervised&#43;Speech&#43;Representation&#43;Learning" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -1029,7 +1022,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fzszheng147.github.io%2Fpublication%2Fma2023tribert%2F&amp;t=Pushing&#43;the&#43;Limits&#43;of&#43;Unsupervised&#43;Unit&#43;Discovery&#43;for&#43;SSL&#43;Speech&#43;Representation" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fzszheng147.github.io%2Fpublication%2Fyang2023fasthubert%2F&amp;t=Fast-HuBERT%3A&#43;An&#43;Efficient&#43;Training&#43;Framework&#43;for&#43;Self-Supervised&#43;Speech&#43;Representation&#43;Learning" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -1048,7 +1041,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
         
       
       <li>
-        <a href="mailto:?subject=Pushing%20the%20Limits%20of%20Unsupervised%20Unit%20Discovery%20for%20SSL%20Speech%20Representation&amp;body=https%3A%2F%2Fzszheng147.github.io%2Fpublication%2Fma2023tribert%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+        <a href="mailto:?subject=Fast-HuBERT%3A%20An%20Efficient%20Training%20Framework%20for%20Self-Supervised%20Speech%20Representation%20Learning&amp;body=https%3A%2F%2Fzszheng147.github.io%2Fpublication%2Fyang2023fasthubert%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -1065,7 +1058,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fzszheng147.github.io%2Fpublication%2Fma2023tribert%2F&amp;title=Pushing&#43;the&#43;Limits&#43;of&#43;Unsupervised&#43;Unit&#43;Discovery&#43;for&#43;SSL&#43;Speech&#43;Representation" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fzszheng147.github.io%2Fpublication%2Fyang2023fasthubert%2F&amp;title=Fast-HuBERT%3A&#43;An&#43;Efficient&#43;Training&#43;Framework&#43;for&#43;Self-Supervised&#43;Speech&#43;Representation&#43;Learning" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -1082,7 +1075,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
       
       
       <li>
-        <a href="whatsapp://send?text=Pushing&#43;the&#43;Limits&#43;of&#43;Unsupervised&#43;Unit&#43;Discovery&#43;for&#43;SSL&#43;Speech&#43;Representation%20https%3A%2F%2Fzszheng147.github.io%2Fpublication%2Fma2023tribert%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+        <a href="whatsapp://send?text=Fast-HuBERT%3A&#43;An&#43;Efficient&#43;Training&#43;Framework&#43;for&#43;Self-Supervised&#43;Speech&#43;Representation&#43;Learning%20https%3A%2F%2Fzszheng147.github.io%2Fpublication%2Fyang2023fasthubert%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -1099,7 +1092,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fzszheng147.github.io%2Fpublication%2Fma2023tribert%2F&amp;title=Pushing&#43;the&#43;Limits&#43;of&#43;Unsupervised&#43;Unit&#43;Discovery&#43;for&#43;SSL&#43;Speech&#43;Representation" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fzszheng147.github.io%2Fpublication%2Fyang2023fasthubert%2F&amp;title=Fast-HuBERT%3A&#43;An&#43;Efficient&#43;Training&#43;Framework&#43;for&#43;Self-Supervised&#43;Speech&#43;Representation&#43;Learning" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -1118,6 +1111,12 @@ Supplementary notes can be added here, including [code, math, and images](https:
 
 
   
+  
+    
+
+
+
+
   
     
 
@@ -1231,12 +1230,6 @@ Supplementary notes can be added here, including [code, math, and images](https:
 
     </div>
   </div>
-
-
-  
-    
-
-
 
 
   
