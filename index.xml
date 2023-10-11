@@ -33,6 +33,26 @@
     </item>
     
     <item>
+      <title>Leveraging Speech PTM, Text LLM, and Emotional TTS for Speech Emotion Recognition</title>
+      <link>https://zszheng147.github.io/publication/ma2023emoaug/</link>
+      <pubDate>Tue, 19 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>https://zszheng147.github.io/publication/ma2023emoaug/</guid>
+      <description>&lt;!--
+
+
+&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    Create your slides in Markdown - click the &lt;em&gt;Slides&lt;/em&gt; button to check out the example.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+Supplementary notes can be added here, including [code, math, and images](https://wowchemy.com/docs/writing-markdown-latex/).
+--&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Fast-HuBERT: An Efficient Training Framework for Self-Supervised Speech Representation Learning</title>
       <link>https://zszheng147.github.io/publication/yang2023fasthubert/</link>
       <pubDate>Mon, 24 Jul 2023 00:00:00 +0000</pubDate>
@@ -284,7 +304,7 @@ data.head()
 
 
 
-&lt;div id=&#34;chart-791584632&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-452173698&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -294,7 +314,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-791584632&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-452173698&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
