@@ -40,6 +40,10 @@
       <description>&lt;!--
 
 
+--&gt;
+&lt;!--
+
+
 &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Create your slides in Markdown - click the &lt;em&gt;Slides&lt;/em&gt; button to check out the example.
@@ -153,7 +157,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
     </item>
     
     <item>
-      <title>MT4SSL: Boosting Self-Supervised Speech Representation Learning by Integrating Multiple Targets (Best student paper shortlist)</title>
+      <title>MT4SSL: Boosting Self-Supervised Speech Representation Learning by Integrating Multiple Targets</title>
       <link>https://zszheng147.github.io/publication/ma2023mt4ssl/</link>
       <pubDate>Mon, 14 Nov 2022 00:00:00 +0000</pubDate>
       <guid>https://zszheng147.github.io/publication/ma2023mt4ssl/</guid>
@@ -304,7 +308,7 @@ data.head()
 
 
 
-&lt;div id=&#34;chart-653198742&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-129845367&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -314,7 +318,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-653198742&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-129845367&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
