@@ -15,11 +15,31 @@
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://zszheng147.github.io/publication-type/3/</loc>
-    <lastmod>2023-09-19T00:00:00+00:00</lastmod>
+    <lastmod>2023-12-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zszheng147.github.io/publication/ma2023emotion2vec/</loc>
+    <lastmod>2023-12-23T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://zszheng147.github.io/tag/er/</loc>
-    <lastmod>2023-09-19T00:00:00+00:00</lastmod>
+    <lastmod>2023-12-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zszheng147.github.io/publication_types/</loc>
+    <lastmod>2023-12-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zszheng147.github.io/publication/</loc>
+    <lastmod>2023-12-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zszheng147.github.io/tag/ssl/</loc>
+    <lastmod>2023-12-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zszheng147.github.io/tags/</loc>
+    <lastmod>2023-12-23T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://zszheng147.github.io/publication/ma2023emoaug/</loc>
@@ -27,18 +47,6 @@
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://zszheng147.github.io/tag/other/</loc>
-    <lastmod>2023-09-19T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://zszheng147.github.io/publication_types/</loc>
-    <lastmod>2023-09-19T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://zszheng147.github.io/publication/</loc>
-    <lastmod>2023-09-19T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://zszheng147.github.io/tags/</loc>
     <lastmod>2023-09-19T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
@@ -55,10 +63,6 @@
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://zszheng147.github.io/tag/hubert/</loc>
-    <lastmod>2023-07-24T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://zszheng147.github.io/tag/ssl/</loc>
     <lastmod>2023-07-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>

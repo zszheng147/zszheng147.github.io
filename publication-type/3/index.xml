@@ -5,12 +5,32 @@
     <link>https://zszheng147.github.io/publication-type/3/</link>
       <atom:link href="https://zszheng147.github.io/publication-type/3/index.xml" rel="self" type="application/rss+xml" />
     <description>3</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 19 Sep 2023 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 23 Dec 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://zszheng147.github.io/media/icon_hucb59738334712558e8efbb6e6969a95e_368560_512x512_fill_lanczos_center_3.png</url>
       <title>3</title>
       <link>https://zszheng147.github.io/publication-type/3/</link>
     </image>
+    
+    <item>
+      <title>emotion2vec: Self-Supervised Pre-Training for Speech Emotion Representation</title>
+      <link>https://zszheng147.github.io/publication/ma2023emotion2vec/</link>
+      <pubDate>Sat, 23 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://zszheng147.github.io/publication/ma2023emotion2vec/</guid>
+      <description>&lt;!--
+
+
+&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    Create your slides in Markdown - click the &lt;em&gt;Slides&lt;/em&gt; button to check out the example.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+Supplementary notes can be added here, including [code, math, and images](https://wowchemy.com/docs/writing-markdown-latex/).
+--&gt;
+</description>
+    </item>
     
     <item>
       <title>Leveraging Speech PTM, Text LLM, and Emotional TTS for Speech Emotion Recognition</title>
