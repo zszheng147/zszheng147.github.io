@@ -33,6 +33,27 @@
     </item>
     
     <item>
+      <title>BAT: Learning to Reason about Spatial Sounds with Large Language Models</title>
+      <link>https://zszheng147.github.io/publication/zheng2024bat/</link>
+      <pubDate>Fri, 02 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>https://zszheng147.github.io/publication/zheng2024bat/</guid>
+      <description>&lt;!--
+
+
+
+&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    Create your slides in Markdown - click the &lt;em&gt;Slides&lt;/em&gt; button to check out the example.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+Supplementary notes can be added here, including [code, math, and images](https://wowchemy.com/docs/writing-markdown-latex/).
+--&gt;
+</description>
+    </item>
+    
+    <item>
       <title>emotion2vec: Self-Supervised Pre-Training for Speech Emotion Representation</title>
       <link>https://zszheng147.github.io/publication/ma2023emotion2vec/</link>
       <pubDate>Sat, 23 Dec 2023 00:00:00 +0000</pubDate>
@@ -328,7 +349,7 @@ data.head()
 
 
 
-&lt;div id=&#34;chart-832147569&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-392174856&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -338,7 +359,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-832147569&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-392174856&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
