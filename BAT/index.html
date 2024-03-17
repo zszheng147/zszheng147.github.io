@@ -145,9 +145,15 @@
   <div class="container is-max-desktop is-centered has-text-centered">
     <div class="hero-body">
       <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
+        <div class="column is-full">
           <h2 class="title is-3">SpatialSoundQA Overview</h2>
-          <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+          <style>
+            .wide-table {
+              width: 100%; /* Adjust this value as needed */
+              max-width: none; /* Ensures the table is not constrained by the parent's max-width */
+            }
+          </style>
+          <table class="table is-bordered is-striped is-narrow is-hoverable wide-table">
             <thead>
               <tr>
                 <th>Type</th>
@@ -171,19 +177,17 @@
                 <td>1</td>
                 <td>
                   <strong>Q:</strong> How would you describe the location of this audio clip?<br>
-                  <strong>A:</strong> right, front, below; 2.5m<br>
+                  <strong>A:</strong> right, front, below; 2.5m
                 </td>
               </tr>
               <!-- More rows as per your image -->
             </tbody>
           </table>
-          <!-- You can continue with more HTML here if needed -->
         </div>
       </div>
     </div>
   </div>
 </section>
-
 
 
 
