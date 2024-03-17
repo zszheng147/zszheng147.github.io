@@ -65,16 +65,13 @@
             <span class="author-block"><sup>1</sup>The University of Texas at Austin,</span>
             <span class="author-block"><sup>2</sup>Shanghai Jiao Tong University</span>
           </div>
-          <div class="is-size-8 publication-authors">
-            <span class="author-block"><sup>*</sup>Equal Contribution</span>
-          </div>
 
 
           <div class="column has-text-centered">
             <div class="publication-links">
               <!-- PDF Link. -->
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2307.07218"
+                <a href="https://arxiv.org/abs/2402.01591"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="ai ai-arxiv"></i>
@@ -101,25 +98,19 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Zero-shot text-to-speech aims at synthesizing voices with unseen speech prompts. 
-            Previous large-scale multispeaker TTS models, have successfully achieved this goal with an enrolled recording within 10 seconds. 
-            However, most of them are designed to utilize only short speech prompts. 
-            The limited information in short speech prompts significantly hinders the performance of fine-grained identity imitation. 
+          Spatial sound reasoning is a fundamental human skill, enabling us to navigate and interpret our surroundings based on sound. 
+          In this paper we present BAT, which combines the spatial sound perception ability of a binaural acoustic scene analysis model
+          with the natural language reasoning capabilities of a large language model (LLM) to replicate this innate ability. 
+          To address the lack of existing datasets of in-the-wild spatial sounds, we synthesized a binaural audio dataset 
+          using AudioSet and SoundSpaces 2.0. Next, we developed SpatialSoundQA, a spatial sound-based question-answering dataset,
+          offering a range of QA tasks that train BAT in various aspects of spatial sound perception and reasoning.
+          The acoustic front end encoder of BAT is a novel spatial audio encoder named Spatial Audio Spectrogram Transformer, or Spatial-AST,
+          which by itself achieves strong performance across sound event detection, spatial localization, and distance estimation.
+          By integrating Spatial-AST with LLaMA-2 7B model, BAT transcends standard Sound Event Localization and Detection (SELD) tasks,
+          enabling the model to reason about the relationships between the sounds in its environment.
+          Our experiments demonstrate BAT’s superior performance on both spatial sound perception and reasoning,
+          showcasing the immense potential of LLMs in navigating and interpreting complex spatial audio environments.
           </p>
-          <p>
-            In this paper, we introduce Mega-TTS 2, a generic zero-shot multispeaker TTS model that is capable of 
-            synthesizing speech for unseen speakers with arbitrary-length prompts. 
-            Specifically, we 1) design a multi-reference timbre encoder to extract timbre information from multiple reference speeches;
-            2) and train a prosody language model (PLM) with arbitrary-length speech prompts;
-            With these designs, our model is suitable for prompts of different lengths, which extends the upper bound of speech quality for zero-shot text-to-speech.
-            Besides arbitrary-length prompts, we introduce arbitrary-source prompts, which leverages the probabilities
-            derived from multiple PLM outputs to produce expressive and controlled prosody.
-            Furthermore, we propose a phoneme-level auto-regressive duration model to introduce in-context learning capabilities to duration modeling.
-          </p>
-          <p>
-            Experiments demonstrate that our method could not only synthesize identity-preserving speech with a short prompt
-            of an unseen speaker but also achieve improved performance with longer speech prompts.
-            Audio samples can be found in our demo page.
           </p>
         </div>
 
