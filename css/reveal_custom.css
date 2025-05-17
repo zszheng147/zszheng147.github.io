@@ -1,0 +1,6 @@
+.scroll-news {
+  max-height: 300px; /* 或您想要的高度 */
+  overflow-y: scroll; /* 启用垂直滚动条 */
+  padding: 10px;
+  border: 1px solid #ccc; /* 可选的边框样式 */
+}

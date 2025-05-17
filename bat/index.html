@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="BAT: Learning to Reason about Spatial Sounds with Large Language Models.">
+  <meta name="keywords" content="Spatial audio, Spatial sound, LLM">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>bat</title>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E1PBHBQRVZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E1PBHBQRVZ');
+</script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body" style="padding-bottom: 24px;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">BAT: Learning to Reason about Spatial Sounds with Large Language Models</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://zhishengzheng.com/">Zhisheng Zheng</a><sup>1,2</sup>,</span>
+            <span class="author-block">
+              <a href="https://jasonppy.github.io/">Puyuan Peng</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://ziyang.tech/">Ziyang Ma</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://chenxie95.github.io/">Xie Chen</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://eunsol.github.io/">Eunsol Choi</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.cs.utexas.edu/~harwath/">David Harwath</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>The University of Texas at Austin,</span>
+            <span class="author-block"><sup>2</sup>Shanghai Jiao Tong University</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">ICML 2024</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2402.01591"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/zhisheng01/SpatialAudio" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-database"></i>
+                  </span>
+                  <span>Dataset</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/zszheng147/Spatial-AST" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Spatial-AST</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/ddlBoJack/SLAM-LLM/tree/main/examples/seld_spatialsoundqa" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>BAT</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" style="padding-top: 0px;">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+          Spatial sound reasoning is a fundamental human skill, enabling us to navigate and interpret our surroundings based on sound. 
+          In this paper we present BAT, which combines the spatial sound perception ability of a binaural acoustic scene analysis model
+          with the natural language reasoning capabilities of a large language model (LLM) to replicate this innate ability. 
+          To address the lack of existing datasets of in-the-wild spatial sounds, we synthesized a binaural audio dataset 
+          using AudioSet and SoundSpaces 2.0. Next, we developed SpatialSoundQA, a spatial sound-based question-answering dataset,
+          offering a range of QA tasks that train BAT in various aspects of spatial sound perception and reasoning.
+          The acoustic front end encoder of BAT is a novel spatial audio encoder named Spatial Audio Spectrogram Transformer, or Spatial-AST,
+          which by itself achieves strong performance across sound event detection, spatial localization, and distance estimation.
+          By integrating Spatial-AST with LLaMA-2 7B model, BAT transcends standard Sound Event Localization and Detection (SELD) tasks,
+          enabling the model to reason about the relationships between the sounds in its environment.
+          Our experiments demonstrate BAT’s superior performance on both spatial sound perception and reasoning,
+          showcasing the immense potential of LLMs in navigating and interpreting complex spatial audio environments.
+          </p>
+          </p>
+        </div>
+
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+  </div>
+</section>
+
+
+
+<section class="hero is-light is-small">
+  <div class="container is-max-desktop is-centered has-text-centered">
+    <div class="hero-body">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">BAT architecture</h2>
+          <img src="./static/images/bat-architecture.png"
+                    class="interpolation-image"
+                    alt="Interpolate start reference image."/>
+          <h2 class="has-text-centered is-8">
+            BAT model structure. The rightmost part shows the binaural audio generation process.
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<<section class="hero teaser" style="margin-top: 10px;"> <!-- Adjust margin-top as needed -->
+  <div class="container is-max-desktop is-centered has-text-centered" style="max-width: 100%;">
+    <div class="hero-body">
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+          <h2 class="title is-3">SpatialSoundQA</h2>
+          <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" style="width: auto; margin: auto;">
+            <thead>
+              <tr>
+                <th><div style="text-align: left;"><strong>Type</strong></div></th>
+                <th><strong>#Sources</strong></th>
+                <th><div style="text-align: left;"><strong>Example</strong></div></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                  <td><strong>A:</strong> Detection <br> (139K, 15.9%)</td>
+                <td>1</td>
+                <td>
+                  <div style="text-align: left;">
+                    <strong>Q:</strong> Identify the sound events in the audio clip. / <strong>A:</strong> baby laughter; laughter; speech<br>
+                    <strong>Q:</strong> What are the distinct sounds present in this audio clip? / <strong>A:</strong> heart sounds, heartbeat
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                  <td><strong>B:</strong> DoA & DP <br>(139K, 15.9%)</td>
+                <td>1</td>
+                <td>
+                  <div style="text-align: left;">
+                    <strong>Q:</strong> How would you describe the location of this audio clip? / <strong>A:</strong> right, front, below; 2.5m<br>
+                    <strong>Q:</strong> At what distance and in which direction, is the music’s sound originating? / <strong>A:</strong> left, behind, below; 5m
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                  <td><strong>C:</strong> Detection <br>(118K, 13.5%)</td>
+                <td>2</td>
+                <td>
+                  <div style="text-align: left;">
+                    <strong>Q:</strong> Identify the sound events in the audio clip coming from the right, front, below, approximately 3 meters away. / <strong>A:</strong> slosh; speech<br>
+                    <strong>Q:</strong> What sound events can you detect in the audio recording emanating from the left, behind, above, roughly 0.5 meters away? <br> <strong>A:</strong> music; musical instrument; steelpan
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                  <td><strong>D:</strong> DoA & DP <br>(118K, 13.5%)</td>
+                <td>2</td>
+                <td>
+                  <div style="text-align: left;">
+                    <strong>Q:</strong> In which direction and how far away is the source of the heart sounds, heartbeat’s sound? / <strong>A:</strong> left, behind, below; 1m<br>
+                    <strong>Q:</strong> Where is the sound of the music coming from? / <strong>A:</strong> left, behind, below; 3m
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                  <td><strong>E:</strong> Reasoning <br>(358K, 41.2%)</td>
+                <td>2</td>
+                <td>
+                  <div style="text-align: left;">
+                    <strong>Q:</strong> When measuring the direct line distance, is the sound produced by wheeze closer to you than the sound from bird flight, flapping wings? / <strong>A:</strong> No<br>
+                    <strong>Q:</strong> Is the source of both explosion and speech’s sounds from your left side? / <strong>A:</strong> Yes<br>
+                    <strong>Q:</strong> Is the sound from the music on the front and the sound from the rattle on the behind? / <strong>A:</strong> No<br>
+                    <strong>Q:</strong> Does the sound of electric shaver, electric razor appear on the behind of the sound of waterfall? / <strong>A:</strong> Yes<br>
+                    <strong>Q:</strong> Can you estimate the distance from the sound of the speech to the sound of the dog? / <strong>A:</strong> 1.5m<br>
+                    <strong>Q:</strong> What is the sound on the above side of the sound of the vibration? / <strong>A:</strong> croak; frog<br>
+                    <strong>Q:</strong> Could you determine whether the singing’s sound is to the left or right of the steam’s sound? / <strong>A:</strong> left
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background-color: #f0f0f0">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-3" style="margin-bottom: 0px;">Distance Perception</h2> <!-- Adjust this margin -->
+    <h2 class="title is-5" style="margin-bottom: 150px;">
+      (<span style="color: red; font-size: 24px;">&#9888;</span> Please wear your headphones!)
+    </h2>
+        <div style="display: flex; justify-content: center; align-items: center;">
+      <!-- Axis line -->
+      <div style="width: 80%; height: 2px; background-color: black; position: relative;">
+        <!-- -4 Tick -->
+        <div style="position: absolute; left: 10%; transform: translateX(-50%);">
+          <audio controls style="position: absolute; top: -120px; left: -45px;">
+            <source src="./static/audio_sample/dogs/clean.wav" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+          <div style="position: absolute; top: -120px; left: -180px;">Clean dog barking</div>
+          <audio controls style="position: absolute; top: -45px; left: -45px;">
+            <source src="./static/audio_sample/dogs/-4.wav" type="audio/mp3">
+            Your browser does not support the audio element.
+          </audio>
+          <div style="height: 10px; width: 2px; background-color: black; margin-bottom: 5px; position: relative;"></div>
+          <div style="margin-top: 5px; position: relative;">-4</div>
+        </div>
+
+        <!-- -2 Tick -->
+        <div style="position: absolute; left: 30%; transform: translateX(-50%);">
+          <audio controls style="position: absolute; top: -45px; left: -45px;">
+            <source src="./static/audio_sample/dogs/-2.wav" type="audio/mp3">
+            Your browser does not support the audio element.
+          </audio>
+          <div style="height: 10px; width: 2px; background-color: black; margin-bottom: 5px; position: relative;"></div>
+          <div style="margin-top: 5px; position: relative;">-2</div>
+        </div>
+        <!-- 0 Tick -->
+        <div style="position: absolute; left: 50%; transform: translateX(-50%);">
+          <audio controls style="position: absolute; top: -45px; left: -45px;">
+            <source src="./static/audio_sample/dogs/0.wav" type="audio/mp3">
+            Your browser does not support the audio element.
+          </audio>
+          <div style="height: 10px; width: 2px; background-color: black; margin-bottom: 5px; position: relative;"></div>
+          <div style="margin-top: 5px; position: relative;">0</div>
+        </div>
+        <!-- 2 Tick -->
+        <div style="position: absolute; left: 70%; transform: translateX(-50%);">
+          <audio controls style="position: absolute; top: -45px; left: -45px;">
+            <source src="./static/audio_sample/dogs/2.wav" type="audio/mp3">
+            Your browser does not support the audio element.
+          </audio>
+          <div style="height: 10px; width: 2px; background-color: black; margin-bottom: 5px; position: relative;"></div>
+          <div style="margin-top: 5px; position: relative;">2</div>
+        </div>
+        <!-- 4 Tick -->
+        <div style="position: absolute; left: 90%; transform: translateX(-50%);">
+          <audio controls style="position: absolute; top: -45px; left: -45px;">
+            <source src="./static/audio_sample/dogs/4.wav" type="audio/mp3">
+            Your browser does not support the audio element.
+          </audio>
+          <div style="height: 10px; width: 2px; background-color: black; margin-bottom: 5px; position: relative;"></div>
+          <div style="margin-top: 5px; position: relative;">4</div>
+        </div>
+        <!-- Arrow -->
+        <div style="position: absolute; right: -12px; top: -5px;">
+          <div style="width: 12px; height: 12px; border-top: 2px solid black; border-right: 2px solid black; transform: rotate(45deg);"></div>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: center; margin-top: 50px;">
+      <div style="position: absolute; left: 50%; transform: translateX(-50%);">Receiver</div>
+    </div>
+    <div style="display: flex; justify-content: flex-end; margin-top: -40px;">
+      <div>Distance/m</div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser" style="margin-top: 20px;">
+  <div class="container is-max-desktop" style="max-width: 100%;">
+    <div class="hero-body">
+      <div class="columns is-centered">
+        <div class="column" style="text-align: left;">
+          <h2 class="title is-3 has-text-centered">Question Type A: Detection</h2>
+
+          <!-- QA 1 -->
+          <div style="margin-top: 20px; display: flex; align-items: center;">
+            <strong>Q:</strong> <span style="margin-left: 5px;">Enumerate the sound occurrences in the audio clip.</span>
+            <audio controls style="margin-left: 10px;">
+              <source src="./static/audio_sample/A/A1.wav" type="audio/mp3">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div>
+            <strong>A:</strong>
+            <span id="answer1" class="masked" onclick="revealAnswer(this)">basketball bounce; music</span>
+          </div>
+
+          <!-- QA 2 -->
+          <div style="margin-top: 20px; display: flex; align-items: center;">
+            <strong>Q:</strong> <span style="margin-left: 5px;">Can you categorize the sounds in the audio?</span>
+            <audio controls style="margin-left: 10px;">
+              <source src="./static/audio_sample/A/A2.wav" type="audio/mp3">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div>
+            <strong>A:</strong>
+            <span id="answer2" class="masked" onclick="revealAnswer(this)">engine; rattle; vehicle</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.masked {
+  background-image: linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc),
+    linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  color: transparent;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.revealed {
+  background: none;
+  color: inherit;
+  cursor: auto;
+}
+</style>
+
+<script>
+function revealAnswer(element) {
+  element.classList.remove('masked');
+  element.classList.add('revealed');
+}
+</script>
+
+
+<section class="hero" style="margin-top: 20px; background-color: #f0f0f0;">
+  <div class="container is-max-desktop" style="max-width: 100%;">
+    <div class="hero-body">
+      <div class="columns is-centered">
+        <div class="column" style="text-align: left;">
+          <h2 class="title is-3 has-text-centered">Question Type B: Distance Prediction & DoA</h2>
+
+          <!-- QA 1 -->
+          <div style="margin-top: 20px; display: flex; align-items: center;">
+            <strong>Q:</strong> <span style="margin-left: 5px;">In your opinion, where is this audio clip coming from?</span>
+            <audio controls style="margin-left: 10px;">
+              <source src="./static/audio_sample/B/B1.wav" type="audio/mp3">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div>
+            <strong>A:</strong>
+            <span id="answer1" class="masked" onclick="revealAnswer(this)">right, front, below; 0.5m</span>
+          </div>
+
+          <!-- QA 2 -->
+          <div style="margin-top: 20px; display: flex; align-items: center;">
+            <strong>Q:</strong> <span style="margin-left: 5px;">Where is the audio clip coming from?</span>
+            <audio controls style="margin-left: 10px;">
+              <source src="./static/audio_sample/B/B2.wav" type="audio/mp3">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div>
+            <strong>A:</strong>
+            <span id="answer2" class="masked" onclick="revealAnswer(this)">left, front, below; 4m</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="hero teaser" style="margin-top: 20px;">
+  <div class="container is-max-desktop" style="max-width: 100%;">
+    <div class="hero-body">
+      <div class="columns is-centered">
+        <div class="column" style="text-align: left;">
+          <h2 class="title is-3 has-text-centered">Question Type C: Mix-up Detection</h2>
+
+          <!-- QA 1 -->
+          <div style="margin-top: 20px; display: flex; align-items: center;">
+            <strong>Q:</strong> <span style="margin-left: 5px;">What sound events can you detect in the audio recording emanating from  <br> the right,front, below, roughly 3.5 meters away?</span>
+            <audio controls style="margin-left: 10px;">
+              <source src="./static/audio_sample/C/C1.wav" type="audio/mp3">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div>
+            <strong>A:</strong>
+            <span id="answer1" class="masked" onclick="revealAnswer(this)">ambulance (siren); emergency vehicle; siren</span>
+          </div>
+
+          <!-- QA 2 -->
+          <div style="margin-top: 20px; display: flex; align-items: center;">
+            <strong>Q:</strong> <span style="margin-left: 5px;">Determine the types of sounds present in the audio clip from directions to <br> the left, front, above, approximately 2 meters distant.</span>
+            <audio controls style="margin-left: 10px;">
+              <source src="./static/audio_sample/C/C2.wav" type="audio/mp3">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div>
+            <strong>A:</strong>
+            <span id="answer2" class="masked" onclick="revealAnswer(this)">explosion</span>
+          </div>
+          <div>
+            <strong>Hint:</strong>
+            <span id="answer2" class="masked" onclick="revealAnswer(this)">Another sound source: rumble</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero" style="margin-top: 20px; background-color: #f0f0f0;">
+  <div class="container is-max-desktop" style="max-width: 100%;">
+    <div class="hero-body">
+      <div class="columns is-centered">
+        <div class="column" style="text-align: left;">
+          <h2 class="title is-3 has-text-centered">Question Type D: Mix-up Distance Prediction & DoA</h2>
+
+          <!-- QA 1 -->
+          <div style="margin-top: 20px; display: flex; align-items: center;">
+            <strong>Q:</strong> <span style="margin-left: 5px;">How would you describe the location of the crow's sound?</span>
+            <audio controls style="margin-left: 10px;">
+              <source src="./static/audio_sample/D/D1.wav" type="audio/mp3">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div>
+            <strong>A:</strong>
+            <span id="answer1" class="masked" onclick="revealAnswer(this)">left, behind, below; 3m</span>
+          </div>
+
+          <!-- QA 2 -->
+          <div style="margin-top: 20px; display: flex; align-items: center;">
+            <strong>Q:</strong> <span style="margin-left: 5px;">Where is the sound of the mechanical fan?</span>
+            <audio controls style="margin-left: 10px;">
+              <source src="./static/audio_sample/D/D2.wav" type="audio/mp3">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div>
+            <strong>A:</strong>
+            <span id="answer2" class="masked" onclick="revealAnswer(this)">left, behind, below; 3m</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="hero teaser" style="margin-top: 20px;">
+  <div class="container is-max-desktop" style="max-width: 100%;">
+    <div class="hero-body">
+      <div class="columns is-centered">
+        <div class="column" style="text-align: left;">
+          <h2 class="title is-3 has-text-centered">Question Type E: Reasoning</h2>
+
+          <!-- QA 1 -->
+          <div style="margin-top: 20px; display: flex; align-items: center;">
+            <strong>Q:</strong> <span style="margin-left: 5px;">Does the sound of gunshot, gunfire appear on the left of the sound of speech?</span>
+            <audio controls style="margin-left: 10px;">
+              <source src="./static/audio_sample/E/E1.wav" type="audio/mp3">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div>
+            <strong>A:</strong>
+            <span id="answer1" class="masked" onclick="revealAnswer(this)">Yes</span>
+          </div>
+
+          <!-- QA 2 -->
+          <div style="margin-top: 20px; display: flex; align-items: center;">
+            <strong>Q:</strong> <span style="margin-left: 5px;">Is the sound from cowbell further away from you in Euclidean distance than<br> the sound from music?</span>
+            <audio controls style="margin-left: 10px;">
+              <source src="./static/audio_sample/E/E2.wav" type="audio/mp3">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div>
+            <strong>A:</strong>
+            <span id="answer2" class="masked" onclick="revealAnswer(this)">No</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section" id="BibTeX" style="background-color: #f0f0f0; padding: 20px; width: 100%;">
+  <div class="container is-max-desktop content">
+    <h2 class="title" style="text-align: center;">BibTeX</h2>
+    <pre><code>@article{zheng2024bat,
+  author    = {Zheng, Zhisheng and Peng, Puyuan and Ma, Ziyang and Chen, Xie and Choi, Eunsol and Harwath, David},
+  title     = {BAT: Learning to Reason about Spatial Sounds with Large Language Models},
+  journal   = {arXiv preprint arXiv:2402.01591},
+  year      = {2024},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Licenses</h2>
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website source code based on the <a
+            href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> project page.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
