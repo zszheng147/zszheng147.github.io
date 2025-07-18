@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>1 | Zhisheng Zheng</title>
-    <link>http://localhost:1313/publication-type/1/</link>
-      <atom:link href="http://localhost:1313/publication-type/1/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://zhishengzheng.com/publication-type/1/</link>
+      <atom:link href="https://zhishengzheng.com/publication-type/1/index.xml" rel="self" type="application/rss+xml" />
     <description>1</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Mon, 24 Jul 2023 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>http://localhost:1313/media/icon_hu977392f85b73bd77f194883392866898_93804_512x512_fill_lanczos_center_3.png</url>
+      <url>https://zhishengzheng.com/media/icon_hu977392f85b73bd77f194883392866898_93804_512x512_fill_lanczos_center_3.png</url>
       <title>1</title>
-      <link>http://localhost:1313/publication-type/1/</link>
+      <link>https://zhishengzheng.com/publication-type/1/</link>
     </image>
     
     <item>
       <title>Fast-HuBERT: An Efficient Training Framework for Self-Supervised Speech Representation Learning</title>
-      <link>http://localhost:1313/publication/yang2023fasthubert/</link>
+      <link>https://zhishengzheng.com/publication/yang2023fasthubert/</link>
       <pubDate>Mon, 24 Jul 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/publication/yang2023fasthubert/</guid>
+      <guid>https://zhishengzheng.com/publication/yang2023fasthubert/</guid>
       <description>&lt;!--
 
 
@@ -34,9 +34,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Pushing the Limits of Unsupervised Unit Discovery for SSL Speech Representation</title>
-      <link>http://localhost:1313/publication/ma2023tribert/</link>
+      <link>https://zhishengzheng.com/publication/ma2023tribert/</link>
       <pubDate>Thu, 09 Mar 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/publication/ma2023tribert/</guid>
+      <guid>https://zhishengzheng.com/publication/ma2023tribert/</guid>
       <description>&lt;!--
 
 
@@ -64,9 +64,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Unsupervised Active Learning: Optimizing Labeling Cost-Effectiveness for Automatic Speech Recognition</title>
-      <link>http://localhost:1313/publication/zheng2023unsupervisedal/</link>
+      <link>https://zhishengzheng.com/publication/zheng2023unsupervisedal/</link>
       <pubDate>Thu, 09 Mar 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/publication/zheng2023unsupervisedal/</guid>
+      <guid>https://zhishengzheng.com/publication/zheng2023unsupervisedal/</guid>
       <description>&lt;!--
 
 
@@ -85,9 +85,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>FRONT-END ADAPTER: ADAPTING FRONT-END INPUT OF SPEECH BASED SELF-SUPERVISED LEARNING FOR SPEECH RECOGNITION</title>
-      <link>http://localhost:1313/publication/chen2023front-end_adapter/</link>
+      <link>https://zhishengzheng.com/publication/chen2023front-end_adapter/</link>
       <pubDate>Sat, 18 Feb 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/publication/chen2023front-end_adapter/</guid>
+      <guid>https://zhishengzheng.com/publication/chen2023front-end_adapter/</guid>
       <description>&lt;!--
 
 
@@ -114,9 +114,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>MT4SSL: Boosting Self-Supervised Speech Representation Learning by Integrating Multiple Targets</title>
-      <link>http://localhost:1313/publication/ma2023mt4ssl/</link>
+      <link>https://zhishengzheng.com/publication/ma2023mt4ssl/</link>
       <pubDate>Mon, 14 Nov 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/publication/ma2023mt4ssl/</guid>
+      <guid>https://zhishengzheng.com/publication/ma2023mt4ssl/</guid>
       <description>&lt;!--
 
 
@@ -134,9 +134,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>EXPLORING EFFECTIVE DISTILLATION OF SELF-SUPERVISED SPEECH MODELS FOR AUTOMATIC SPEECH RECOGNITION</title>
-      <link>http://localhost:1313/publication/wang2022exploring/</link>
+      <link>https://zhishengzheng.com/publication/wang2022exploring/</link>
       <pubDate>Thu, 27 Oct 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/publication/wang2022exploring/</guid>
+      <guid>https://zhishengzheng.com/publication/wang2022exploring/</guid>
       <description>&lt;!--
 
 

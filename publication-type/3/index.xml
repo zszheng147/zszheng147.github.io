@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>3 | Zhisheng Zheng</title>
-    <link>http://localhost:1313/publication-type/3/</link>
-      <atom:link href="http://localhost:1313/publication-type/3/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://zhishengzheng.com/publication-type/3/</link>
+      <atom:link href="https://zhishengzheng.com/publication-type/3/index.xml" rel="self" type="application/rss+xml" />
     <description>3</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Fri, 02 Feb 2024 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>http://localhost:1313/media/icon_hu977392f85b73bd77f194883392866898_93804_512x512_fill_lanczos_center_3.png</url>
+      <url>https://zhishengzheng.com/media/icon_hu977392f85b73bd77f194883392866898_93804_512x512_fill_lanczos_center_3.png</url>
       <title>3</title>
-      <link>http://localhost:1313/publication-type/3/</link>
+      <link>https://zhishengzheng.com/publication-type/3/</link>
     </image>
     
     <item>
       <title>BAT: Learning to Reason about Spatial Sounds with Large Language Models</title>
-      <link>http://localhost:1313/publication/zheng2024bat/</link>
+      <link>https://zhishengzheng.com/publication/zheng2024bat/</link>
       <pubDate>Fri, 02 Feb 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/publication/zheng2024bat/</guid>
+      <guid>https://zhishengzheng.com/publication/zheng2024bat/</guid>
       <description>&lt;!--
 
 
@@ -35,9 +35,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>emotion2vec: Self-Supervised Pre-Training for Speech Emotion Representation</title>
-      <link>http://localhost:1313/publication/ma2023emotion2vec/</link>
+      <link>https://zhishengzheng.com/publication/ma2023emotion2vec/</link>
       <pubDate>Sat, 23 Dec 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/publication/ma2023emotion2vec/</guid>
+      <guid>https://zhishengzheng.com/publication/ma2023emotion2vec/</guid>
       <description>&lt;!--
 
 
@@ -55,9 +55,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Leveraging Speech PTM, Text LLM, and Emotional TTS for Speech Emotion Recognition</title>
-      <link>http://localhost:1313/publication/ma2023emoaug/</link>
+      <link>https://zhishengzheng.com/publication/ma2023emoaug/</link>
       <pubDate>Tue, 19 Sep 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/publication/ma2023emoaug/</guid>
+      <guid>https://zhishengzheng.com/publication/ma2023emoaug/</guid>
       <description>&lt;!--
 
 

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: March 31, 2025 --><html lang="en-us" >
+<!-- Last Published: July 17, 2025 --><html lang="en-us" >
 
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -70,7 +70,7 @@
 
   
 
-  <link rel="stylesheet" href="/css/vendor-bundle.min.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/css/vendor-bundle.min.26c458e6907dc03073573976b7f4044e.css" media="print" onload="this.media='all'">
 
   
   
@@ -214,7 +214,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/wowchemy.css" />
+  <link rel="stylesheet" href="/css/wowchemy.2e310a7bf57378865bf7939ed0ece158.css" />
 
   
   
@@ -238,6 +238,45 @@
 
 
 
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E1PBHBQRVZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'G-E1PBHBQRVZ', {});
+  gtag('set', {'cookie_flags': 'SameSite=None;Secure'});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
 
 
 
@@ -283,8 +322,8 @@
 
 
 
-<link rel="alternate" hreflang="en-us" href="http://localhost:1313/publication/chen2023front-end_adapter/" />
-<link rel="canonical" href="http://localhost:1313/publication/chen2023front-end_adapter/" />
+<link rel="alternate" hreflang="en-us" href="https://zhishengzheng.com/publication/chen2023front-end_adapter/" />
+<link rel="canonical" href="https://zhishengzheng.com/publication/chen2023front-end_adapter/" />
 
 
 
@@ -314,7 +353,7 @@
 
 
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:image" content="http://localhost:1313/publication/chen2023front-end_adapter/featured.png" />
+<meta property="twitter:image" content="https://zhishengzheng.com/publication/chen2023front-end_adapter/featured.png" />
 
 
 
@@ -322,9 +361,9 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="Zhisheng Zheng" />
-<meta property="og:url" content="http://localhost:1313/publication/chen2023front-end_adapter/" />
+<meta property="og:url" content="https://zhishengzheng.com/publication/chen2023front-end_adapter/" />
 <meta property="og:title" content="FRONT-END ADAPTER: ADAPTING FRONT-END INPUT OF SPEECH BASED SELF-SUPERVISED LEARNING FOR SPEECH RECOGNITION | Zhisheng Zheng" />
-<meta property="og:description" content="Recent years have witnessed a boom in self-supervised learning (SSL) in various areas including speech processing. Speech based SSL models present promising performance in a range of speech related tasks. However, the training of SSL models is computationally expensive and a common practice is to fine-tune a released SSL model on the specific task. It is essential to use consistent front-end input during pre-training and fine-tuning. This consistency may introduce potential issues when the optimal front-end is not the same as that used in pre-training. In this paper, we propose a simple but effective front-end adapter to address this front-end discrepancy. By minimizing the distance between the outputs of different front-ends, the filterbank feature (Fbank) can be compatible with SSL models which are pre-trained with waveform. The experiment results demonstrate the effectiveness of our proposed front-end adapter on several popular SSL models for the speech recognition task." /><meta property="og:image" content="http://localhost:1313/publication/chen2023front-end_adapter/featured.png" /><meta property="og:locale" content="en-us" />
+<meta property="og:description" content="Recent years have witnessed a boom in self-supervised learning (SSL) in various areas including speech processing. Speech based SSL models present promising performance in a range of speech related tasks. However, the training of SSL models is computationally expensive and a common practice is to fine-tune a released SSL model on the specific task. It is essential to use consistent front-end input during pre-training and fine-tuning. This consistency may introduce potential issues when the optimal front-end is not the same as that used in pre-training. In this paper, we propose a simple but effective front-end adapter to address this front-end discrepancy. By minimizing the distance between the outputs of different front-ends, the filterbank feature (Fbank) can be compatible with SSL models which are pre-trained with waveform. The experiment results demonstrate the effectiveness of our proposed front-end adapter on several popular SSL models for the speech recognition task." /><meta property="og:image" content="https://zhishengzheng.com/publication/chen2023front-end_adapter/featured.png" /><meta property="og:locale" content="en-us" />
 
   
     <meta
@@ -357,12 +396,12 @@
   "@type": "Article",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://localhost:1313/publication/chen2023front-end_adapter/"
+    "@id": "https://zhishengzheng.com/publication/chen2023front-end_adapter/"
   },
   "headline": "FRONT-END ADAPTER: ADAPTING FRONT-END INPUT OF SPEECH BASED SELF-SUPERVISED LEARNING FOR SPEECH RECOGNITION",
   
   "image": [
-    "http://localhost:1313/publication/chen2023front-end_adapter/featured.png"
+    "https://zhishengzheng.com/publication/chen2023front-end_adapter/featured.png"
   ],
   
   "datePublished": "2023-02-18T00:00:00Z",
@@ -378,7 +417,7 @@
     "name": "Zhisheng Zheng",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://localhost:1313/media/icon_hu977392f85b73bd77f194883392866898_93804_192x192_fill_lanczos_center_3.png"
+      "url": "https://zhishengzheng.com/media/icon_hu977392f85b73bd77f194883392866898_93804_192x192_fill_lanczos_center_3.png"
     }
   },
   "description": "Recent years have witnessed a boom in self-supervised learning (SSL) in various areas including speech processing. Speech based SSL models present promising performance in a range of speech related tasks. However, the training of SSL models is computationally expensive and a common practice is to fine-tune a released SSL model on the specific task. It is essential to use consistent front-end input during pre-training and fine-tuning. This consistency may introduce potential issues when the optimal front-end is not the same as that used in pre-training. In this paper, we propose a simple but effective front-end adapter to address this front-end discrepancy. By minimizing the distance between the outputs of different front-ends, the filterbank feature (Fbank) can be compatible with SSL models which are pre-trained with waveform. The experiment results demonstrate the effectiveness of our proposed front-end adapter on several popular SSL models for the speech recognition task."
@@ -434,7 +473,7 @@
   
   
   
-  <script src="/js/wowchemy-init.min.js"></script>
+  <script src="/js/wowchemy-init.min.9e4214442a7711d35691acd58f6f6361.js"></script>
 
   
 
@@ -1061,7 +1100,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A1313%2Fpublication%2Fchen2023front-end_adapter%2F&amp;text=FRONT-END&#43;ADAPTER%3A&#43;ADAPTING&#43;FRONT-END&#43;INPUT&#43;OF&#43;SPEECH&#43;BASED&#43;SELF-SUPERVISED&#43;LEARNING&#43;FOR&#43;SPEECH&#43;RECOGNITION" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fzhishengzheng.com%2Fpublication%2Fchen2023front-end_adapter%2F&amp;text=FRONT-END&#43;ADAPTER%3A&#43;ADAPTING&#43;FRONT-END&#43;INPUT&#43;OF&#43;SPEECH&#43;BASED&#43;SELF-SUPERVISED&#43;LEARNING&#43;FOR&#43;SPEECH&#43;RECOGNITION" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -1078,7 +1117,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Flocalhost%3A1313%2Fpublication%2Fchen2023front-end_adapter%2F&amp;t=FRONT-END&#43;ADAPTER%3A&#43;ADAPTING&#43;FRONT-END&#43;INPUT&#43;OF&#43;SPEECH&#43;BASED&#43;SELF-SUPERVISED&#43;LEARNING&#43;FOR&#43;SPEECH&#43;RECOGNITION" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fzhishengzheng.com%2Fpublication%2Fchen2023front-end_adapter%2F&amp;t=FRONT-END&#43;ADAPTER%3A&#43;ADAPTING&#43;FRONT-END&#43;INPUT&#43;OF&#43;SPEECH&#43;BASED&#43;SELF-SUPERVISED&#43;LEARNING&#43;FOR&#43;SPEECH&#43;RECOGNITION" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -1097,7 +1136,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
         
       
       <li>
-        <a href="mailto:?subject=FRONT-END%20ADAPTER%3A%20ADAPTING%20FRONT-END%20INPUT%20OF%20SPEECH%20BASED%20SELF-SUPERVISED%20LEARNING%20FOR%20SPEECH%20RECOGNITION&amp;body=http%3A%2F%2Flocalhost%3A1313%2Fpublication%2Fchen2023front-end_adapter%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+        <a href="mailto:?subject=FRONT-END%20ADAPTER%3A%20ADAPTING%20FRONT-END%20INPUT%20OF%20SPEECH%20BASED%20SELF-SUPERVISED%20LEARNING%20FOR%20SPEECH%20RECOGNITION&amp;body=https%3A%2F%2Fzhishengzheng.com%2Fpublication%2Fchen2023front-end_adapter%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -1114,7 +1153,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Flocalhost%3A1313%2Fpublication%2Fchen2023front-end_adapter%2F&amp;title=FRONT-END&#43;ADAPTER%3A&#43;ADAPTING&#43;FRONT-END&#43;INPUT&#43;OF&#43;SPEECH&#43;BASED&#43;SELF-SUPERVISED&#43;LEARNING&#43;FOR&#43;SPEECH&#43;RECOGNITION" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fzhishengzheng.com%2Fpublication%2Fchen2023front-end_adapter%2F&amp;title=FRONT-END&#43;ADAPTER%3A&#43;ADAPTING&#43;FRONT-END&#43;INPUT&#43;OF&#43;SPEECH&#43;BASED&#43;SELF-SUPERVISED&#43;LEARNING&#43;FOR&#43;SPEECH&#43;RECOGNITION" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -1131,7 +1170,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
       
       
       <li>
-        <a href="whatsapp://send?text=FRONT-END&#43;ADAPTER%3A&#43;ADAPTING&#43;FRONT-END&#43;INPUT&#43;OF&#43;SPEECH&#43;BASED&#43;SELF-SUPERVISED&#43;LEARNING&#43;FOR&#43;SPEECH&#43;RECOGNITION%20http%3A%2F%2Flocalhost%3A1313%2Fpublication%2Fchen2023front-end_adapter%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+        <a href="whatsapp://send?text=FRONT-END&#43;ADAPTER%3A&#43;ADAPTING&#43;FRONT-END&#43;INPUT&#43;OF&#43;SPEECH&#43;BASED&#43;SELF-SUPERVISED&#43;LEARNING&#43;FOR&#43;SPEECH&#43;RECOGNITION%20https%3A%2F%2Fzhishengzheng.com%2Fpublication%2Fchen2023front-end_adapter%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -1148,7 +1187,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=http%3A%2F%2Flocalhost%3A1313%2Fpublication%2Fchen2023front-end_adapter%2F&amp;title=FRONT-END&#43;ADAPTER%3A&#43;ADAPTING&#43;FRONT-END&#43;INPUT&#43;OF&#43;SPEECH&#43;BASED&#43;SELF-SUPERVISED&#43;LEARNING&#43;FOR&#43;SPEECH&#43;RECOGNITION" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fzhishengzheng.com%2Fpublication%2Fchen2023front-end_adapter%2F&amp;title=FRONT-END&#43;ADAPTER%3A&#43;ADAPTING&#43;FRONT-END&#43;INPUT&#43;OF&#43;SPEECH&#43;BASED&#43;SELF-SUPERVISED&#43;LEARNING&#43;FOR&#43;SPEECH&#43;RECOGNITION" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -1206,11 +1245,11 @@ Supplementary notes can be added here, including [code, math, and images](https:
   <div class="media author-card content-widget-hr">
     
       
-      <a href="http://localhost:1313/"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hucbda40f763a8d1abc96e3d8816c351d1_1311242_270x270_fill_q75_lanczos_center.jpeg" alt="Zhisheng Zheng"></a>
+      <a href="https://zhishengzheng.com/"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hucbda40f763a8d1abc96e3d8816c351d1_1311242_270x270_fill_q75_lanczos_center.jpeg" alt="Zhisheng Zheng"></a>
     
 
     <div class="media-body">
-      <h5 class="card-title"><a href="http://localhost:1313/">Zhisheng Zheng</a></h5>
+      <h5 class="card-title"><a href="https://zhishengzheng.com/">Zhisheng Zheng</a></h5>
       <h6 class="card-subtitle">Ph.D. Student in Computer Science</h6>
       <p class="card-text">Ph.D. student at UT-Austin.</p>
       <ul class="network-icon" aria-hidden="true">
@@ -1407,7 +1446,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
   
 
 
-<script src="/js/vendor-bundle.min.js"></script>
+<script src="/js/vendor-bundle.min.b2240102cb8b24bcbe037562ce2ea60a.js"></script>
 
 
 
@@ -1488,7 +1527,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
 <script id="page-data" type="application/json">{"use_headroom":true}</script>
 
 
-  <script src="/js/wowchemy-headroom.js" type="module"></script>
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
 
 
 
@@ -1502,11 +1541,11 @@ Supplementary notes can be added here, including [code, math, and images](https:
   
 
 
-<script src="/en/js/wowchemy.min.js"></script>
+<script src="/en/js/wowchemy.min.7f5ebaff62ae468cff8bb3dd1337bb9b.js"></script>
 
 
 
-  <script src="/js/wowchemy-map.js" type="module"></script>
+  <script src="/js/wowchemy-map.a26e9d2f7238ba5b868384f1c5bc6477.js" type="module"></script>
 
 
 
@@ -1539,7 +1578,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
 </div>
 
 
-  <script src="/js/wowchemy-publication.js" type="module"></script>
+  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
 
 
 

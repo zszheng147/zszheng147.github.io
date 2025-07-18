@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Other | Zhisheng Zheng</title>
-    <link>http://localhost:1313/tag/other/</link>
-      <atom:link href="http://localhost:1313/tag/other/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://zhishengzheng.com/tag/other/</link>
+      <atom:link href="https://zhishengzheng.com/tag/other/index.xml" rel="self" type="application/rss+xml" />
     <description>Other</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Tue, 19 Sep 2023 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>http://localhost:1313/media/icon_hu977392f85b73bd77f194883392866898_93804_512x512_fill_lanczos_center_3.png</url>
+      <url>https://zhishengzheng.com/media/icon_hu977392f85b73bd77f194883392866898_93804_512x512_fill_lanczos_center_3.png</url>
       <title>Other</title>
-      <link>http://localhost:1313/tag/other/</link>
+      <link>https://zhishengzheng.com/tag/other/</link>
     </image>
     
     <item>
       <title>Leveraging Speech PTM, Text LLM, and Emotional TTS for Speech Emotion Recognition</title>
-      <link>http://localhost:1313/publication/ma2023emoaug/</link>
+      <link>https://zhishengzheng.com/publication/ma2023emoaug/</link>
       <pubDate>Tue, 19 Sep 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/publication/ma2023emoaug/</guid>
+      <guid>https://zhishengzheng.com/publication/ma2023emoaug/</guid>
       <description>&lt;!--
 
 

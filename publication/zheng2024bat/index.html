@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: March 31, 2025 --><html lang="en-us" >
+<!-- Last Published: July 17, 2025 --><html lang="en-us" >
 
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -70,7 +70,7 @@
 
   
 
-  <link rel="stylesheet" href="/css/vendor-bundle.min.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/css/vendor-bundle.min.26c458e6907dc03073573976b7f4044e.css" media="print" onload="this.media='all'">
 
   
   
@@ -214,7 +214,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/wowchemy.css" />
+  <link rel="stylesheet" href="/css/wowchemy.2e310a7bf57378865bf7939ed0ece158.css" />
 
   
   
@@ -238,6 +238,45 @@
 
 
 
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E1PBHBQRVZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'G-E1PBHBQRVZ', {});
+  gtag('set', {'cookie_flags': 'SameSite=None;Secure'});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
 
 
 
@@ -283,8 +322,8 @@
 
 
 
-<link rel="alternate" hreflang="en-us" href="http://localhost:1313/publication/zheng2024bat/" />
-<link rel="canonical" href="http://localhost:1313/publication/zheng2024bat/" />
+<link rel="alternate" hreflang="en-us" href="https://zhishengzheng.com/publication/zheng2024bat/" />
+<link rel="canonical" href="https://zhishengzheng.com/publication/zheng2024bat/" />
 
 
 
@@ -314,7 +353,7 @@
 
 
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:image" content="http://localhost:1313/publication/zheng2024bat/featured.jpg" />
+<meta property="twitter:image" content="https://zhishengzheng.com/publication/zheng2024bat/featured.jpg" />
 
 
 
@@ -322,9 +361,9 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="Zhisheng Zheng" />
-<meta property="og:url" content="http://localhost:1313/publication/zheng2024bat/" />
+<meta property="og:url" content="https://zhishengzheng.com/publication/zheng2024bat/" />
 <meta property="og:title" content="BAT: Learning to Reason about Spatial Sounds with Large Language Models | Zhisheng Zheng" />
-<meta property="og:description" content="Spatial sound reasoning is a fundamental human skill, enabling us to navigate and interpret our surroundings based on sound. In this paper we present BAT, which combines the spatial sound perception ability of a binaural acoustic scene analysis model with the natural language reasoning capabilities of a large language model (LLM) to replicate this innate ability. To address the lack of existing datasets of in-the-wild spatial sounds, we synthesized a binaural audio dataset using AudioSet and SoundSpaces 2.0. Next, we developed SpatialSoundQA, a spatial sound-based question-answering dataset, offering a range of QA tasks that train BAT in various aspects of spatial sound perception and reasoning. The acoustic front end encoder of BAT is a novel spatial audio encoder named Spatial Audio Spectrogram Transformer, or Spatial-AST, which by itself achieves strong performance across sound event detection, spatial localization, and distance estimation. By integrating Spatial-AST with LLaMA-2 7B model, BAT transcends standard Sound Event Localization and Detection (SELD) tasks, enabling the model to reason about the relationships between the sounds in its environment. Our experiments demonstrate BAT&#39;s superior performance on both spatial sound perception and reasoning, showcasing the immense potential of LLMs in navigating and interpreting complex spatial audio environments." /><meta property="og:image" content="http://localhost:1313/publication/zheng2024bat/featured.jpg" /><meta property="og:locale" content="en-us" />
+<meta property="og:description" content="Spatial sound reasoning is a fundamental human skill, enabling us to navigate and interpret our surroundings based on sound. In this paper we present BAT, which combines the spatial sound perception ability of a binaural acoustic scene analysis model with the natural language reasoning capabilities of a large language model (LLM) to replicate this innate ability. To address the lack of existing datasets of in-the-wild spatial sounds, we synthesized a binaural audio dataset using AudioSet and SoundSpaces 2.0. Next, we developed SpatialSoundQA, a spatial sound-based question-answering dataset, offering a range of QA tasks that train BAT in various aspects of spatial sound perception and reasoning. The acoustic front end encoder of BAT is a novel spatial audio encoder named Spatial Audio Spectrogram Transformer, or Spatial-AST, which by itself achieves strong performance across sound event detection, spatial localization, and distance estimation. By integrating Spatial-AST with LLaMA-2 7B model, BAT transcends standard Sound Event Localization and Detection (SELD) tasks, enabling the model to reason about the relationships between the sounds in its environment. Our experiments demonstrate BAT&#39;s superior performance on both spatial sound perception and reasoning, showcasing the immense potential of LLMs in navigating and interpreting complex spatial audio environments." /><meta property="og:image" content="https://zhishengzheng.com/publication/zheng2024bat/featured.jpg" /><meta property="og:locale" content="en-us" />
 
   
     <meta
@@ -357,12 +396,12 @@
   "@type": "Article",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://localhost:1313/publication/zheng2024bat/"
+    "@id": "https://zhishengzheng.com/publication/zheng2024bat/"
   },
   "headline": "BAT: Learning to Reason about Spatial Sounds with Large Language Models",
   
   "image": [
-    "http://localhost:1313/publication/zheng2024bat/featured.jpg"
+    "https://zhishengzheng.com/publication/zheng2024bat/featured.jpg"
   ],
   
   "datePublished": "2024-02-05T00:00:00Z",
@@ -378,7 +417,7 @@
     "name": "Zhisheng Zheng",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://localhost:1313/media/icon_hu977392f85b73bd77f194883392866898_93804_192x192_fill_lanczos_center_3.png"
+      "url": "https://zhishengzheng.com/media/icon_hu977392f85b73bd77f194883392866898_93804_192x192_fill_lanczos_center_3.png"
     }
   },
   "description": "Spatial sound reasoning is a fundamental human skill, enabling us to navigate and interpret our surroundings based on sound. In this paper we present BAT, which combines the spatial sound perception ability of a binaural acoustic scene analysis model with the natural language reasoning capabilities of a large language model (LLM) to replicate this innate ability. To address the lack of existing datasets of in-the-wild spatial sounds, we synthesized a binaural audio dataset using AudioSet and SoundSpaces 2.0. Next, we developed SpatialSoundQA, a spatial sound-based question-answering dataset, offering a range of QA tasks that train BAT in various aspects of spatial sound perception and reasoning. The acoustic front end encoder of BAT is a novel spatial audio encoder named Spatial Audio Spectrogram Transformer, or Spatial-AST, which by itself achieves strong performance across sound event detection, spatial localization, and distance estimation. By integrating Spatial-AST with LLaMA-2 7B model, BAT transcends standard Sound Event Localization and Detection (SELD) tasks, enabling the model to reason about the relationships between the sounds in its environment. Our experiments demonstrate BAT's superior performance on both spatial sound perception and reasoning, showcasing the immense potential of LLMs in navigating and interpreting complex spatial audio environments."
@@ -434,7 +473,7 @@
   
   
   
-  <script src="/js/wowchemy-init.min.js"></script>
+  <script src="/js/wowchemy-init.min.9e4214442a7711d35691acd58f6f6361.js"></script>
 
   
 
@@ -1031,7 +1070,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A1313%2Fpublication%2Fzheng2024bat%2F&amp;text=BAT%3A&#43;Learning&#43;to&#43;Reason&#43;about&#43;Spatial&#43;Sounds&#43;with&#43;Large&#43;Language&#43;Models" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fzhishengzheng.com%2Fpublication%2Fzheng2024bat%2F&amp;text=BAT%3A&#43;Learning&#43;to&#43;Reason&#43;about&#43;Spatial&#43;Sounds&#43;with&#43;Large&#43;Language&#43;Models" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -1048,7 +1087,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Flocalhost%3A1313%2Fpublication%2Fzheng2024bat%2F&amp;t=BAT%3A&#43;Learning&#43;to&#43;Reason&#43;about&#43;Spatial&#43;Sounds&#43;with&#43;Large&#43;Language&#43;Models" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fzhishengzheng.com%2Fpublication%2Fzheng2024bat%2F&amp;t=BAT%3A&#43;Learning&#43;to&#43;Reason&#43;about&#43;Spatial&#43;Sounds&#43;with&#43;Large&#43;Language&#43;Models" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -1067,7 +1106,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
         
       
       <li>
-        <a href="mailto:?subject=BAT%3A%20Learning%20to%20Reason%20about%20Spatial%20Sounds%20with%20Large%20Language%20Models&amp;body=http%3A%2F%2Flocalhost%3A1313%2Fpublication%2Fzheng2024bat%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+        <a href="mailto:?subject=BAT%3A%20Learning%20to%20Reason%20about%20Spatial%20Sounds%20with%20Large%20Language%20Models&amp;body=https%3A%2F%2Fzhishengzheng.com%2Fpublication%2Fzheng2024bat%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -1084,7 +1123,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Flocalhost%3A1313%2Fpublication%2Fzheng2024bat%2F&amp;title=BAT%3A&#43;Learning&#43;to&#43;Reason&#43;about&#43;Spatial&#43;Sounds&#43;with&#43;Large&#43;Language&#43;Models" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fzhishengzheng.com%2Fpublication%2Fzheng2024bat%2F&amp;title=BAT%3A&#43;Learning&#43;to&#43;Reason&#43;about&#43;Spatial&#43;Sounds&#43;with&#43;Large&#43;Language&#43;Models" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -1101,7 +1140,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
       
       
       <li>
-        <a href="whatsapp://send?text=BAT%3A&#43;Learning&#43;to&#43;Reason&#43;about&#43;Spatial&#43;Sounds&#43;with&#43;Large&#43;Language&#43;Models%20http%3A%2F%2Flocalhost%3A1313%2Fpublication%2Fzheng2024bat%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+        <a href="whatsapp://send?text=BAT%3A&#43;Learning&#43;to&#43;Reason&#43;about&#43;Spatial&#43;Sounds&#43;with&#43;Large&#43;Language&#43;Models%20https%3A%2F%2Fzhishengzheng.com%2Fpublication%2Fzheng2024bat%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -1118,7 +1157,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=http%3A%2F%2Flocalhost%3A1313%2Fpublication%2Fzheng2024bat%2F&amp;title=BAT%3A&#43;Learning&#43;to&#43;Reason&#43;about&#43;Spatial&#43;Sounds&#43;with&#43;Large&#43;Language&#43;Models" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fzhishengzheng.com%2Fpublication%2Fzheng2024bat%2F&amp;title=BAT%3A&#43;Learning&#43;to&#43;Reason&#43;about&#43;Spatial&#43;Sounds&#43;with&#43;Large&#43;Language&#43;Models" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -1152,11 +1191,11 @@ Supplementary notes can be added here, including [code, math, and images](https:
   <div class="media author-card content-widget-hr">
     
       
-      <a href="http://localhost:1313/"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hucbda40f763a8d1abc96e3d8816c351d1_1311242_270x270_fill_q75_lanczos_center.jpeg" alt="Zhisheng Zheng"></a>
+      <a href="https://zhishengzheng.com/"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hucbda40f763a8d1abc96e3d8816c351d1_1311242_270x270_fill_q75_lanczos_center.jpeg" alt="Zhisheng Zheng"></a>
     
 
     <div class="media-body">
-      <h5 class="card-title"><a href="http://localhost:1313/">Zhisheng Zheng</a></h5>
+      <h5 class="card-title"><a href="https://zhishengzheng.com/">Zhisheng Zheng</a></h5>
       <h6 class="card-subtitle">Ph.D. Student in Computer Science</h6>
       <p class="card-text">Ph.D. student at UT-Austin.</p>
       <ul class="network-icon" aria-hidden="true">
@@ -1383,7 +1422,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
   
 
 
-<script src="/js/vendor-bundle.min.js"></script>
+<script src="/js/vendor-bundle.min.b2240102cb8b24bcbe037562ce2ea60a.js"></script>
 
 
 
@@ -1464,7 +1503,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
 <script id="page-data" type="application/json">{"use_headroom":true}</script>
 
 
-  <script src="/js/wowchemy-headroom.js" type="module"></script>
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
 
 
 
@@ -1478,11 +1517,11 @@ Supplementary notes can be added here, including [code, math, and images](https:
   
 
 
-<script src="/en/js/wowchemy.min.js"></script>
+<script src="/en/js/wowchemy.min.7f5ebaff62ae468cff8bb3dd1337bb9b.js"></script>
 
 
 
-  <script src="/js/wowchemy-map.js" type="module"></script>
+  <script src="/js/wowchemy-map.a26e9d2f7238ba5b868384f1c5bc6477.js" type="module"></script>
 
 
 
@@ -1515,7 +1554,7 @@ Supplementary notes can be added here, including [code, math, and images](https:
 </div>
 
 
-  <script src="/js/wowchemy-publication.js" type="module"></script>
+  <script src="/js/wowchemy-publication.9c0e895144aef5a693008b5c5d450147.js" type="module"></script>
 
 
 
