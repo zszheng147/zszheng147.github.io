@@ -143,6 +143,34 @@
         .details-cell audio {
             width: 160px; /* Increased width */
         }
+
+		/* Author and link styles */
+		.author-section a:hover {
+			color: var(--primary-color) !important;
+			text-decoration: underline;
+		}
+
+		.publication-link {
+			display: inline-flex;
+			align-items: center;
+			padding: 0.5rem 1rem;
+			background-color: #333;
+			color: white !important;
+			text-decoration: none;
+			border-radius: 0.5rem;
+			transition: all 0.3s ease;
+			margin: 0.25rem;
+		}
+
+		.publication-link:hover {
+			background-color: var(--primary-color);
+			transform: translateY(-2px);
+			box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+		}
+
+		.publication-link span {
+			margin-right: 0.5rem;
+		}
 	</style>
 </head>
 
@@ -159,14 +187,49 @@
 	<div class="text-center">
 	<h2>VoiceCraft-X</h2>
       <h3>Unifying Multilingual, Voice-Cloning Speech Synthesis and Speech Editing</h3>
-      <!-- [<a href="https://arxiv.org/abs/2406.02430">Paper</a>] -->
+      
+      <!-- Authors -->
+      <div class="author-section" style="font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 1rem;">
+        <span style="margin: 0 0.5rem;">
+          <a href="https://zhishengzheng.com/" style="text-decoration: none; color: #333;">Zhisheng Zheng</a><sup>1,2</sup>,</span>
+        <span style="margin: 0 0.5rem;">
+            <a href="https://jasonppy.github.io/" style="text-decoration: none; color: #333;">Puyuan Peng</a><sup>1</sup>,</span>
+        <span style="margin: 0 0.5rem;">
+        <a href="https://ajd12342.github.io/" style="text-decoration: none; color: #333;">Anuj Diwan</a><sup>1</sup>,</span><br>
+        <span style="margin: 0 0.5rem;">
+        <a href="#" style="text-decoration: none; color: #333;">Cong Phuoc Huynh</a><sup>2</sup>,</span>
+        <span style="margin: 0 0.5rem;">
+        <a href="#" style="text-decoration: none; color: #333;">Xiaohang Sun</a><sup>2</sup>,</span>
+        <span style="margin: 0 0.5rem;">
+        <a href="#" style="text-decoration: none; color: #333;">Zhu Liu</a><sup>2</sup>,</span>
+        <span style="margin: 0 0.5rem;">
+        <a href="#" style="text-decoration: none; color: #333;">Vimal Bhat</a><sup>2</sup>,</span>
+        <span style="margin: 0 0.5rem;">
+        <a href="https://www.cs.utexas.edu/~harwath/" style="text-decoration: none; color: #333;">David Harwath</a><sup>1</sup></span>
+      </div>
 
-        <!-- <p class="fst-italic mb-0">
-        	<br>
-          Seed Team
-      <p></p>
-        </p>
-        <p><b>ByteDance</b></p> -->
+      <!-- Affiliations -->
+      <div style="font-size: 1rem; margin-bottom: 1rem; color: #666;">
+        <span style="margin: 0 0.5rem;"><sup>1</sup>University of Texas at Austin</span>
+        <span style="margin: 0 0.5rem;"><sup>2</sup>Amazon</span>
+      </div>
+
+      <!-- Conference/Venue -->
+      <div style="font-size: 1rem; margin-bottom: 1.5rem; color: #666;">
+        <span>EMNLP 2025 main conference</span>
+      </div>
+
+      <!-- Links -->
+      <div style="display: flex; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
+        <a href="https://arxiv.org/pdf/2511.12347" class="publication-link">
+          <span>📄</span>
+          <span>Paper</span>
+        </a>
+        <a href="https://github.com/zszheng147/VoiceCraft-X" class="publication-link">
+          <span>💻</span>
+          <span>Code</span>
+        </a>
+      </div>
 	</div>
 	<p><b>Abstract.</b> We introduce VoiceCraft-X, an autoregressive neural codec language model which unifies multilingual speech editing and zero-shot Text-to-Speech (TTS) synthesis across 11 languages: English, Mandarin, Korean, Japanese, Spanish, French, German, Dutch, Italian, Portuguese, and Polish. VoiceCraft-X utilizes the Qwen3 large language model for phoneme-free cross-lingual text processing and a novel token reordering mechanism with time-aligned text and speech tokens to handle both tasks as a single sequence generation problem. The model generates high-quality, natural-sounding speech, seamlessly creating new audio or editing existing recordings within one framework. VoiceCraft-X shows robust performance in diverse linguistic settings, even with limited per-language data, underscoring the power of unified autoregressive approaches for advancing complex, real-world multilingual speech applications.
 	</p>
@@ -1725,6 +1788,17 @@
 		<p style="text-align: center; max-width: 750px; margin: auto;" >
 			<b>Figure 1.</b> The training process for the VoiceCraft-X model, which takes text and a speaker embedding as input and is trained to predict sequences of speech tokens. The labels CB1-CB4 represent codec tokens from different codebooks.
 		</p>
+</div>
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded" id="BibTeX" style="background-color: #f8f9fa;">
+	<h2 style="text-align: center; margin-bottom: 2rem; color: var(--text-color);">BibTeX</h2>
+	<pre style="background-color: #ffffff; padding: 1.5rem; border-radius: 0.5rem; border: 1px solid #e0e0e0; overflow-x: auto;"><code>@inproceedings{zheng2025voicecraft,
+        title={VoiceCraft-X: Unifying Multilingual, Voice-Cloning Speech Synthesis and Speech Editing},
+        author={Zheng, Zhisheng and Peng, Puyuan and Diwan, Anuj and Huynh, Cong Phuoc and Sun, Xiaohang and Liu, Zhu and Bhat, Vimal and Harwath, David},
+        booktitle={Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing},
+        pages={2737--2756},
+        year={2025}
+      }</code></pre>
 </div>
 
 </article>
