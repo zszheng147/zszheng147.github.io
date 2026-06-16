@@ -10,8 +10,32 @@
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://zhishengzheng.com/publication-type/3/</loc>
-    <lastmod>2024-02-02T00:00:00+00:00</lastmod>
+    <loc>https://zhishengzheng.com/publication-type/1/</loc>
+    <lastmod>2026-01-01T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/publication/zheng2026ctrlspeech/</loc>
+    <lastmod>2026-01-01T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/publication_types/</loc>
+    <lastmod>2026-01-01T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/publication/</loc>
+    <lastmod>2026-01-01T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/tag/speech-synthesis/</loc>
+    <lastmod>2026-01-01T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/tags/</loc>
+    <lastmod>2026-01-01T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/tag/tts/</loc>
+    <lastmod>2026-01-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://zhishengzheng.com/publication/zheng2024bat/</loc>
@@ -22,16 +46,8 @@
     <lastmod>2024-02-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://zhishengzheng.com/publication_types/</loc>
-    <lastmod>2024-02-02T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://zhishengzheng.com/publication/</loc>
-    <lastmod>2024-02-02T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://zhishengzheng.com/tags/</loc>
-    <lastmod>2024-02-02T00:00:00+00:00</lastmod>
+    <loc>https://zhishengzheng.com/publication-type/3/</loc>
+    <lastmod>2023-12-23T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://zhishengzheng.com/publication/ma2023emotion2vec/</loc>
@@ -60,10 +76,6 @@
   </url><url>
     <loc>https://zhishengzheng.com/tag/other/</loc>
     <lastmod>2023-09-19T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://zhishengzheng.com/publication-type/1/</loc>
-    <lastmod>2023-07-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://zhishengzheng.com/tag/asr/</loc>
