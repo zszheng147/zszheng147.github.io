@@ -9,23 +9,28 @@
   <style>
     :root {
       color-scheme: light;
-      --page: #f4f6f5;
-      --paper: #ffffff;
-      --ink: #273d4b;
-      --text: #2d3338;
-      --muted: #60707b;
-      --line: #dfe6e2;
-      --teal: #2c8f8a;
-      --green: #70a64d;
-      --gold: #e4a548;
-      --coral: #c96f52;
-      --lavender: #7f77b8;
-      --soft-teal: #e7f4f2;
-      --soft-green: #edf5e7;
-      --soft-gold: #fff4dd;
-      --soft-coral: #faece7;
-      --shadow: 0 22px 50px rgba(34, 44, 53, 0.12);
-      --radius: 4px;
+      --bg: #f0eee6;
+      --surface: #faf9f4;
+      --surface-2: #f5f3ea;
+      --ink: #181712;
+      --ink-soft: #33322c;
+      --muted: #6d6c63;
+      --faint: #908f84;
+      --line: #ddd9cb;
+      --line-soft: #e7e3d6;
+      --clay: #cc785c;
+      --clay-deep: #b0573b;
+      --clay-tint: #f1e2d9;
+      --slate: #5f7896;
+      --slate-tint: #e2e8ef;
+      --sage: #7c8a62;
+      --sage-tint: #e7ebdb;
+      --brown: #8a6b54;
+      --brown-tint: #ece2d8;
+      --radius: 14px;
+      --radius-sm: 9px;
+      --serif: "Tiempos Headline", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+      --sans: "Styrene B", "Styrene A", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     }
 
     * {
@@ -38,135 +43,131 @@
 
     body {
       margin: 0;
-      background: var(--page);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 16px;
-      line-height: 1.55;
+      background: var(--bg);
+      color: var(--ink-soft);
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.62;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     a {
-      color: #0969da;
-      text-decoration: underline;
-      text-underline-offset: 2px;
+      color: var(--clay-deep);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(176, 87, 59, 0.32);
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: var(--clay);
+      border-color: var(--clay);
     }
 
     .page {
-      width: min(92vw, 1180px);
+      width: min(90vw, 1080px);
       margin: 0 auto;
-      padding: 32px 0 64px;
+      padding: 0 0 96px;
     }
 
-    .panel {
-      background: var(--paper);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      margin: 0 0 44px;
-      padding: clamp(28px, 4vw, 54px);
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding-top: clamp(34px, 5vw, 56px);
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(90deg, rgba(44, 143, 138, 0.08) 1px, transparent 1px),
-        linear-gradient(0deg, rgba(112, 166, 77, 0.06) 1px, transparent 1px);
-      background-size: 52px 52px;
-      mask-image: linear-gradient(180deg, #000 0%, transparent 72%);
-      pointer-events: none;
-    }
-
-    .title-block {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      max-width: 980px;
-      margin: 0 auto 28px;
+    .section {
+      padding: 60px 0;
+      border-top: 1px solid var(--line);
     }
 
     h1,
     h2,
     h3 {
       color: var(--ink);
-      line-height: 1.2;
-      letter-spacing: 0;
+      font-family: var(--serif);
+      font-weight: 500;
+      line-height: 1.12;
+      letter-spacing: -0.012em;
+    }
+
+    .eyebrow {
+      display: block;
+      margin: 0 0 18px;
+      color: var(--clay-deep);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 0 0 32px;
+      font-size: clamp(28px, 4vw, 40px);
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      padding-top: clamp(56px, 8vw, 96px);
+      text-align: center;
+    }
+
+    .title-block {
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    .hero-venue {
+      display: inline-block;
+      margin: 0 0 26px;
+      padding: 6px 15px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
 
     .paper-title {
-      display: grid;
-      gap: 12px;
-      margin: 0 0 24px;
+      margin: 0;
     }
 
     .title-name {
-      display: inline-flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.12em;
-      position: relative;
-      width: max-content;
-      max-width: 100%;
-      margin: 0 auto;
-      color: #1f3947;
-      font-size: clamp(48px, 7vw, 82px);
-      font-weight: 800;
-      line-height: 0.95;
-    }
-
-    .title-name::after {
-      content: "";
-      position: absolute;
-      right: 0;
-      bottom: -8px;
-      left: 0;
-      height: 6px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--teal), var(--green), var(--gold));
-      opacity: 0.9;
+      display: block;
+      font-family: var(--serif);
+      font-size: clamp(54px, 9vw, 104px);
+      font-weight: 500;
+      line-height: 0.98;
+      letter-spacing: -0.025em;
+      color: var(--ink);
     }
 
     .title-ctrl {
-      display: inline-block;
-      padding: 0.02em 0.14em 0.08em;
-      border: 2px solid #1f3947;
-      border-radius: 8px;
-      background: #26333b;
-      color: #ffffff;
-      box-shadow: 0 7px 0 #d4ddd8;
+      color: var(--clay);
     }
 
     .title-speech {
-      display: inline-block;
-      color: #1f3947;
+      color: var(--ink);
     }
 
     .title-subline {
       display: block;
-      max-width: 860px;
-      margin: 12px auto 0;
-      color: #2b4352;
-      font-size: clamp(24px, 3.5vw, 39px);
-      font-weight: 700;
-      line-height: 1.18;
+      max-width: 760px;
+      margin: 22px auto 0;
+      font-family: var(--serif);
+      font-size: clamp(22px, 3.2vw, 33px);
+      font-weight: 500;
+      line-height: 1.22;
+      letter-spacing: -0.01em;
+      color: var(--ink-soft);
     }
 
     .prosody-ribbon {
-      max-width: 820px;
-      margin: 18px auto 26px;
-      padding: 14px 18px 12px;
-      border: 1px solid #d9e4de;
-      border-radius: 8px;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(247, 250, 248, 0.92)),
-        repeating-linear-gradient(90deg, transparent 0 44px, rgba(39, 61, 75, 0.06) 44px 45px);
-      box-shadow: 0 14px 34px rgba(39, 61, 75, 0.09);
+      max-width: 760px;
+      margin: 40px auto 36px;
+      padding: 20px 24px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
     }
 
     .prosody-ribbon svg {
@@ -176,40 +177,40 @@
     }
 
     .phone-token {
-      fill: #eef4f1;
-      stroke: #cfdad4;
+      fill: #efece2;
+      stroke: var(--line);
       stroke-width: 1.5;
     }
 
     .phone-token.emphasis {
-      fill: #fff4dd;
-      stroke: #e4a548;
+      fill: var(--clay-tint);
+      stroke: var(--clay);
     }
 
     .phone-token.local {
-      fill: #e7f4f2;
-      stroke: #2c8f8a;
+      fill: var(--slate-tint);
+      stroke: var(--slate);
     }
 
     .prosody-wave {
       fill: none;
-      stroke: #2c8f8a;
+      stroke: var(--clay);
       stroke-linecap: round;
       stroke-linejoin: round;
-      stroke-width: 5;
+      stroke-width: 4.5;
     }
 
     .prosody-wave-shadow {
       fill: none;
-      opacity: 0.36;
-      stroke: #e4a548;
+      opacity: 0.3;
+      stroke: var(--slate);
       stroke-linecap: round;
       stroke-linejoin: round;
       stroke-width: 8;
     }
 
     .control-stem {
-      stroke: #8a9a9f;
+      stroke: #b6b3a6;
       stroke-dasharray: 4 5;
       stroke-width: 1.6;
     }
@@ -221,24 +222,25 @@
     }
 
     .control-point.pitch {
-      fill: #2c8f8a;
+      fill: var(--slate);
     }
 
     .control-point.loudness {
       animation-delay: 0.45s;
-      fill: #e4a548;
+      fill: var(--clay);
     }
 
     .control-point.duration {
       animation-delay: 0.9s;
-      fill: #70a64d;
+      fill: var(--sage);
     }
 
     .ribbon-label {
-      fill: #52636d;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0;
+      fill: var(--faint);
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
     }
 
     @keyframes pointLift {
@@ -263,148 +265,175 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 4px 10px;
+      gap: 4px 12px;
       margin: 0 auto;
-      color: var(--text);
-      font-size: 17px;
+      max-width: 880px;
     }
 
     .authors {
-      max-width: 930px;
-      margin-top: 16px;
+      margin-top: 8px;
+      color: var(--ink-soft);
+      font-size: 17px;
+    }
+
+    .authors a {
+      border-bottom-color: transparent;
+    }
+
+    .authors a:hover {
+      border-bottom-color: var(--clay);
     }
 
     .affiliations {
       margin-top: 12px;
       color: var(--muted);
-      font-size: 16px;
-    }
-
-    .venue {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 34px;
-      margin-top: 16px;
-      padding: 6px 14px;
-      border: 1px solid #cfdad4;
-      border-radius: 999px;
-      background: #f7faf8;
-      color: #26333b;
       font-size: 15px;
-      font-weight: 700;
-    }
-
-    .author {
-      white-space: normal;
     }
 
     .links {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 10px;
-      margin: 24px 0 0;
+      gap: 12px;
+      margin: 34px 0 0;
     }
 
     .link-button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 40px;
-      padding: 9px 16px;
-      border-radius: 999px;
-      background: #26333b;
+      min-height: 46px;
+      padding: 11px 24px;
+      border: 1px solid var(--clay);
+      border-radius: var(--radius-sm);
+      background: var(--clay);
       color: #fff;
-      font-weight: 700;
+      font-size: 15px;
+      font-weight: 600;
       text-decoration: none;
-      box-shadow: 0 8px 18px rgba(38, 51, 59, 0.17);
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
     }
 
     .link-button:hover,
     .link-button:focus-visible {
-      background: var(--teal);
+      background: var(--clay-deep);
+      border-color: var(--clay-deep);
       color: #fff;
     }
 
+    .link-button.secondary {
+      background: transparent;
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+
+    .link-button.secondary:hover,
+    .link-button.secondary:focus-visible {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--bg);
+    }
+
+    /* ---------- Prose ---------- */
     .abstract {
-      max-width: 1060px;
-      margin: 26px auto 0;
-      text-align: left;
+      max-width: 760px;
+    }
+
+    .abstract .lead {
+      margin: 0;
+      font-size: 19px;
+      line-height: 1.65;
+      color: var(--ink-soft);
     }
 
     .contents {
-      max-width: 1060px;
-      margin: 22px auto 0;
-    }
-
-    .contents strong,
-    .abstract strong {
-      color: #252c31;
+      margin-top: 30px;
     }
 
     .contents ul {
-      margin: 10px 0 0 22px;
+      list-style: none;
+      margin: 14px 0 0;
       padding: 0;
+      display: grid;
+      gap: 0;
+      max-width: 540px;
     }
 
-    .contents li + li {
-      margin-top: 8px;
+    .contents li {
+      border-top: 1px solid var(--line-soft);
     }
 
-    .section-title {
-      margin: 0 0 28px;
-      text-align: center;
-      font-size: clamp(28px, 4vw, 38px);
-      font-weight: 700;
+    .contents li:last-child {
+      border-bottom: 1px solid var(--line-soft);
     }
 
+    .contents li a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 4px;
+      color: var(--ink);
+      border-bottom: 0;
+      font-weight: 500;
+    }
+
+    .contents li a::after {
+      content: "\2192";
+      color: var(--clay);
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .contents li a:hover {
+      color: var(--clay-deep);
+    }
+
+    .contents li a:hover::after {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ---------- Figure ---------- */
     .figure-wrap {
       overflow-x: auto;
-      padding: 0;
+      padding: clamp(18px, 3vw, 36px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
     }
 
     .overview-image {
       display: block;
-      width: min(100%, 980px);
+      width: min(100%, 940px);
       margin: 0 auto;
       border: 0;
-      border-radius: 0;
       background: transparent;
     }
 
-    .figure-link-wrap {
-      margin-top: 18px;
-      text-align: center;
-    }
-
-    .figure-link {
-      color: #0969da;
-      font-weight: 700;
-    }
-
     .caption {
-      max-width: 1020px;
-      margin: 24px auto 0;
-      text-align: center;
-      color: var(--text);
-      font-size: 16px;
+      max-width: 820px;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
     }
 
     .caption strong {
-      color: #252c31;
+      color: var(--ink);
+      font-weight: 600;
     }
 
+    /* ---------- Control design ---------- */
     .control-path {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 30px minmax(0, 1fr) 30px minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr) 28px minmax(0, 1fr);
       align-items: center;
-      gap: 8px;
-      max-width: 980px;
-      margin: 0 auto 16px;
-      color: #405461;
+      gap: 10px;
+      margin: 0 0 28px;
+      color: var(--ink);
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 600;
       text-align: center;
     }
 
@@ -412,47 +441,46 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 38px;
-      padding: 8px 12px;
-      border: 1px solid #d7e2dd;
+      min-height: 42px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
       border-radius: 999px;
-      background: #f7faf8;
+      background: var(--surface);
     }
 
     .path-arrow {
-      color: var(--teal);
-      font-size: 22px;
+      color: var(--clay);
+      font-size: 20px;
       line-height: 1;
     }
 
     .control-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-      margin-top: 0;
+      gap: 20px;
     }
 
     .control-card {
       display: grid;
-      gap: 13px;
+      gap: 14px;
       align-content: start;
       border: 1px solid var(--line);
+      border-top: 3px solid var(--clay);
       border-radius: var(--radius);
-      padding: 20px;
-      background: #fbfcfc;
-      box-shadow: inset 0 4px 0 var(--teal);
+      padding: 24px;
+      background: var(--surface);
     }
 
     .control-card.stage-coarse {
-      box-shadow: inset 0 4px 0 var(--coral);
+      border-top-color: var(--clay);
     }
 
     .control-card.stage-fine {
-      box-shadow: inset 0 4px 0 var(--teal);
+      border-top-color: var(--slate);
     }
 
     .control-card.stage-refine {
-      box-shadow: inset 0 4px 0 var(--green);
+      border-top-color: var(--sage);
     }
 
     .stage-header {
@@ -466,12 +494,14 @@
       display: inline-flex;
       align-items: center;
       min-height: 26px;
-      padding: 4px 9px;
+      padding: 4px 11px;
       border-radius: 999px;
-      background: #eef4f1;
-      color: #405461;
+      background: var(--surface-2);
+      border: 1px solid var(--line-soft);
+      color: var(--muted);
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 600;
+      letter-spacing: 0.03em;
     }
 
     .stage-icon {
@@ -479,12 +509,20 @@
       align-items: center;
       justify-content: center;
       flex: 0 0 auto;
-      width: 38px;
-      height: 38px;
-      border: 1px solid #d7e2dd;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line);
       border-radius: 50%;
-      background: #ffffff;
-      color: var(--teal);
+      background: var(--bg);
+      color: var(--clay);
+    }
+
+    .stage-fine .stage-icon {
+      color: var(--slate);
+    }
+
+    .stage-refine .stage-icon {
+      color: var(--sage);
     }
 
     .stage-icon svg {
@@ -496,149 +534,154 @@
     .control-card h3 {
       margin: 0;
       font-size: 21px;
+      letter-spacing: -0.01em;
     }
 
     .control-card p {
       margin: 0;
       color: var(--muted);
+      font-size: 15.5px;
     }
 
     .module-visual {
       display: block;
       width: 100%;
       height: 96px;
-      border: 1px solid #dfe6e2;
-      border-radius: var(--radius);
-      background: #ffffff;
+      border: 1px solid var(--line-soft);
+      border-radius: var(--radius-sm);
+      background: var(--bg);
     }
 
     .visual-soft-coral {
-      fill: var(--soft-coral);
-      stroke: #e5c1b6;
+      fill: var(--clay-tint);
+      stroke: #dcb3a3;
     }
 
     .visual-soft-teal {
-      fill: var(--soft-teal);
-      stroke: #acd8d4;
+      fill: var(--slate-tint);
+      stroke: #b6c4d4;
     }
 
     .visual-soft-green {
-      fill: var(--soft-green);
-      stroke: #cfe3c3;
+      fill: var(--sage-tint);
+      stroke: #c1ccab;
     }
 
     .visual-highlight {
-      fill: var(--soft-gold);
-      stroke: var(--gold);
+      fill: var(--clay-tint);
+      stroke: var(--clay);
     }
 
     .visual-line {
       fill: none;
-      stroke: #c9d5cf;
+      stroke: #cac6b8;
       stroke-linecap: round;
       stroke-width: 1.5;
     }
 
     .visual-wave {
       fill: none;
-      stroke: var(--teal);
+      stroke: var(--slate);
       stroke-linecap: round;
       stroke-linejoin: round;
       stroke-width: 3;
     }
 
     .visual-wave.gold {
-      stroke: var(--gold);
+      stroke: var(--clay);
     }
 
     .visual-wave.green {
-      stroke: var(--green);
+      stroke: var(--sage);
     }
 
     .visual-arrow {
       fill: none;
-      stroke: var(--teal);
+      stroke: var(--clay);
       stroke-linecap: round;
       stroke-linejoin: round;
       stroke-width: 2.5;
     }
 
     .visual-fill-teal {
-      fill: var(--teal);
+      fill: var(--slate);
     }
 
     .visual-fill-green {
-      fill: var(--green);
+      fill: var(--sage);
     }
 
     .visual-fill-gold {
-      fill: var(--gold);
+      fill: var(--clay);
     }
 
     .visual-text {
-      fill: #52636d;
+      fill: var(--faint);
+      font-family: var(--sans);
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 600;
     }
 
     .chips {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 14px;
+      margin-top: 4px;
     }
 
     .chip {
       display: inline-flex;
       align-items: center;
       min-height: 28px;
-      padding: 4px 10px;
+      padding: 4px 11px;
       border-radius: 999px;
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 600;
     }
 
     .chip.pitch {
-      background: var(--soft-teal);
-      color: #1c6f6a;
+      background: var(--slate-tint);
+      color: #44607d;
     }
 
     .chip.loudness {
-      background: var(--soft-gold);
-      color: #946612;
+      background: var(--clay-tint);
+      color: var(--clay-deep);
     }
 
     .chip.duration {
-      background: var(--soft-green);
-      color: #4f7b34;
+      background: var(--sage-tint);
+      color: #5c6a44;
     }
 
     .chip.speaker {
-      background: var(--soft-coral);
-      color: #9b4d38;
+      background: var(--brown-tint);
+      color: var(--brown);
     }
 
     .chip.embedding,
     .chip.alignment {
-      background: #eef4f1;
-      color: #405461;
+      background: var(--surface-2);
+      color: var(--muted);
+      border: 1px solid var(--line-soft);
     }
 
     .chip.timbre {
-      background: #eae8f5;
-      color: #5f5793;
+      background: var(--brown-tint);
+      color: var(--brown);
     }
 
     .chip.refinement {
-      background: var(--soft-teal);
-      color: #1c6f6a;
+      background: var(--slate-tint);
+      color: #44607d;
     }
 
+    /* ---------- Samples table ---------- */
     .sample-table-wrap {
       overflow-x: auto;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: #fff;
+      background: var(--surface);
     }
 
     table {
@@ -649,18 +692,19 @@
 
     th,
     td {
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--line);
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line-soft);
       text-align: left;
       vertical-align: top;
     }
 
     th {
-      background: #f7faf8;
-      color: var(--ink);
-      font-size: 14px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.07em;
     }
 
     tr:last-child td {
@@ -670,93 +714,146 @@
     .sample-text {
       max-width: 360px;
       font-size: 15px;
+      color: var(--ink-soft);
     }
 
     .audio-slot {
       display: grid;
-      gap: 6px;
+      gap: 7px;
       min-width: 150px;
       color: var(--muted);
       font-size: 13px;
     }
 
     audio {
-      width: 180px;
+      width: 184px;
       max-width: 100%;
     }
 
-    .metric-row {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 10px;
-    }
-
-    .metric {
+    /* ---------- BibTeX ---------- */
+    .bibtex-card {
+      overflow: hidden;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 18px;
-      background: #fbfcfc;
-      text-align: center;
+      background: #211f1a;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
     }
 
-    .metric-value {
-      display: block;
-      color: var(--ink);
-      font-size: 26px;
-      font-weight: 700;
-      line-height: 1.15;
+    .bibtex-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 14px 11px 18px;
+      background: #2a2721;
+      border-bottom: 1px solid #38342c;
     }
 
-    .metric-label {
-      display: block;
-      margin-top: 7px;
-      color: var(--muted);
-      font-size: 14px;
+    .bibtex-file {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: #b8b2a2;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+    }
+
+    .bibtex-file svg {
+      width: 15px;
+      height: 15px;
+      color: var(--clay);
+    }
+
+    .bibtex-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 13px;
+      border: 1px solid #4a463b;
+      border-radius: 8px;
+      background: transparent;
+      color: #ddd7c8;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .bibtex-copy svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .bibtex-copy:hover,
+    .bibtex-copy:focus-visible {
+      background: #39352c;
+      border-color: #5b5648;
+      color: #fff;
+      outline: none;
+    }
+
+    .bibtex-copy.copied {
+      color: #c6d4ab;
+      border-color: #5c6b46;
     }
 
     .bibtex {
       overflow-x: auto;
       margin: 0;
-      padding: 18px;
-      border-radius: var(--radius);
-      background: #26333b;
-      color: #f5f8f7;
+      padding: 20px 22px;
+      background: #211f1a;
+      color: #e6e1d4;
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-      font-size: 14px;
-      line-height: 1.55;
+      font-size: 13.5px;
+      line-height: 1.72;
+    }
+
+    .bibtex .tok-type {
+      color: #e3a184;
+    }
+
+    .bibtex .tok-key {
+      color: #d8b46a;
+    }
+
+    .bibtex .tok-field {
+      color: #9db7d2;
+    }
+
+    .bibtex .tok-str {
+      color: #c5d0a6;
+    }
+
+    .bibtex .tok-punc {
+      color: #8f897b;
     }
 
     @media (max-width: 840px) {
       .page {
-        width: 100%;
-        padding: 0 0 42px;
+        width: 88vw;
       }
 
-      .panel {
-        margin-bottom: 28px;
-        border-radius: 0;
-        box-shadow: 0 12px 28px rgba(34, 44, 53, 0.1);
+      .section {
+        padding: 44px 0;
       }
 
-      .control-grid,
-      .metric-row {
+      .control-grid {
         grid-template-columns: 1fr;
       }
 
       .control-path {
         grid-template-columns: 1fr;
-        gap: 6px;
-        margin-bottom: 18px;
+        gap: 8px;
+        margin-bottom: 20px;
       }
 
       .path-arrow {
         transform: rotate(90deg);
-        font-size: 18px;
+        font-size: 16px;
       }
 
-      .authors,
-      .affiliations {
+      .authors {
         font-size: 15px;
       }
     }
@@ -764,8 +861,9 @@
 </head>
 <body>
   <main class="page">
-    <section class="panel hero" id="top">
+    <header class="hero" id="top">
       <div class="title-block">
+        <span class="hero-venue">Interspeech 2026</span>
         <h1 class="paper-title">
           <span class="title-name"><span class="title-ctrl">Ctrl</span><span class="title-speech">Speech</span></span>
           <span class="title-subline">Coarse-to-Fine Control for Expressive Speech Synthesis</span>
@@ -823,17 +921,18 @@
         </div>
         <div class="links" aria-label="Project links">
           <a class="link-button" href="#" aria-label="Paper link">Paper</a>
-          <a class="link-button" href="#demo">Samples</a>
-          <a class="link-button" href="#bibtex">BibTeX</a>
+          <a class="link-button secondary" href="#demo">Samples</a>
+          <a class="link-button secondary" href="#bibtex">BibTeX</a>
         </div>
       </div>
+    </header>
 
+    <section class="section" id="abstract">
       <div class="abstract">
-        <p><strong>Abstract.</strong> Recent Text-To-Speech (TTS) systems have achieved strong naturalness and zero-shot voice cloning performance, but fine-grained control of expressive speech at the word or phoneme level remains challenging. We propose CtrlSpeech, a controllable, expressive TTS framework with coarse-to-fine control. Built on the DiTAR architecture, CtrlSpeech combines global speaker conditioning with phone-aligned pitch, loudness, and duration signals, enabling localized prosodic control while preserving the target speaker's timbre. This design allows users to adjust expressive attributes at a fine temporal granularity, making speech refinement more flexible and controllable. Experimental results show that CtrlSpeech achieves competitive zero-shot TTS performance and improves controllability over expressive attributes, demonstrating its effectiveness for flexible and practical expressive speech synthesis.</p>
+        <span class="eyebrow">Abstract</span>
+        <p class="lead">Recent Text-To-Speech (TTS) systems have achieved strong naturalness and zero-shot voice cloning performance, but fine-grained control of expressive speech at the word or phoneme level remains challenging. We propose CtrlSpeech, a controllable, expressive TTS framework with coarse-to-fine control. Built on the DiTAR architecture, CtrlSpeech combines global speaker conditioning with phone-aligned pitch, loudness, and duration signals, enabling localized prosodic control while preserving the target speaker's timbre. This design allows users to adjust expressive attributes at a fine temporal granularity, making speech refinement more flexible and controllable. Experimental results show that CtrlSpeech achieves competitive zero-shot TTS performance and improves controllability over expressive attributes, demonstrating its effectiveness for flexible and practical expressive speech synthesis.</p>
       </div>
-
       <nav class="contents" aria-label="Contents">
-        <strong>Contents</strong>
         <ul>
           <li><a href="#system-overview">System Overview</a></li>
           <li><a href="#control-design">Coarse-to-Fine Control Design</a></li>
@@ -843,14 +942,15 @@
       </nav>
     </section>
 
-    <section class="panel" id="system-overview">
+    <section class="section" id="system-overview">
+      <span class="eyebrow">Architecture</span>
       <h2 class="section-title">System Overview</h2>
       <div class="figure-wrap">
         <img
           class="overview-image"
           src="assets/system-overview.png"
           srcset="assets/system-overview.png 938w, assets/system-overview@2x.png 1876w, assets/system-overview@3x.png 2814w"
-          sizes="(max-width: 840px) 100vw, 980px"
+          sizes="(max-width: 840px) 100vw, 940px"
           width="938"
           height="380"
           alt="CtrlSpeech system overview showing a coarse control round followed by fine pitch, loudness, and duration adjustments.">
@@ -858,7 +958,8 @@
       <p class="caption"><strong>Figure 1.</strong> CtrlSpeech follows a coarse-to-fine workflow: users first provide input text, and optionally specify speaker settings or provide prompt audio; in subsequent rounds, they iteratively refine pitch, loudness, and word duration.</p>
     </section>
 
-    <section class="panel" id="control-design">
+    <section class="section" id="control-design">
+      <span class="eyebrow">Method</span>
       <h2 class="section-title">Coarse-to-Fine Control Design</h2>
       <div class="control-path" aria-label="Coarse-to-fine workflow">
         <span>Coarse Global Control</span>
@@ -870,7 +971,7 @@
       <div class="control-grid">
         <article class="control-card stage-coarse">
           <div class="stage-header">
-            <span class="stage-label">Stage 1: Coarse</span>
+            <span class="stage-label">Stage 1 · Coarse</span>
             <span class="stage-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <path d="M4 10v4h4l5 4V6l-5 4H4z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path>
@@ -903,7 +1004,7 @@
         </article>
         <article class="control-card stage-fine">
           <div class="stage-header">
-            <span class="stage-label">Stage 2: Fine</span>
+            <span class="stage-label">Stage 2 · Fine</span>
             <span class="stage-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path>
@@ -944,7 +1045,7 @@
         </article>
         <article class="control-card stage-refine">
           <div class="stage-header">
-            <span class="stage-label">Stage 3: Refine</span>
+            <span class="stage-label">Stage 3 · Refine</span>
             <span class="stage-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <path d="M18 7h-4v4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
@@ -982,7 +1083,8 @@
       </div>
     </section>
 
-    <section class="panel" id="demo">
+    <section class="section" id="demo">
+      <span class="eyebrow">Listen</span>
       <h2 class="section-title">Expressive Control Samples</h2>
       <div class="sample-table-wrap">
         <table>
@@ -1023,15 +1125,76 @@
       <p class="caption"><strong>Table 1.</strong> Representative sample layout for pitch, loudness, and duration control experiments.</p>
     </section>
 
-    <section class="panel" id="bibtex">
+    <section class="section" id="bibtex">
+      <span class="eyebrow">Cite</span>
       <h2 class="section-title">BibTeX</h2>
-      <pre class="bibtex">@inproceedings{zheng2026ctrlspeech,
-  title     = {CtrlSpeech: Coarse-to-Fine Control for Expressive Speech Synthesis},
-  author    = {Zheng, Zhisheng and Sun, Xiaohang and Liu, Zhu and Chen, Caren and Kumar, Rohith and Aggarwal, Manoj and Medioni, Gerard and Harwath, David},
-  booktitle = {Proc. Interspeech 2026},
-  year      = {2026}
-}</pre>
+      <div class="bibtex-card">
+        <div class="bibtex-head">
+          <span class="bibtex-file">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M14 3v4a1 1 0 0 0 1 1h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M19 8.5V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6.5L19 8.5z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            zheng2026ctrlspeech.bib
+          </span>
+          <button class="bibtex-copy" type="button" aria-label="Copy BibTeX to clipboard">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.7"></rect>
+              <path d="M5 15V6a2 2 0 0 1 2-2h9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
+            </svg>
+            <span class="bibtex-copy-label">Copy</span>
+          </button>
+        </div>
+        <pre class="bibtex"><code id="bibtex-code"><span class="tok-type">@inproceedings</span><span class="tok-punc">{</span><span class="tok-key">zheng2026ctrlspeech</span><span class="tok-punc">,</span>
+  <span class="tok-field">title</span>     <span class="tok-punc">=</span> <span class="tok-punc">{</span><span class="tok-str">CtrlSpeech: Coarse-to-Fine Control for Expressive Speech Synthesis</span><span class="tok-punc">},</span>
+  <span class="tok-field">author</span>    <span class="tok-punc">=</span> <span class="tok-punc">{</span><span class="tok-str">Zheng, Zhisheng and Sun, Xiaohang and Liu, Zhu and Chen, Caren and Kumar, Rohith and Aggarwal, Manoj and Medioni, Gerard and Harwath, David</span><span class="tok-punc">},</span>
+  <span class="tok-field">booktitle</span> <span class="tok-punc">=</span> <span class="tok-punc">{</span><span class="tok-str">Proc. Interspeech 2026</span><span class="tok-punc">},</span>
+  <span class="tok-field">year</span>      <span class="tok-punc">=</span> <span class="tok-punc">{</span><span class="tok-str">2026</span><span class="tok-punc">}</span>
+<span class="tok-punc">}</span></code></pre>
+      </div>
     </section>
   </main>
+  <script>
+    (function () {
+      var btn = document.querySelector('.bibtex-copy');
+      var code = document.getElementById('bibtex-code');
+      if (!btn || !code) return;
+      var label = btn.querySelector('.bibtex-copy-label');
+      var original = label ? label.textContent : 'Copy';
+      var timer;
+
+      function flash() {
+        btn.classList.add('copied');
+        if (label) label.textContent = 'Copied';
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          btn.classList.remove('copied');
+          if (label) label.textContent = original;
+        }, 1800);
+      }
+
+      function fallback(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        flash();
+      }
+
+      btn.addEventListener('click', function () {
+        var text = code.textContent;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(flash).catch(function () { fallback(text); });
+        } else {
+          fallback(text);
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
