@@ -777,13 +777,18 @@ def send_slack(text: str) -> None:
 
 def send_email(text: str, cfg: dict[str, Any]) -> None:
     host = os.getenv("SMTP_HOST", "").strip()
-    port = int(os.getenv("SMTP_PORT", "465"))
+    port_raw = os.getenv("SMTP_PORT", "").strip() or "465"
     username = os.getenv("SMTP_USERNAME", "").strip()
     password = os.getenv("SMTP_PASSWORD", "")
     mail_from = os.getenv("EMAIL_FROM", username).strip()
     mail_to = [x.strip() for x in os.getenv("EMAIL_TO", "").split(",") if x.strip()]
     if not all([host, username, password, mail_from]) or not mail_to:
         print("SMTP/EMAIL env vars incomplete; skipping email send.", file=sys.stderr)
+        return
+    try:
+        port = int(port_raw)
+    except ValueError:
+        print(f"SMTP_PORT is invalid ({port_raw!r}); skipping email send.", file=sys.stderr)
         return
 
     subject_prefix = cfg.get("notifications", {}).get("title", "Paper Radar")
@@ -901,6 +906,13 @@ def main() -> int:
     papers = fetch_arxiv(cfg)
     sections = rank_topic_sections(papers, cfg, state)
     selected = [paper for _, section_papers in sections for paper in section_papers]
+    llm_cfg = cfg.get("llm", {})
+    if llm_cfg.get("enabled", False):
+        provider = str(llm_cfg.get("provider", "anthropic")).lower()
+        required_key = "OPENAI_API_KEY" if provider == "openai" else "ANTHROPIC_API_KEY"
+        if not os.getenv(required_key, "").strip():
+            print(f"{required_key} not set; skipping LLM interpretation.", file=sys.stderr)
+            cfg = {**cfg, "llm": {**llm_cfg, "enabled": False}}
     for p in selected:
         p.interpretation = interpret_paper(p, cfg)
 

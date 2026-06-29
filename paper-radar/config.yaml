@@ -311,7 +311,7 @@ topics:
 notifications:
   title: "AI Paper Radar"
   slack_enabled: false
-  email_enabled: true
+  email_enabled: false
   html_dir: "daily-paper"
   include_abstract_chars: 420
   full_abstract: true
