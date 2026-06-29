@@ -1,0 +1,7 @@
+requests>=2.32.0
+feedparser>=6.0.11
+PyYAML>=6.0.2
+# Optional: only needed when notifications/llm.enabled is true. Imported lazily,
+# so install just the one matching your configured provider.
+anthropic>=0.69.0
+openai>=1.40.0

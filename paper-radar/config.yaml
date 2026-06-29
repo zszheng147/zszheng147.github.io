@@ -1,0 +1,329 @@
+# Multi-topic AI paper radar configuration.
+# Topics are evaluated in this order.  Once a paper enters one topic, it is
+# reserved there and cannot appear in a later topic.
+
+schedule:
+  timezone: "America/Los_Angeles"
+  weekdays_only: true
+  run_hour: 8
+
+arxiv:
+  categories:
+    - cs.CL
+    - cs.LG
+    - cs.AI
+    - cs.CV
+    - cs.MM
+    - cs.SD
+    - cs.RO
+    - stat.ML
+    - eess.AS
+  lookback_days: 3
+  max_results: 1200
+  user_agent: "ai-paper-radar/0.2 mailto:you@example.com"
+
+topics:
+  # 1) 12 papers: RL + language/multimodal language models.  Audio-related
+  # work is a hard exclusion, rather than merely receiving a lower score.
+  - id: rl_llm_mllm
+    title: "RL + LLM/MLLM"
+    ranking:
+      top_k: 12
+      score_threshold: 4.0
+      require_all_group_sets:
+        - [rl_core, preference_alignment, verifiable_reasoning, agentic_rl]
+        - [llm_core, mllm_vlm]
+      exclude_any_groups: [audio_related]
+      exclude_terms:
+        - audio
+        - speech
+        - music
+        - acoustic
+        - spoken
+        - vocal
+        - voice
+        - text-to-speech
+        - automatic speech recognition
+        - speech recognition
+        - speech synthesis
+      groups:
+        rl_core:
+          weight: 2.5
+          terms:
+            - reinforcement learning
+            - rl-based
+            - rl training
+            - rl fine-tuning
+            - rl post-training
+            - policy optimization
+            - policy gradient
+            - actor-critic
+            - ppo
+            - reinforce
+            - rloo
+            - remax
+            - dapo
+            - dcpo
+            - offline rl
+            - online rl
+            - reward shaping
+            - advantage normalization
+        preference_alignment:
+          weight: 3.0
+          terms:
+            - rlhf
+            - rlaif
+            - dpo
+            - ipo
+            - kto
+            - orpo
+            - simpo
+            - cpo
+            - rrhf
+            - reward model
+            - reward modeling
+            - preference optimization
+            - preference learning
+            - preference tuning
+            - human preference
+            - human feedback
+            - direct preference optimization
+            - constitutional ai
+            - ai feedback
+        verifiable_reasoning:
+          weight: 3.0
+          terms:
+            - grpo
+            - rlvr
+            - reinforcement learning from verifiable rewards
+            - reinforcement learning with verifiable rewards
+            - verifiable reward
+            - rule-based reward
+            - process reward
+            - outcome reward
+            - process reward model
+            - outcome reward model
+        agentic_rl:
+          weight: 2.5
+          terms:
+            - agentic reinforcement learning
+            - reinforcement learning for agents
+            - reinforcement learning agents
+            - rl agent
+            - environment reward
+            - interaction reward
+            - trajectory reward
+            - multi-turn reward
+            - self-play
+        llm_core:
+          weight: 2.5
+          terms:
+            - large language model
+            - large language models
+            - llm
+            - llms
+            - language model
+            - language models
+            - foundation model
+            - foundation models
+            - generative ai
+            - instruction tuning
+            - reasoning model
+            - large reasoning model
+        mllm_vlm:
+          weight: 2.2
+          terms:
+            - multimodal large language model
+            - multimodal large language models
+            - large multimodal model
+            - mllm
+            - mllms
+            - vision-language model
+            - vision language model
+            - visual-language model
+            - vlm
+            - vlms
+            - image-text
+            - video-language
+            - visual instruction tuning
+        audio_related:
+          weight: 0.0
+          terms:
+            - audio language model
+            - speech language model
+            - speech-language model
+            - spoken language model
+            - audio-text
+            - speech instruction tuning
+            - audio instruction tuning
+            - speech recognition
+            - text-to-speech
+            - music generation
+      negative_terms:
+        - wireless
+        - packet routing
+        - traffic signal
+        - power grid
+        - protein
+        - molecule
+        - quantum
+        - antenna
+
+  # 2) 5 papers: speech, audio, or music.  This is a separate modality track.
+  - id: speech_audio_music
+    title: "Speech-Audio-Music"
+    ranking:
+      top_k: 5
+      score_threshold: 3.0
+      require_one_group: [speech_audio_music]
+      groups:
+        speech_audio_music:
+          weight: 3.0
+          terms:
+            - speech
+            - spoken
+            - audio
+            - acoustic
+            - sound
+            - music
+            - singing
+            - vocal
+            - voice conversion
+            - speech recognition
+            - speech synthesis
+            - text-to-speech
+            - automatic speech recognition
+            - asr
+            - tts
+        audio_tasks:
+          weight: 1.5
+          terms:
+            - speaker diarization
+            - speech enhancement
+            - source separation
+            - audio captioning
+            - sound event detection
+            - voice activity detection
+            - speech translation
+            - music information retrieval
+            - music transcription
+            - audio editing
+        audio_models:
+          weight: 2.0
+          terms:
+            - audio language model
+            - speech language model
+            - speech-language model
+            - audio generation
+            - music generation
+            - audio diffusion
+            - neural codec
+            - speech tokenizer
+            - audio tokenizer
+      negative_terms:
+        - wireless
+        - antenna
+        - radar signal
+
+  # 3) 5 papers: broad, currently active AI directions.  The radar ranks by
+  # strong frontier-AI signals, while the ordered topic logic prevents overlap
+  # with the two focused tracks above.
+  - id: hottest_ai
+    title: "AI paper of the day"
+    ranking:
+      top_k: 5
+      score_threshold: 3.0
+      require_one_group:
+        - foundation_models
+        - agents_reasoning
+        - generative_world_models
+        - embodied_ai
+        - ai_systems
+      groups:
+        foundation_models:
+          weight: 2.5
+          terms:
+            - large language model
+            - llm
+            - foundation model
+            - multimodal
+            - vision-language model
+            - mllm
+            - reasoning model
+        agents_reasoning:
+          weight: 2.5
+          terms:
+            - ai agent
+            - llm agent
+            - agentic
+            - tool use
+            - tool-use
+            - web agent
+            - code agent
+            - multi-agent
+            - test-time scaling
+            - chain-of-thought
+            - mathematical reasoning
+            - theorem proving
+        generative_world_models:
+          weight: 2.3
+          terms:
+            - diffusion model
+            - diffusion transformer
+            - flow matching
+            - image generation
+            - video generation
+            - generative video
+            - world model
+            - world models
+            - 3d generation
+        embodied_ai:
+          weight: 2.2
+          terms:
+            - robotics
+            - robot learning
+            - vision-language-action
+            - embodied ai
+            - physical ai
+            - manipulation
+            - autonomous driving
+        ai_systems:
+          weight: 1.8
+          terms:
+            - inference optimization
+            - efficient inference
+            - model compression
+            - quantization
+            - long context
+            - retrieval-augmented generation
+            - rag
+            - synthetic data
+      negative_terms:
+        - wireless
+        - packet routing
+        - traffic signal
+        - power grid
+        - protein
+        - molecule
+        - quantum
+        - antenna
+
+notifications:
+  title: "AI Paper Radar"
+  slack_enabled: false
+  email_enabled: true
+  html_dir: "daily-paper"
+  include_abstract_chars: 420
+  full_abstract: true
+
+# Optional LLM pass: each selected paper receives a short interpretation that
+# is aware of the section it was selected for.
+llm:
+  enabled: true
+  provider: openai
+  language: zh
+  max_tokens: 600
+  anthropic:
+    model: claude-opus-4-8
+  openai:
+    model: gpt-5.5
