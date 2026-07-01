@@ -6,6 +6,7 @@ schedule:
   timezone: "America/Los_Angeles"
   weekdays_only: true
   run_hour: 8
+  run_until_hour: 13
 
 arxiv:
   categories:
@@ -21,6 +22,56 @@ arxiv:
   lookback_days: 3
   max_results: 1200
   user_agent: "ai-paper-radar/0.2 mailto:you@example.com"
+
+# Hard exclusions shared by every topic. These remove AI-for-science and other
+# applied-science papers even when they contain hot AI terms such as foundation
+# model, multimodal, reasoning, agent, diffusion, or world model.
+global_exclude_terms:
+  - ai for science
+  - ai4science
+  - scientific discovery
+  - scientific machine learning
+  - scientific foundation model
+  - biology
+  - biomedical
+  - clinical
+  - medical
+  - radiology
+  - pathology
+  - protein
+  - proteins
+  - molecule
+  - molecules
+  - molecular
+  - drug discovery
+  - drug design
+  - chemistry
+  - chemical
+  - genome
+  - genomics
+  - dna
+  - rna
+  - materials science
+  - material discovery
+  - materials discovery
+  - crystal
+  - catalyst
+  - battery
+  - quantum
+  - physics
+  - climate
+  - weather forecasting
+  - earth observation
+  - remote sensing
+  - satellite
+  - wireless
+  - packet routing
+  - traffic signal
+  - power grid
+  - antenna
+  - q-bio
+  - cond-mat
+  - astro-ph
 
 topics:
   # 1) 12 papers: RL + language/multimodal language models.  Audio-related
@@ -174,8 +225,14 @@ topics:
     title: "Speech-Audio-Music"
     ranking:
       top_k: 5
-      score_threshold: 3.0
-      require_one_group: [speech_audio_music]
+      score_threshold: 4.0
+      require_all_group_sets:
+        - [speech_audio_music]
+        - [audio_models, frontier_audio_ai]
+      exclude_any_groups:
+        - traditional_signal_processing
+        - applied_audio_domains
+        - narrow_language_targets
       groups:
         speech_audio_music:
           weight: 3.0
@@ -208,18 +265,152 @@ topics:
             - music information retrieval
             - music transcription
             - audio editing
+        frontier_audio_ai:
+          weight: 2.2
+          terms:
+            - audio foundation model
+            - speech foundation model
+            - large audio model
+            - large speech model
+            - spoken language model
+            - speech llm
+            - audio llm
+            - multimodal audio
+            - audio-language model
+            - speech-language model
+            - audio instruction tuning
+            - speech instruction tuning
+            - audio reasoning
+            - speech reasoning
+            - audio tokenization
+            - speech tokenization
+            - discrete speech units
+            - codec language model
+            - neural speech synthesis
+            - generative speech
+            - generative audio
+            - controllable speech
+            - controllable audio
         audio_models:
           weight: 2.0
           terms:
             - audio language model
             - speech language model
             - speech-language model
+            - spoken language model
             - audio generation
             - music generation
             - audio diffusion
             - neural codec
             - speech tokenizer
             - audio tokenizer
+            - neural vocoder
+            - diffusion vocoder
+            - speech diffusion
+            - text-to-audio
+            - text-to-music
+            - text-to-speech
+            - tts
+        traditional_signal_processing:
+          weight: 0.0
+          terms:
+            - signal processing
+            - digital signal processing
+            - acoustic signal processing
+            - array signal processing
+            - beamforming
+            - source localization
+            - direction of arrival
+            - doa estimation
+            - adaptive filtering
+            - wiener filter
+            - kalman filter
+            - spectral subtraction
+            - cepstral
+            - mfcc
+            - handcrafted features
+            - hand-crafted features
+        applied_audio_domains:
+          weight: 0.0
+          terms:
+            - fraud
+            - fraud investigation
+            - call centre
+            - call center
+            - call-centre
+            - call-center
+            - contact centre
+            - contact center
+            - real call-centre
+            - real call-center
+            - customer service
+            - telephony
+            - telephone
+            - forensic
+            - forensics
+            - law enforcement
+            - surveillance
+            - speaker clustering
+            - speaker verification
+            - speaker identification
+            - speaker recognition
+        narrow_language_targets:
+          weight: 0.0
+          terms:
+            - low-resource language
+            - low-resource languages
+            - low resource language
+            - low resource languages
+            - low-resource speech
+            - low-resource asr
+            - low-resource tts
+            - under-resourced language
+            - under-resourced languages
+            - underrepresented language
+            - underrepresented languages
+            - minority language
+            - minority languages
+            - endangered language
+            - endangered languages
+            - indigenous language
+            - indigenous languages
+            - regional language
+            - regional languages
+            - local language
+            - local languages
+            - dialect
+            - dialects
+            - dialectal
+            - language-specific
+            - language specific
+            - code-switching
+            - code switching
+            - kazakh speech
+            - kazakh asr
+            - kazakh tts
+            - uyghur speech
+            - uighur speech
+            - tibetan speech
+            - mongolian speech
+            - kyrgyz speech
+            - uzbek speech
+            - azerbaijani speech
+            - swahili speech
+            - yoruba speech
+            - hausa speech
+            - amharic speech
+            - somali speech
+            - basque speech
+            - catalan speech
+            - galician speech
+            - maltese speech
+            - icelandic speech
+            - nepali speech
+            - sinhala speech
+            - khmer speech
+            - lao speech
+            - burmese speech
+            - myanmar speech
       negative_terms:
         - wireless
         - antenna

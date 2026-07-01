@@ -8,11 +8,10 @@ on:
         type: boolean
         default: false
   schedule:
-    # GitHub Actions cron is UTC-only. These two times cover 8 AM
-    # America/Los_Angeles across daylight saving changes; the script's own
-    # local-time guard lets only the matching run proceed.
-    - cron: "0 15 * * 1-5"
-    - cron: "0 16 * * 1-5"
+    # Run once on weekdays at 8:17 AM Los Angeles time. GitHub may delay
+    # scheduled jobs, so the script also accepts a later local-time window.
+    - cron: "17 8 * * 1-5"
+      timezone: "America/Los_Angeles"
 
 permissions:
   contents: write

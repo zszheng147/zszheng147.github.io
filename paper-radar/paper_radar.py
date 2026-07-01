@@ -218,7 +218,10 @@ def keep_paper(paper: Paper, cfg: dict[str, Any]) -> bool:
         return False
     # Unlike negative_terms (which merely downrank), these are hard topic
     # boundaries.  They are useful when a section must not include a modality.
-    if any(contains_term(text, term) for term in ranking.get("exclude_terms", [])):
+    exclude_terms = list(cfg.get("global_exclude_terms", [])) + list(
+        ranking.get("exclude_terms", [])
+    )
+    if any(contains_term(text, term) for term in exclude_terms):
         return False
     if set(ranking.get("exclude_any_groups", [])) & hit_groups:
         return False
@@ -825,10 +828,8 @@ def update_state(state: dict[str, Any], papers: list[Paper]) -> dict[str, Any]:
 def should_run_now(cfg: dict[str, Any]) -> tuple[bool, str]:
     """Gate execution to a local-time window.
 
-    The GitHub Actions cron is UTC-only, so the workflow triggers at a couple of
-    UTC times and this guard lets the job proceed only at the configured local
-    hour on weekdays. That keeps "weekday, local time" correct year-round even
-    across daylight-saving changes.
+    Scheduled GitHub Actions jobs can start late, so the workflow targets the
+    desired local start time and this guard accepts a bounded local-time window.
     """
     sched = cfg.get("schedule", {})
     tz_name = sched.get("timezone", "America/Los_Angeles")
@@ -840,11 +841,15 @@ def should_run_now(cfg: dict[str, Any]) -> tuple[bool, str]:
         return True, f"Schedule check skipped ({exc})."
     if weekdays_only and now_local.weekday() >= 5:
         return False, f"Skipping: {now_local:%A} is a weekend in {tz_name}."
-    if run_hour is not None and now_local.hour != int(run_hour):
-        return False, (
-            f"Skipping: local time is {now_local:%H:%M} {tz_name}; "
-            f"waiting for hour {int(run_hour):02d}."
-        )
+
+    if run_hour is not None:
+        start_hour = int(run_hour)
+        end_hour = int(sched.get("run_until_hour", start_hour + 1))
+        if not start_hour <= now_local.hour < end_hour:
+            return False, (
+                f"Skipping: local time is {now_local:%H:%M} {tz_name}; "
+                f"waiting for {start_hour:02d}:00-{end_hour:02d}:00."
+            )
     return True, ""
 
 
