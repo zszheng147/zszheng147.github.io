@@ -1,0 +1,160 @@
+{
+  "2606.29296": {
+    "score": 19.5,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "Process Advantage Signal Shaping: A Paradigm-Agnostic Middleware for Process-Supervised RL in LLM Reasoners",
+    "url": "https://arxiv.org/abs/2606.29296v1"
+  },
+  "2606.29354": {
+    "score": 12.5,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "When LLMs Develop Languages: Symbolic Communication for Efficient Multi-Agent Reasoning",
+    "url": "https://arxiv.org/abs/2606.29354v1"
+  },
+  "2606.29573": {
+    "score": 20.1,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "Reliability-Prioritized Fine-Grained Generation in Multimodal Large",
+    "url": "https://arxiv.org/abs/2606.29573v1"
+  },
+  "2606.29758": {
+    "score": 21.0,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "PS-PPO: Prefix-Sampling PPO for Critic-Free RLHF",
+    "url": "https://arxiv.org/abs/2606.29758v1"
+  },
+  "2606.29805": {
+    "score": 17.1,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "Clearer Sight, Fewer Lies: Oriented Pickup Preference Optimization for Multimodal Hallucination Mitigation",
+    "url": "https://arxiv.org/abs/2606.29805v2"
+  },
+  "2606.29824": {
+    "score": 11.1,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "Neural Procedural Memory: Empowering LLM Agents with Implicit Activation Steering",
+    "url": "https://arxiv.org/abs/2606.29824v1"
+  },
+  "2606.29901": {
+    "score": 13.2,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "Semi-Supervised Sound Event Detection with Conditional Mixup and Embedding-Level Contrastive Loss",
+    "url": "https://arxiv.org/abs/2606.29901v1"
+  },
+  "2606.29984": {
+    "score": 17.1,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "Be Faithful When Response: Returning Fluent and Grounded Answers for Vision-Language Models Reinforcement Learning",
+    "url": "https://arxiv.org/abs/2606.29984v1"
+  },
+  "2606.30378": {
+    "score": 17.6,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "OmniCoT: A Benchmark for Global and Multi-Step Panoramic Reasoning",
+    "url": "https://arxiv.org/abs/2606.30378v1"
+  },
+  "2606.30420": {
+    "score": 22.0,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "Experience Augmented Policy Optimization for LLM Reasoning",
+    "url": "https://arxiv.org/abs/2606.30420v1"
+  },
+  "2606.30552": {
+    "score": 14.5,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "Training Vision-Language-Action Models with Dense Embodied Chain-of-Thought Supervision",
+    "url": "https://arxiv.org/abs/2606.30552v1"
+  },
+  "2606.30704": {
+    "score": 19.5,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "From Search to Synthesis: Training LLMs as Zero-Shot Workflow Generators",
+    "url": "https://arxiv.org/abs/2606.30704v1"
+  },
+  "2606.30944": {
+    "score": 13.0,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "Preserving Speech-to-Text LLM Capabilities in Speech-to-Speech Generation",
+    "url": "https://arxiv.org/abs/2606.30944v1"
+  },
+  "2606.31054": {
+    "score": 20.6,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "ADAPT: Attention Dynamics Alignment with Preference Tuning for Faithful MLLMs",
+    "url": "https://arxiv.org/abs/2606.31054v1"
+  },
+  "2606.31200": {
+    "score": 11.3,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "Agentic RAG-VLM: Affordance-Aware Retrieval-Augmented Generation with Self-Reflective Planning for Robotic Grasping",
+    "url": "https://arxiv.org/abs/2606.31200v1"
+  },
+  "2606.31247": {
+    "score": 15.7,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "FlexiSLM: A Dynamic and Controllable Frame Rate Spoken Language Model",
+    "url": "https://arxiv.org/abs/2606.31247v1"
+  },
+  "2606.31338": {
+    "score": 8.7,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "Beyond Binary Instrument QA: Probing Instrument Grounding in Music Audio-Language Models",
+    "url": "https://arxiv.org/abs/2606.31338v1"
+  },
+  "2606.31575": {
+    "score": 22.0,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "Which Tokens Matter? Adaptive Token Selection for RLVR with the Relative Surprisal Index",
+    "url": "https://arxiv.org/abs/2606.31575v1"
+  },
+  "2606.31648": {
+    "score": 12.3,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "Think in English, Answer in Korean: Efficient Adaptation of Multilingual Tool-Using Agents",
+    "url": "https://arxiv.org/abs/2606.31648v1"
+  },
+  "2606.31729": {
+    "score": 13.5,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "Is Natural Always Appropriate? Investigating Naturalness and Appropriateness Across Different Domains for TTS Evaluation",
+    "url": "https://arxiv.org/abs/2606.31729v1"
+  },
+  "2606.31732": {
+    "score": 17.1,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "UniCoder: Unified Visual-to-Code Generation via Symbolic Rewards and Reference-Guided Code Optimization",
+    "url": "https://arxiv.org/abs/2606.31732v1"
+  },
+  "2606.31813": {
+    "score": 19.5,
+    "seen_at": "2026-07-01T06:33:49.114033+00:00",
+    "source": "arXiv",
+    "title": "Geometry-Preserving Orthonormal Initialization for Low-Rank Adaptation in RLVR",
+    "url": "https://arxiv.org/abs/2606.31813v1"
+  },
+  "_meta": {
+    "last_run_at": "2026-07-01T06:33:49.114085+00:00",
+    "last_run_date": "2026-06-30"
+  }
+}

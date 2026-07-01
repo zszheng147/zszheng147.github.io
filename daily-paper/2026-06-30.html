@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Paper Radar · 2026-06-30</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F4F2EC; --surface:#FFFFFF; --surface-2:#FBFAF6;
+  --ink:#1A1915; --ink-2:#57544B; --ink-3:#8A867A;
+  --accent:#CC785C; --accent-deep:#A8512F;
+  --border:#E4E0D4; --border-2:#D6D1C2; --tint:#F2EAE2;
+  --serif:"Tiempos Headline",ui-serif,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,Cambria,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans); color:var(--ink); line-height:1.7; -webkit-font-smoothing:antialiased;
+  padding:0 20px 80px; background-color:var(--bg);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+body::before{
+  content:""; position:fixed; top:0; left:0; right:0; height:3px; z-index:50;
+  background:linear-gradient(90deg,var(--accent),#E2A98E,var(--accent-deep));
+}
+.container{max-width:760px;margin:0 auto}
+a{color:var(--accent)}
+/* ---- Editorial header ---- */
+.hero{max-width:760px; margin:0 auto; padding:64px 0 32px}
+.eyebrow{
+  display:inline-block; font-size:.74rem; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin-bottom:20px;
+}
+.hero h1{
+  font-family:var(--serif); font-weight:600; font-size:2.7rem; line-height:1.1;
+  letter-spacing:-.018em; color:var(--ink); margin-bottom:16px;
+}
+.hero .sub{color:var(--ink-2); font-size:1rem; font-weight:400}
+.hero .sub b{color:var(--ink); font-weight:600}
+.rule{max-width:760px; margin:0 auto 40px; border:none; border-top:1px solid var(--border)}
+/* ---- Nav ---- */
+.nav{margin-bottom:40px}
+.nav a{
+  font-size:.88rem; text-decoration:none; color:var(--ink-2); transition:color .15s;
+}
+.nav a:hover{color:var(--accent)}
+.digest-layout{display:grid; gap:24px}
+.toc{display:flex; gap:8px; overflow-x:auto; padding:12px; border:1px solid var(--border); border-radius:10px; background:var(--surface-2)}
+.toc-label{flex:none; padding:7px 8px; color:var(--ink-3); font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase}
+.toc a{display:flex; align-items:baseline; gap:7px; flex:none; padding:7px 10px; border-radius:7px; color:var(--ink-2); font-size:.86rem; line-height:1.25; text-decoration:none; transition:background .15s,color .15s}
+.toc a:hover{background:var(--tint); color:var(--accent-deep)}
+.toc a span{color:var(--accent); font-family:var(--serif); font-size:1rem; font-weight:600}
+.toc a b{color:var(--ink-3); font-size:.72rem; font-weight:500}
+.digest-content{min-width:0}
+.topic{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:28px 30px; box-shadow:0 2px 10px rgba(39,34,23,.025)}
+.topic + .topic{margin-top:28px}
+.topic-head{display:flex; justify-content:space-between; align-items:baseline; gap:16px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border)}
+.topic-title{font-family:var(--serif); font-size:1.75rem; font-weight:600; line-height:1.2; letter-spacing:-.012em}
+.topic-count{flex:none; color:var(--accent); font-size:.9rem; font-weight:600}
+.topic .topic-head + .paper{border-top:none; padding-top:0}
+.topic-empty{text-align:left; padding:14px 0 22px}
+.empty{color:var(--ink-2); text-align:center; padding:72px 0; font-size:1.05rem}
+.empty .big{font-family:var(--serif); font-size:2rem; color:var(--ink-3); margin-bottom:10px}
+/* ---- Paper as article ---- */
+.paper{
+  position:relative; padding:32px 0; border-top:1px solid var(--border);
+}
+.paper:first-of-type{border-top:none; padding-top:0}
+.p-head{display:flex; gap:16px; align-items:baseline; margin-bottom:14px}
+.idx{
+  flex:none; font-family:var(--serif); font-size:2.1rem; font-weight:600;
+  color:#D8A286; line-height:1; min-width:1em;
+}
+.paper-title{font-family:var(--serif); font-size:1.5rem; font-weight:600; line-height:1.28; letter-spacing:-.012em}
+.paper-title a{color:var(--ink); text-decoration:none; transition:color .15s}
+.paper-title a:hover{color:var(--accent)}
+.meta-line{font-size:.8rem; color:var(--ink-2); margin:0 0 11px 0}
+.meta-line .sep{margin:0 9px; color:var(--border-2)}
+.score{font-weight:600; color:var(--accent)}
+.score.hot{color:var(--accent-deep)}
+.tags{display:flex; flex-wrap:wrap; gap:7px; margin:0 0 16px 0}
+.tag{font-size:.72rem; font-weight:600; letter-spacing:.02em; padding:3px 11px; border-radius:999px}
+.tag.c0{color:#A8512F; background:#F1E2D9}
+.tag.c1{color:#5E6B39; background:#E8EAD9}
+.tag.c2{color:#4D7287; background:#DEE8ED}
+.tag.c3{color:#94712C; background:#EFE6CE}
+.tag.c4{color:#855272; background:#EDE0E7}
+.meta-row{font-size:.92rem; color:var(--ink-2); margin:0 0 4px 0}
+.why{
+  font-size:.82rem; color:var(--ink-3); margin:0 0 20px 0; font-style:italic;
+}
+.section-label{
+  font-family:var(--sans); font-size:.72rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.1em; color:var(--ink-3); margin:0 0 8px 0;
+}
+.abstract{
+  font-size:1rem; color:var(--ink); margin:0 0 22px 0; white-space:pre-wrap; line-height:1.75;
+}
+.interp{
+  font-size:1rem; color:var(--ink); white-space:pre-wrap; line-height:1.78;
+  background:var(--tint); border-left:3px solid var(--accent);
+  padding:18px 22px; border-radius:2px 10px 10px 2px;
+}
+.interp .section-label{color:var(--accent-deep)}
+.links{display:flex; gap:20px; margin:20px 0 0 0}
+.links a{
+  font-size:.9rem; font-weight:500; text-decoration:none; color:var(--accent);
+}
+.links a:hover{color:var(--accent-deep); text-decoration:underline}
+footer{
+  max-width:760px; margin:64px auto 0; padding-top:28px; border-top:1px solid var(--border);
+  font-size:.84rem; color:var(--ink-3); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+}
+footer a{color:var(--ink-3); text-decoration:none} footer a:hover{color:var(--accent)}
+@media(max-width:560px){
+  .hero{padding:44px 0 24px} .hero h1{font-size:2rem}
+  .paper-title{font-size:1.28rem}
+  .topic{padding:22px 20px}
+}
+@media(min-width:980px){
+  .daily-container{max-width:1030px}
+  .digest-layout{grid-template-columns:205px minmax(0,1fr); align-items:start; gap:32px}
+  .toc{position:sticky; top:24px; display:flex; flex-direction:column; overflow:visible; padding:12px}
+  .toc a{justify-content:flex-start}
+}
+</style>
+</head>
+<body>
+<div class="hero">
+  <span class="eyebrow">Daily Radar</span>
+  <h1>AI Paper Radar</h1>
+  <div class="sub"><b>2026-06-30</b> &nbsp;·&nbsp; 22 篇精选论文</div>
+</div>
+<hr class="rule">
+<div class="container daily-container">
+<nav class="nav"><a href="index.html">← 全部归档</a></nav>
+<div class="digest-layout">
+  <aside class="toc" aria-label="论文栏目目录">
+    <span class="toc-label">目录</span>
+    <a href="#section-1"><span>1</span>RL + LLM/MLLM<b>12 篇</b></a>
+    <a href="#section-2"><span>2</span>Speech-Audio-Music<b>5 篇</b></a>
+    <a href="#section-3"><span>3</span>AI paper of the day<b>5 篇</b></a>
+  </aside>
+  <main class="digest-content">
+    <section class="topic" id="section-1"><div class="topic-head"><h2 class="topic-title">RL + LLM/MLLM</h2><span class="topic-count">12 篇</span></div><div class="paper">
+  <div class="p-head">
+    <span class="idx">1</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.31575v1" target="_blank">Which Tokens Matter? Adaptive Token Selection for RLVR with the Relative Surprisal Index</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 22.0</span><span class="sep">·</span><span>2026-06-30</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Outongyi Lv, Yanzhao Zheng, Yuanwei Zhang, Zhenghao Huang, Xingjun Wang et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, rl_core:policy optimization, verifiable_reasoning:grpo, verifiable_reasoning:rlvr, verifiable_reasoning:verifiable reward, llm_core:large language model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Reinforcement learning (RL) has become a powerful tool for propelling Large Language Models (LLMs) beyond imitation-based training towards more robust reasoning capabilities. Among existing approaches, RL with Verifiable Rewards (RLVR) has emerged as a pivotal paradigm for advancing LLM reasoning. Despite its empirical success, recent studies have offered different insights. One line of inquiry advocates prioritizing high-entropy token positions during training, while another perspective cautions against allowing low-probability tokens to dominate gradient updates. Notably, although high-entropy tokens are usually correlated with low probability, both paradigms empirically yield substantial performance gains. In this work, we argue that evaluating sampled-token probability or entropy in isolation is insufficient to capture the policy optimization dynamics. To resolve this tension, we introduce the Relative Surprisal Index (RSI), a principled, information-theoretic metric that naturally couples the token's entropy with the probability of the selected token. We show that, under mild conditions, RSI is related to the local ratio between the first-order variations of the logit-gradient norm and predictive entropy under a selected-logit perturbation. Building on RSI, we propose RSI Selection (RSI-S), an entropy-adaptive token filtering method that retains tokens within a stable RSI interval. RSI-S successfully reconciles previous contradictory paradigms and filters out both redundant low-surprisal tokens and unstable high-surprisal tail tokens. Empirical evaluations show that RSI-S achieves higher avg@32 accuracy across different model scales (Qwen2.5-1.5B, 3B, and 7B) on AIME and AMC benchmarks: RSI-S improves avg@32 accuracy by 2--3 percentage points over GRPO. Overall, RSI offers a promising perspective for RLVR improvement.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文针对 RLVR 训练中“该强化哪些 token”这一关键问题，提出了 Relative Surprisal Index（RSI），用一个同时考虑 token 熵和被采样概率的指标来解释为何高熵 token 与低概率 token 筛选策略都可能有效。方法上，作者基于 RSI 设计了 RSI-S：只保留 RSI 处于稳定区间的 token，从而过滤掉过于容易、信息量不足的 token，也避免极低概率尾部 token 带来不稳定梯度。实验显示，在 Qwen2.5 多个尺度模型上，RSI-S 相比 GRPO 在 AIME、AMC 等数学推理任务上带来约 2–3 个百分点的 avg@32 提升。它值得 RL + LLM/MLLM 栏目关注，因为它不是单纯改 reward 或 rollout，而是从 token 级优化信号选择入手，为提升 RLVR 稳定性和样本效率提供了更细粒度的训练视角。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.31575v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.31575v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">2</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.30420v1" target="_blank">Experience Augmented Policy Optimization for LLM Reasoning</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 22.0</span><span class="sep">·</span><span>2026-06-29</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Jinda Lu, Kexin Huang, Junkang Wu, Shuo Yang, Jinghan Li et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, rl_core:policy optimization, verifiable_reasoning:rlvr, verifiable_reasoning:reinforcement learning with verifiable rewards, verifiable_reasoning:verifiable reward, llm_core:large language model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Reinforcement Learning with Verifiable Rewards (RLVR) is a powerful paradigm for improving the reasoning capabilities of large language models (LLMs). However, existing RLVR methods typically rely on on-policy optimization from scratch, resulting in high sampling costs and inefficient utilization of accumulated experience. As model capabilities and policy behaviors evolve during training, recent attempts to reuse experience via fixed reasoning trajectories further suffer from policy mismatch. Motivated by these limitations, we argue that experience in RLVR should not be reused as fixed reasoning trajectories, but instead expressed in a policy-adaptive manner. In this work, we propose Experience-Augmented Policy Optimization (EAPO), which leverages a prior RL-optimized policy as an action-level experience prior and selectively injects experience at critical decision points during rollout. To ensure stable and unbiased learning from experience-augmented rollouts, EAPO further incorporates an adapted importance sampling scheme. Experiments on using Qwen-2.5-math 7b and Qwen-3-8B on five different benchmarks demonstrate that EAPO consistently improves reasoning performance over state-of-the-art RLVR methods.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把 RLVR 中“经验复用”的对象从固定推理轨迹，改成可随当前策略变化而适配的动作级经验先验，从而缓解传统离线轨迹复用带来的策略不匹配问题。  
+方法上，EAPO 使用一个已经经过 RL 优化的旧策略，在当前模型 rollout 时只在关键决策点引入其动作建议，并通过改造的重要性采样校正经验增强后的训练信号，尽量保证优化稳定且不偏。  
+相比纯 on-policy RLVR，它试图更充分利用已有训练经验、降低采样成本；相比直接蒸馏或重放旧轨迹，它保留了当前策略探索空间。  
+这对 RL + LLM/MLLM 栏目值得关注，因为它针对大模型推理强化学习中非常现实的效率瓶颈，提出了一种介于 on-policy 探索和经验复用之间的训练范式，并在数学推理基准上展示了稳定收益。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.30420v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.30420v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">3</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.29758v1" target="_blank">PS-PPO: Prefix-Sampling PPO for Critic-Free RLHF</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 21.0</span><span class="sep">·</span><span>2026-06-29</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Doo Hwan Hwang, Kee-Eung Kim</div>
+  <div class="why">why: rl_core:reinforcement learning, rl_core:policy optimization, rl_core:ppo, preference_alignment:rlhf, preference_alignment:human feedback, llm_core:large language model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Reinforcement Learning from Human Feedback (RLHF) for Large Language Models increasingly relies on critic-free methods as a practical alternative to actor--critic training. Despite their simplicity, existing critic-free approaches propagate a trajectory-level learning signal uniformly across all tokens in a trajectory. This requires full-trajectory policy updates for every rollout, leading to substantial optimization cost for long reasoning traces, even though intermediate prefixes often contain enough information to largely determine the final outcome. We propose Prefix-Sampling Proximal Policy Optimization (PS-PPO), a compute-efficient critic-free method for RLHF that exploits this temporal redundancy. PS-PPO introduces a prompt-conditioned cutoff distribution and samples a cutoff timestep for each trajectory. During the update pass, PS-PPO backpropagates only through the sampled prefix of each trajectory and applies an importance-weighting correction so that the resulting truncated gradient estimator remains unbiased with respect to the full-trajectory objective. Experiments on mathematical reasoning and RLHF benchmarks show that PS-PPO achieves large reductions in training compute and peak GPU memory, while maintaining accuracy comparable to strong critic-free baselines.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文针对 critic-free RLHF 在长推理轨迹上“每个 token 都反传同一个最终奖励信号”带来的高计算成本，提出了 PS-PPO，核心贡献是把更新范围从完整回答缩短到采样得到的前缀，同时仍尽量保持对原 PPO 目标的无偏估计。方法上，它为每个 prompt/trajectory 采样一个截断位置，只对该前缀做反向传播，并用重要性加权修正截断带来的分布偏差。直觉是很多长链式推理的成败在中间步骤已基本显现，因此不必每次都为整段输出付出训练代价。它值得 RL + LLM/MLLM 栏目关注，因为它直接面向当前 RLHF/RLAIF 训练的瓶颈：在不引入 critic 的情况下，降低长文本/长推理强化学习的显存和算力开销。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.29758v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.29758v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">4</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.31054v1" target="_blank">ADAPT: Attention Dynamics Alignment with Preference Tuning for Faithful MLLMs</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 20.6</span><span class="sep">·</span><span>2026-06-30</span></div>
+  <div class="tags"><span class="tag c3">cs.CV</span><span class="tag c3">cs.AI</span><span class="tag c3">cs.CL</span><span class="tag c4">cs.MM</span></div>
+  <div class="meta-row">Zhiyuan Yao, Zheren Fu, Zhixiao Zheng, Jiajun Li, Yi Tu et al.</div>
+  <div class="why">why: preference_alignment:dpo, preference_alignment:preference tuning, llm_core:large language model, llm_core:large language models, llm_core:language model, mllm_vlm:multimodal large language model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Multimodal Large Language Models (MLLMs) are critically hampered by hallucination, generating content inconsistent with the provided image. In this paper, we identify an internal signature of hallucination: progressive degradation of text-to-image cross-attention during generation, leading to specific failure patterns like unfocused or biased attention. Existing mitigation strategies are largely outcome-driven and do not explicitly target this failure mode. To address this problem, we propose ADAPT (Attention Dynamics Alignment with Preference Tuning), an attention-based framework that intervenes directly on text-to-image cross-attention dynamics. We propose ADAPT with three key contributions: a cross-attention visual anchor refined from early decoding to provide stable spatial grounding, an attention-supervised inference mechanism that detects and corrects attention drift online, and a Visual Attention Guidance DPO that aligns preferences toward visually grounded responses. Experiments show that each component of ADAPT contributes to hallucination reduction, and the full framework achieves new best results across multiple hallucination benchmarks, reducing hallucination rates by 40%-60% across mainstream backbones while preserving general multimodal capabilities. Our work provides an attention-based perspective on mitigating hallucinations by exploring the model's internal text-to-image cross-attention behaviors. Code is available at https://github.com/yao-ustc/ADAPT</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文把 MLLM 幻觉问题归因到生成过程中“文本到图像”的跨注意力逐步失稳：模型越生成越容易偏离图像证据，出现注意力发散或偏向错误区域等现象。作者提出 ADAPT，从内部注意力动态入手：先用早期解码阶段形成稳定的视觉锚点，再在推理时监测并纠正注意力漂移，同时用带视觉注意力约束的 DPO 偏好优化，让模型更偏好基于图像依据的回答。实验显示，该方法在多个幻觉评测上显著降低幻觉率，并且可迁移到主流 MLLM 骨干上，同时基本保持通用多模态能力。它值得 RL + LLM/MLLM 栏目关注，因为它把偏好学习/DPO 与可解释的跨模态注意力机制结合起来，不只是优化输出结果，而是直接对齐模型生成过程中的视觉 grounding 行为。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.31054v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.31054v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">5</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.29573v1" target="_blank">Reliability-Prioritized Fine-Grained Generation in Multimodal Large</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 20.1</span><span class="sep">·</span><span>2026-06-28</span></div>
+  <div class="tags"><span class="tag c3">cs.CV</span></div>
+  <div class="meta-row">Xiaomeng Fan, Wu Wei, Yuwei Wu, Zhi Gao, Shiyu Luo et al.</div>
+  <div class="why">why: preference_alignment:preference optimization, preference_alignment:direct preference optimization, llm_core:large language model, llm_core:large language models, llm_core:language model, mllm_vlm:multimodal large language model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Multimodal large language models (MLLMs) are increasingly expected to generate fine-grained descriptions of visual content. However, we observe and theoretically show that generating fine-grained responses poses a reliability challenge, \textit{i.e.}, fine-grained generation is more error-prone than coarse-grained generation. This phenomenon suggests that models should generate the finest description that remains reliable rather than simply produce more specific outputs. To investigate this problem, we develop \textsc{GranFact}, a granularity-aware benchmark consisting of expert-verified multi-object images with coarse-to-fine category annotations. Then, we design a hierarchy-aware evaluation algorithm, which assesses both whether model predictions are visually correct and how specific the correct predictions are. We also propose a reliability-prioritized preference optimization method based on Direct Preference Optimization, which penalizes unreliable fine-grained claims while rewarding reliable specificity. Experiments on \textsc{GranFact} show that our method improves fine-grained generation while preserving reliability. Code and data are available \href{https://github.com/WeiWu2025/GranFact}{here}.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文指出 MLLM 在生成越细粒度的视觉描述时越容易出错，因此关键不应是“越具体越好”，而是生成在当前视觉证据下仍可靠的最细描述。作者构建了 GranFact 基准，包含多目标图像和从粗到细的类别标注，并设计了层级感知评估方法，同时衡量预测是否正确以及正确预测的细粒度程度。方法上，他们基于 DPO 做可靠性优先的偏好优化：惩罚不可靠的细粒度断言，奖励可靠且更具体的表达。它值得 RL + LLM/MLLM 栏目关注，因为它把偏好优化用于解决多模态生成中的“细粒度-可靠性”权衡，为 MLLM 对齐提供了比单纯追求详细描述更稳健的训练目标。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.29573v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.29573v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">6</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.31813v1" target="_blank">Geometry-Preserving Orthonormal Initialization for Low-Rank Adaptation in RLVR</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 19.5</span><span class="sep">·</span><span>2026-06-30</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Ruijia Zhang, Jiacheng Zhu, Hanqing Zhu, Laixi Shi</div>
+  <div class="why">why: rl_core:reinforcement learning, verifiable_reasoning:rlvr, verifiable_reasoning:reinforcement learning with verifiable rewards, verifiable_reasoning:verifiable reward, llm_core:large language model, llm_core:large language models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Low-rank adaptation (LoRA) and its variants enable parameter-efficient fine-tuning of large language models under the supervised fine-tuning (SFT) paradigm. However, their efficacy and behavior under Reinforcement learning with verifiable rewards (RLVR) are less well understood. In particular, two structurally initialized LoRA variants, PiSSA and MiLoRA, which outperform standard LoRA under SFT, can underperform standard LoRA under RLVR and may even exhibit training instability. These observations suggest that how to initialize the low-rank matrices in RLVR remains unclear. In this work, we develop a theoretical analysis of LoRA in RLVR, showing that orthonormal initialization achieves the minimal gap between LoRA outcome and that of full fine-tuning. Guided by this insight, we propose geometry-preserving orthonormal initialization for low-rank adaptation in RLVR, leading to two new variants, RLPO and RLMO. Experiments on mathematical reasoning benchmarks show that the proposed orthonormal initialization stabilizes RLVR training and outperforms standard LoRA, contrasting with PiSSA and MiLoRA. Finally, our unified analysis for LoRA initialization also explains why PiSSA and MiLoRA can underperform in RLVR, which may be of independent interest. Code and checkpoints are publicly available at https://github.com/Richard-ZZZ/geometry-preserving-orthonormal-init-rlvr.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文关注 LoRA 在 RLVR（可验证奖励强化学习）中的初始化问题，指出在 SFT 中表现较好的 PiSSA、MiLoRA 到 RLVR 场景反而可能不稳定或弱于普通 LoRA。作者从理论上分析低秩适配与全参数微调在 RLVR 优化结果之间的差距，得出“正交归一初始化”更能保留原模型参数空间几何结构，并据此提出 RLPO、RLMO 两种初始化变体。实验显示，在数学推理任务上，这类初始化能提升训练稳定性和最终性能，同时解释了部分结构化初始化方法在 RLVR 中失效的原因。它值得 RL + LLM/MLLM 栏目关注，因为 RLVR 正成为提升大模型推理能力的重要训练范式，而参数高效微调在该场景下的行为规律仍不清楚，这篇工作提供了理论和实证上的新理解。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.31813v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.31813v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">7</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.30704v1" target="_blank">From Search to Synthesis: Training LLMs as Zero-Shot Workflow Generators</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 19.5</span><span class="sep">·</span><span>2026-06-29</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span><span class="tag c3">cs.AI</span><span class="tag c3">cs.CL</span></div>
+  <div class="meta-row">Gan Luo, Zihan Qin, Bin Dong, Wotao Yin</div>
+  <div class="why">why: rl_core:reinforcement learning, verifiable_reasoning:rlvr, verifiable_reasoning:reinforcement learning with verifiable rewards, verifiable_reasoning:verifiable reward, llm_core:large language model, llm_core:large language models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Large language models (LLMs) excel across a wide range of tasks, yet their instance-specific solutions often lack the structural consistency needed for reliable deployment. Workflows that encode recurring algorithmic patterns at the task level provide a principled framework, offering robustness across instance variations, interpretable traces for debugging, and reusability across problem instances. However, manually designing such workflows requires significant expertise and effort, limiting their broader application. While automatic workflow generation could address this bottleneck, existing methods either produce instance-specific solutions without learning task-level patterns, or cannot generalize beyond their training configurations. We present MetaFlow, which casts workflow generation as a meta-learning problem: given a task and an operator set, the model learns to compose solution strategies. MetaFlow trains in two stages: supervised fine-tuning on synthetic workflow data, followed by reinforcement learning with verifiable rewards (RLVR) that uses execution feedback across problem instances in the task to improve end-to-end success. The resulting model produces effective workflows for trained tasks and exhibits strong generalization to untrained tasks and novel operator sets. Across benchmarks in question answering, code generation, and mathematical reasoning, MetaFlow achieves performance comparable to state-of-the-art baselines on in-domain tasks with single inference, while demonstrating remarkable zero-shot generalization capabilities on out-of-domain tasks and operator sets.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是提出 **MetaFlow**，把“为某类任务自动设计可复用工作流”从人工工程问题转化为一个可学习的元学习问题，使 LLM 不只是为单个样例搜索答案，而是生成能跨样例复用的解题流程。方法上，它先用合成工作流数据做监督微调，让模型学会基本的算子组合模式；再用带可验证奖励的强化学习（RLVR），通过在同一任务的多个实例上执行工作流并反馈成败，优化端到端成功率。值得 RL + LLM/MLLM 栏目关注的是，它展示了 RL 不仅可以提升单题推理表现，还能训练模型生成结构化、可解释、可迁移的“算法级策略”。尤其重要的是，MetaFlow 在未见过的任务和算子集合上仍有较强零样本泛化，指向了从 prompt/search 走向自动化 agent/workflow synthesis 的趋势。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.30704v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.30704v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">8</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.29296v1" target="_blank">Process Advantage Signal Shaping: A Paradigm-Agnostic Middleware for Process-Supervised RL in LLM Reasoners</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 19.5</span><span class="sep">·</span><span>2026-06-28</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Chao Wang, Hongtao Tian, Tao Yang, Yunsheng Shi, Ting Yao et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, rl_core:policy optimization, preference_alignment:reward model, verifiable_reasoning:grpo, verifiable_reasoning:process reward, verifiable_reasoning:outcome reward</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Group Relative Policy Optimization (GRPO) is a default recipe for process-supervised reinforcement learning of LLM reasoners, and dense process supervision -- via learned process reward models (PRMs) or on-policy-distillation KL signals -- is a common way to densify its otherwise weak outcome reward. Layering such a step-level signal on top of GRPO's group-standardized advantage, however, exposes three structural pathologies: \emph{channel contamination} between the pooled process, outcome, and format streams at group standardization; \emph{resolution mismatch} between the granularity of the process signal and the granularity of the logical decisions being credited; and a \emph{cumulative trap} by which GRPO's return-to-go sum surfaces either length inflation or truncated exploration depending on the sign regime of the signal. We propose \textbf{PASS} (\emph{Process Advantage Signal Shaping}), a compact middleware that sits between any scalar step-level process signal and GRPO's clipped surrogate and addresses the three pathologies in turn: \emph{Advantage Fusion} standardizes the three streams independently within each group, \emph{Chunk-by-Value} derives value-homogeneous chunks from the signal itself and broadcasts credit within each chunk, and \emph{Divide-Length} converts the cumulative objective into an average-value-density score. We validate PASS across two domains and two process-signal paradigms -- a learned PRM on mathematical reasoning and an on-policy-distillation KL signal (with a generalized variant) on multi-hop question answering -- and under two group-standardization operators. In every regime PASS delivers a consistent pass@1 gain over the corresponding GRPO baseline.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文指出，当前用 GRPO 训练推理型 LLM 时，直接叠加步骤级过程监督信号会带来奖励通道混杂、信用分配粒度不匹配以及长度偏置等问题，影响 RL 训练稳定性和效果。作者提出 PASS 作为一种“中间件”，不改变底层过程信号来源，而是在进入 GRPO 目标前对优势信号做三步重塑：分流标准化不同奖励来源、按信号相似性切分推理片段并共享信用、再用平均密度替代累积回报以缓解长度陷阱。实验覆盖数学推理中的 PRM 信号和多跳问答中的 KL 蒸馏信号，显示 PASS 在不同设定下都能稳定提升 pass@1。它值得 RL + LLM/MLLM 栏目关注，因为它不是提出新的奖励模型或新 RL 算法，而是针对“过程监督如何正确接入 GRPO”这一实际训练瓶颈给出可迁移的工程化范式。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.29296v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.29296v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">9</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.30378v1" target="_blank">OmniCoT: A Benchmark for Global and Multi-Step Panoramic Reasoning</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 17.6</span><span class="sep">·</span><span>2026-06-29</span></div>
+  <div class="tags"><span class="tag c3">cs.CV</span></div>
+  <div class="meta-row">Haocong He, Chenfei Liao, Zichen Wen, Zihao Dongfang, Xu Zheng et al.</div>
+  <div class="why">why: verifiable_reasoning:grpo, llm_core:large language model, llm_core:large language models, llm_core:language model, mllm_vlm:multimodal large language model, mllm_vlm:multimodal large language models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Multimodal Large Language Models (MLLMs) have demonstrated promising spatial reasoning capabilities, while these abilities remain underexplored in the emerging visual modality of panoramic imagery. The full 360°$\times$180° field of view of panoramas essentially supports complex global multi-step reasoning, which is also the fundamental advantage of panoramas in applications such as embodied intelligence. However, existing panoramic benchmarks largely focus on simplistic queries that rely on local cues or single-/few-step reasoning, thereby ignoring the fundamental advantage of panoramas and failing to fully exploit their potential. To address this gap, we introduce OmniCoT, a panoramic spatial reasoning suite designed to enable MLLMs to use global evidence and perform multi-step inference across viewpoints. It includes OmniCoT-B (6.7K data) for evaluation, which measures both answer accuracy and reasoning quality, OmniCoT-Real (1K data) as a manually annotated real-world subset to quantify the Sim-to-Real gap. For training, OmniCoT-T (14.3K data) is purpose-built with structured stepwise Chain-of-Thought annotations that explicitly link intermediate reasoning steps to panoramic evidence. Based on OmniCoT-T, we introduce OmniCoT-R1 and adopt a two-stage training strategy tailored to the geometrically complex panoramic space, where Supervised Fine-tuning (SFT) anchors reasoning to panoramic evidence (e.g., bearings, proximity) and GRPO penalizes geometrically incoherent paths to consolidate global 360° spatial consistency. Through OmniCoT, we aim to recalibrate the difficulty of panoramic spatial reasoning to better align with the intrinsic capabilities of panoramic imagery, thereby fostering meaningful progress in this research area.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是提出了 OmniCoT，一个面向全景图像的空间推理基准，重点考察模型是否能利用 360° 全局视野进行跨视角、多步骤推理，而不是只回答依赖局部线索的简单问题。  
+方法上，它不仅提供评测集 OmniCoT-B 和真实场景子集 OmniCoT-Real，还构建了带有逐步 Chain-of-Thought 标注的训练集 OmniCoT-T，用来把每一步推理显式绑定到方位、距离、相对位置等全景证据上。  
+基于该数据，作者训练了 OmniCoT-R1：先用 SFT 学习证据对齐的推理过程，再用 GRPO 惩罚几何上不一致的推理路径，从而强化模型的全局空间一致性。  
+它值得 RL + LLM/MLLM 栏目关注，因为它把强化学习用于多模态空间推理中的“几何一致性”优化，展示了 RL 不只是提升答案正确率，也可以约束和改进 MLLM 的中间推理过程。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.30378v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.30378v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">10</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.31732v1" target="_blank">UniCoder: Unified Visual-to-Code Generation via Symbolic Rewards and Reference-Guided Code Optimization</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 17.1</span><span class="sep">·</span><span>2026-06-30</span></div>
+  <div class="tags"><span class="tag c3">cs.CV</span></div>
+  <div class="meta-row">Yaozhi Zheng, Yilei Jiang, Manyuan Zhang, Yuxuan Wan, Kaituo Feng et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, llm_core:large language model, llm_core:large language models, llm_core:llm, mllm_vlm:multimodal large language model, mllm_vlm:multimodal large language models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Visual-to-Code generation, which transforms scientific plots, vector graphics, and webpages into executable scripts, demands a level of pixel-precise alignment that standard Multimodal Large Language Models (MLLMs) fail to achieve through Supervised Fine-Tuning (SFT) alone. While Reinforcement Learning (RL) offers a theoretical pathway to bridge this gap, its application is hindered by two fundamental obstacles: (1) \textit{Reward Coarseness}, where semantic metrics like CLIP scores fail to penalize fine-grained element deviations, and (2) \textit{Exploration Stagnation}, where the sparse, heterogeneous code search space prevents the policy from bootstrapping valid trajectories. To overcome these limitations, we introduce UniCoder, a unified RL framework that integrates two novel mechanisms. First, we propose \textbf{Symbolic Attribute Alignment}, which employs a lightweight auxiliary LLM to parse generated code into discrete visual attributes (e.g., hex colors, coordinate limits), enabling dense, element-wise reward computation. Second, to escape local optima, we devise \textbf{Reference-Guided Code Optimization}, a strategy that dynamically injects ground-truth trajectories into low-performing rollout groups, transforming blind exploration into guided policy improvement. Extensive experiments on ChartMimic, UniSVG, Design2Code and ScreenBench benchmarks demonstrate that our 8B-parameter model not only surpasses all open-source baselines but also achieves state-of-the-art performance comparable to proprietary models, establishing a new paradigm for generalized visual-to-code synthesis.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文针对“看图生成代码”中常见的像素级对齐难题，提出 UniCoder：相比单纯 SFT，它用强化学习进一步优化模型生成的绘图、SVG、网页等代码质量。核心方法有两点：一是让辅助 LLM 从生成代码中抽取颜色、坐标、尺寸等符号化属性，用这些可比较的结构化信息构造更细粒度奖励；二是在模型探索失败时动态引入参考代码轨迹，避免 RL 在稀疏代码空间中停滞。它值得 RL + LLM/MLLM 栏目关注，因为它展示了如何把“视觉相似度”转化为可执行代码层面的密集奖励，并结合参考引导解决大模型代码生成 RL 的探索问题。实验覆盖图表、SVG、网页和屏幕界面，说明该框架有望成为多模态代码生成中从 SFT 走向 RL 优化的通用范式。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.31732v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.31732v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">11</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.29984v1" target="_blank">Be Faithful When Response: Returning Fluent and Grounded Answers for Vision-Language Models Reinforcement Learning</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 17.1</span><span class="sep">·</span><span>2026-06-29</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Peng, Lee, Yin Zhang, Yanglin Zhang, Haonan Wu et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, rl_core:rl training, llm_core:language model, llm_core:language models, mllm_vlm:vision-language model, mllm_vlm:vlm</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Reinforcement Learning (RL) is an important paradigm for improving the reasoning capabilities of Vision-Language Models (VLMs). However, directly applying RL to rollout multimodal reasoning can lead to instability, due to the exploitation of language priors, the neglect of visual evidence, and the generation of reasoning traces that are fluent yet not visually grounded. The question arises: Can initially steer the policy toward visually faithful reasoning regime before applying reinforcement learning? To this end, we propose a Faithful Warm-Start (FWS) strategy that first curates samples with explicit vision-language causal relationships from six general VQA benchmarks to construct the FaithfulQA dataset, where each of the image-question pairs gains a certain degree of visual observations, question requirements, commonsense knowledge, domain knowledge, and the final answer. Subsequently, a VLM-based judge is employed to further purify the dataset, ensuring strong causal consistency and visual faithfulness. This warm-start stage equips the model with the capability to understand causally grounded vision-language patterns before subsequent RL optimization under sparse answer-level rewards. Experimental results show that such faithful supervision improves answer accuracy, stabilizes RL training, and reduces visually unsupported reasoning.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是指出 VLM 做强化学习推理时，容易依赖语言先验而“编造”看似流畅但缺乏视觉依据的推理，并提出在 RL 前先进行“忠实性预热”来缓解这一问题。方法上，作者从多个通用 VQA 数据集中构造 FaithfulQA，显式标注/组织图像观察、问题需求、常识/领域知识与答案之间的因果关系，并用 VLM judge 进一步筛选出视觉依据更可靠的样本，再接 sparse answer reward 的 RL 训练。实验表明，这种 warm-start 能提升回答准确率、降低 RL 训练不稳定性，并减少不受图像支持的 reasoning trace。对 RL + LLM/MLLM 栏目值得关注的是，它把“奖励优化”前的策略初始化质量作为关键变量，强调多模态 RL 不只是追求最终答案，更要约束推理过程与视觉证据的一致性。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.29984v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.29984v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">12</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.29805v2" target="_blank">Clearer Sight, Fewer Lies: Oriented Pickup Preference Optimization for Multimodal Hallucination Mitigation</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 17.1</span><span class="sep">·</span><span>2026-06-29</span></div>
+  <div class="tags"><span class="tag c3">cs.CV</span></div>
+  <div class="meta-row">Xin Zou, Haolin Deng, Yibo Yan, Shuliang Liu, Zhiwei Jin et al.</div>
+  <div class="why">why: preference_alignment:preference optimization, llm_core:large language model, llm_core:large language models, llm_core:language model, mllm_vlm:multimodal large language model, mllm_vlm:multimodal large language models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Multimodal Large Language Models (MLLMs) are prone to hallucination as their generation preferences are insufficiently calibrated to visual evidence, causing them to fall back on linguistic priors, rather than faithful grounding. In this work, we start from an empirical observation: when query-relevant visual evidence is explicitly strengthened using the model's own attention, generation becomes more accurate, suggesting that many failures do not arise solely from missing perception, but from an insufficient tendency to trust the evidence the model has already attended to. Motivated by this finding, we propose Oriented Pickup Preference Optimization (\texttt{OPPO}), an evidence-aware alignment objective that learns preferences over the strength of visual evidence, rather than only response quality. Concretely, \texttt{OPPO} contrasts the same faithful response under stronger, anchored, weaker-evidence views, turning naive visual preference into ordered visual-evidence alignment. We further combine this objective with fine-grained span-level and token-level regularization to stabilize the training. Besides, we provide a theoretical analysis showing that ordered evidence margins induce a positive lower bound on local visual sensitivity. Extensive evaluations across hallucination and general-purpose benchmarks demonstrate that \texttt{OPPO} consistently outperforms baseline methods.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文针对 MLLM 幻觉问题提出了一个关键观点：模型并非总是“看不见”图像证据，而是生成时没有足够倾向去相信已经关注到的视觉信息。为此，作者提出 OPPO，把偏好优化从“哪个回答更好”转向“在不同视觉证据强度下，模型应更偏好有充分证据支撑的忠实回答”，通过构造强证据、锚定证据、弱证据视图来学习有序的视觉证据对齐。方法上还加入 span-level 和 token-level 正则，使训练更稳定，并从理论上说明这种证据间隔能提升局部视觉敏感性。它值得 RL + LLM/MLLM 栏目关注，因为它把偏好优化/RLHF 类思想细化到多模态 grounding 层面，为减少幻觉提供了比单纯答案偏好更细粒度的对齐路径。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.29805v2" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.29805v2" target="_blank">PDF</a>
+  </div>
+</div></section>
+<section class="topic" id="section-2"><div class="topic-head"><h2 class="topic-title">Speech-Audio-Music</h2><span class="topic-count">5 篇</span></div><div class="paper">
+  <div class="p-head">
+    <span class="idx">1</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.31247v1" target="_blank">FlexiSLM: A Dynamic and Controllable Frame Rate Spoken Language Model</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 15.7</span><span class="sep">·</span><span>2026-06-30</span></div>
+  <div class="tags"><span class="tag c1">cs.SD</span><span class="tag c1">eess.AS</span></div>
+  <div class="meta-row">Jiaqi Li, Chaoren Wang, Xiaohai Tian, Mingjie Chen, Xinyu Liang et al.</div>
+  <div class="why">why: speech_audio_music:speech, speech_audio_music:spoken, speech_audio_music:audio, frontier_audio_ai:spoken language model, audio_models:spoken language model, audio_models:audio tokenizer</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Spoken language models (SLMs) extend LLMs to speech input and output. Existing SLMs represent speech at fixed frame rates (e.g., 25 or 12.5 Hz), ignoring the time-varying information density of speech and offering no flexibility to trade off quality for speed at inference time. Recent audio tokenizer research has proposed dynamic frame rate speech coding, which exploits this non-uniformity and enables two new capabilities: very low average frame rates and frame rate controllability. However, this technique has not yet been applied to SLMs. We introduce Flexible Spoken Language Model (FlexiSLM), the first SLM that supports dynamic and controllable frame rates on both speech input and output. Using dynamic frame rate representations, FlexiSLM outperforms fixed-frame-rate 7B models including Qwen2.5-Omni and Kimi-Audio at its high-quality operating points. We further verify that FlexiSLM can be accurately steered down to 4.0 Hz; at 6.25 Hz, it roughly halves inference time relative to 12.5 Hz while retaining strong speech-to-speech quality. Audio samples are available at https://flexislm.github.io .</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文提出了 FlexiSLM，一个可在语音输入和输出两端使用“动态帧率”的 spoken language model，使模型不再被固定的 25Hz 或 12.5Hz 语音 token 速率限制。其核心思路是把动态帧率音频 tokenizer 引入 SLM：语音信息密集处用更多帧，冗余处用更少帧，并允许推理时手动控制平均帧率，从而在质量、延迟和计算成本之间切换。实验显示，FlexiSLM 在高质量设置下优于一些固定帧率的 7B 语音模型，并且可降到约 4Hz；在 6.25Hz 时能显著减少推理时间，同时保持较好的语音到语音效果。对于 Speech-Audio-Music 栏目，它值得关注是因为它把“可变码率/帧率”从音频编码推进到端到端语音大模型，提供了一条提升语音交互效率和可控性的实用路线。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.31247v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.31247v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">2</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.31729v1" target="_blank">Is Natural Always Appropriate? Investigating Naturalness and Appropriateness Across Different Domains for TTS Evaluation</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 13.5</span><span class="sep">·</span><span>2026-06-30</span></div>
+  <div class="tags"><span class="tag c1">eess.AS</span><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Dominika Woszczyk, Andreas Triantafyllopoulos, Jura Miniota, Éva Székely, Bjoern Schuller</div>
+  <div class="why">why: speech_audio_music:speech, speech_audio_music:text-to-speech, speech_audio_music:tts, audio_models:text-to-speech, audio_models:tts</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Text-to-speech (TTS) evaluation is an open challenge. While the primary target was &quot;naturalness,&quot; recent fidelity gains shifted focus toward &quot;appropriateness&quot; and whether speech is correct for its context. In this work, we examine how perception changes when the expected downstream use varies. We measure the appropriateness and human-likeness of five SOTA TTS systems across five domains: AI assistant, reader, actor, animated character, and spontaneous speaker. Results show appropriateness varies across domains independently of naturalness. While systems shine at reading, expressive domains remain challenging, and optimizing for one can degrade others. Furthermore, naturalness scores tend to penalize stylized speech while rewarding spontaneity. Finally, our study also highlights blind spots in one-size-fits-all evaluation metrics across more expressive domains. We demonstrate that TTS performance is not &quot;solved&quot; but depends on the target domain, requiring context-aware evaluation.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是指出：TTS 评价不能只看“像不像真人/自然不自然”，还必须看语音是否适合具体使用场景，因为同一个系统在朗读、助手、表演、动画角色、自发对话等领域的表现可能差异很大。  
+作者通过让人类评估五个先进 TTS 系统在五类应用域中的“合适性”和“人类感”，比较不同语境下感知评分的变化，发现自然度与场景适配性并不总是一致。  
+一个重要发现是，偏风格化或表演化的语音可能被传统自然度指标低估，而带有自发感的语音反而更容易获得高自然度评分。  
+这对 Speech-Audio-Music 栏目值得关注，因为它提醒研究者和产品开发者：高质量语音合成不只是提升平均 MOS，而是要建立面向任务、角色和表达风格的上下文感知评测体系。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.31729v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.31729v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">3</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.29901v1" target="_blank">Semi-Supervised Sound Event Detection with Conditional Mixup and Embedding-Level Contrastive Loss</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 13.2</span><span class="sep">·</span><span>2026-06-29</span></div>
+  <div class="tags"><span class="tag c1">eess.AS</span><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Nian Shao, Xian Li, Xiaofei Li</div>
+  <div class="why">why: speech_audio_music:audio, speech_audio_music:acoustic, speech_audio_music:sound, audio_tasks:sound event detection, frontier_audio_ai:audio foundation model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Sound event detection (SED) is a core module for acoustic environmental analysis, yet its performance is often limited by scarce labeled data. Recent systems leverage large pretrained audio foundation models, but effective fine-tuning remains challenging because labeled data are limited while unlabeled data are abundant. A previous work, ATST-SED, addressed this problem with a pseudo-label based semi-supervised fine-tuning framework. In this work, we further improve the framework by adopting an embedding-level self-supervised contrastive loss inspired by ATST-Frame pretraining. This contrastive objective better exploits unlabeled data during fine-tuning. One challenge is that mixup serves different roles in the two objectives: pseudo-label learning uses composition mixup, while contrastive learning treats mixup as a perturbation. To resolve this mismatch, we propose conditional mixup, which combines composition mixup and perturbation mixup in one semi-supervised framework and defines the corresponding embedding-level contrastive losses. The resulting model achieves 0.645 PSDS1 and 0.822 PSDS2 on the DESED validation set, establishing a new state of the art.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文针对声音事件检测中“有标注数据少、无标注数据多”的典型瓶颈，改进了基于预训练音频模型的半监督微调流程。核心做法是在伪标签学习之外，引入帧/嵌入层面的对比学习目标，让模型在利用无标签音频时不仅学习事件标签，也学习更稳健的音频表征。论文还提出了“条件 mixup”，区分用于标签组合的 mixup 和作为扰动增强的 mixup，避免两类训练目标之间相互冲突。它值得关注是因为该方法在 DESED 上刷新了 SED 性能，说明音频基础模型的微调策略仍有显著提升空间，对环境声分析、智能监听和多媒体理解都有参考价值。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.29901v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.29901v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">4</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.30944v1" target="_blank">Preserving Speech-to-Text LLM Capabilities in Speech-to-Speech Generation</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 13.0</span><span class="sep">·</span><span>2026-06-29</span></div>
+  <div class="tags"><span class="tag c1">eess.AS</span><span class="tag c1">cs.SD</span></div>
+  <div class="meta-row">Yuxuan Hu, Heng Lu, Ruchao Fan, Yao Qian, Xiaofei Wang et al.</div>
+  <div class="why">why: speech_audio_music:speech, speech_audio_music:spoken, speech_audio_music:audio, audio_tasks:speech translation, audio_models:text-to-speech</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Strong speech-to-text (S2T) LLMs already provide robust speech perception and text reasoning, but adding speech-to-speech (S2S) output is challenging: fine-tuning the backbone can degrade the original S2T performance, while attaching a downstream talker reintroduces a serial text-to-speech bottleneck. We present PRIME-Speech, a frozen-backbone S2S conversion framework that trains only speech-generation modules. PRIME-Speech synchronizes a causal audio post-decoder with intermediate hidden states of the frozen backbone, so codec tokens are generated from the model's evolving reasoning trajectory rather than from completed text chunks. The post-decoder uses mixed hidden-state, text, and audio-history conditioning, and a training-time packing strategy with turn-level audio KV-cache and position reset stabilizes multi-turn spoken interaction without additional multi-turn S2S training data. Multi-token prediction further reduces the effective codec prediction rate and improves first-audio latency without modifying the reasoning path. Across speech translation, spoken QA, speech understanding, and multi-turn dialogue, PRIME-Speech preserves the S2T behavior of the frozen backbone while producing accurate, low-WER spoken responses.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是提出 PRIME-Speech：在不微调原有语音到文本大模型主干的情况下，为其增加语音到语音输出能力，从而尽量避免破坏原本强大的语音理解和文本推理性能。方法上，它只训练语音生成相关模块，让一个因果音频后解码器对齐并利用冻结 LLM 的中间隐状态，同时结合文本信息和历史音频上下文来生成 codec token，而不是等完整文本生成后再串联 TTS。论文还通过多轮对话中的音频 KV-cache、位置重置和多 token 预测来降低延迟、提升稳定性。它值得 Speech-Audio-Music 栏目关注，因为它探索了端到端 spoken LLM 的实用路径：既保留 S2T 模型能力，又实现低延迟、低错误率的自然语音回复。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.30944v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.30944v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">5</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.31338v1" target="_blank">Beyond Binary Instrument QA: Probing Instrument Grounding in Music Audio-Language Models</a></div>
+  </div>
+  <div class="meta-line"><span class="score">score 8.7</span><span class="sep">·</span><span>2026-06-30</span></div>
+  <div class="tags"><span class="tag c1">cs.SD</span><span class="tag c3">cs.AI</span><span class="tag c1">eess.AS</span></div>
+  <div class="meta-row">Yujun Lee, Joonhyeok Shin, Hyoeun Kim, Kyuhong Shim</div>
+  <div class="why">why: speech_audio_music:audio, speech_audio_music:music, frontier_audio_ai:audio-language model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Recent music audio-language models achieve high accuracy on instrument question-answering benchmarks, but it remains unclear whether this reflects robust audio grounding or benchmark-specific shortcuts. In this paper, we introduce an OpenMIC-derived diagnostic benchmark sequence for instrument grounding in music audio-language models, extending binary instrument-presence QA to genre-prior-reduced examples, confusable instrument discrimination, longer audio context, and temporal localization. Across these settings, high binary QA accuracy often fails to predict model behavior: models can exhibit option-position bias, confusable-instrument errors, and temporal response bias. These results suggest that instrument grounding should be evaluated with multi-axis diagnostic benchmarks rather than a single aggregate accuracy.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文指出，现有音乐音频-语言模型在“某乐器是否出现”的问答任务上得分很高，并不一定代表它们真正听懂了音频中的乐器。作者基于 OpenMIC 构建了一组诊断性评测，覆盖去除流派先验、相似乐器区分、长音频上下文和时间定位等维度，用来检验模型是否存在利用数据偏差或选项位置等捷径。实验发现，模型在简单二分类 QA 上的高准确率无法可靠预测其在更真实、更细粒度场景中的表现，常见问题包括混淆相近乐器和时间判断偏置。对 Speech-Audio-Music 栏目而言，这篇工作重要在于它推动音乐音频理解评测从单一准确率走向更细致的“音频 grounding”诊断，有助于发现并改进模型的真实听觉理解能力。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.31338v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.31338v1" target="_blank">PDF</a>
+  </div>
+</div></section>
+<section class="topic" id="section-3"><div class="topic-head"><h2 class="topic-title">AI paper of the day</h2><span class="topic-count">5 篇</span></div><div class="paper">
+  <div class="p-head">
+    <span class="idx">1</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.30552v1" target="_blank">Training Vision-Language-Action Models with Dense Embodied Chain-of-Thought Supervision</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 14.5</span><span class="sep">·</span><span>2026-06-29</span></div>
+  <div class="tags"><span class="tag c1">cs.RO</span><span class="tag c3">cs.CV</span></div>
+  <div class="meta-row">Haoyang Li, Guanlin Li, Youhe Feng, Chen Zhao, Zhuoran Wang et al.</div>
+  <div class="why">why: foundation_models:vision-language model, agents_reasoning:chain-of-thought, generative_world_models:diffusion transformer, generative_world_models:flow matching, embodied_ai:vision-language-action, embodied_ai:manipulation</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Cross-embodiment transfer in vision-language-action (VLA) models remains challenging because low-level state and action spaces differ fundamentally across robot platforms. We observe that the high-level cognitive process underlying manipulation, including scene perception, object identification, task planning, and sub-task decomposition, is largely shared across embodiments. Based on this observation, we present ZR-0, a 2.6 billion parameter end-to-end VLA model that uses dense Embodied Chain-of-Thought (ECoT) supervision to align cross-embodiment representations within the vision-language model (VLM). ZR-0 adopts a dual-stream architecture: a pre-trained VLM (System 2) generates structured ECoT reasoning during training, while a Diffusion Transformer-based action expert (System 1) produces continuous action chunks via flow matching. The two components are coupled through cross-attention, with an attention mask that restricts the action expert to input prompt features only, enabling ECoT generation to be entirely skipped at inference without any performance loss. ZR-0 is pre-trained on ProcCorpus-60M, a large-scale dataset comprising approximately 60 million frames (approximately 1,000 hours) from over 400K trajectories, with dense ECoT annotations covering 96.8% of all frames. We evaluate ZR-0 on three simulation benchmarks spanning single-arm (LIBERO), bimanual (RoboTwin 2.0), and humanoid (RoboCasa GR-1 Tabletop) embodiments, as well as real-world experiments on the xArm platform, demonstrating strong performance across all settings. Code and model checkpoints are available at https://github.com/RUCKBReasoning/ZR-0.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是提出了 ZR-0：一个面向多机器人形态迁移的端到端 VLA 模型，重点解决不同机器人低层动作空间不一致导致的泛化困难。它的关键思路是把“可迁移的高层认知过程”显式监督起来，用密集的具身 Chain-of-Thought 标注训练 VLM 学会场景理解、目标识别和任务分解，再通过与 Diffusion Transformer 动作专家的双流架构生成连续动作。一个有意思的设计是，ECoT 只在训练时提供中间监督，推理时可以完全跳过，因此不会增加部署成本。它值得关注在于：论文同时覆盖单臂、双臂、类人和真实机器人实验，并发布大规模数据、代码和模型，可能成为研究跨具身 VLA 迁移的重要基线。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.30552v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.30552v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">2</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.29354v1" target="_blank">When LLMs Develop Languages: Symbolic Communication for Efficient Multi-Agent Reasoning</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 12.5</span><span class="sep">·</span><span>2026-06-28</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span><span class="tag c2">cs.NE</span></div>
+  <div class="meta-row">Zhengqi Pei, Qingming Huang, Shuhui Wang</div>
+  <div class="why">why: foundation_models:large language model, foundation_models:llm, agents_reasoning:llm agent, agents_reasoning:multi-agent, agents_reasoning:chain-of-thought</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Chain-of-Thought (CoT) improves large language models (LLMs) on difficult reasoning tasks, but it often incurs long natural-language rationales that are poorly aligned with efficient machine reasoning. We propose Communicative Language Symbolism Routing (CLSR), a test-time framework in which multiple LLM agents autonomously invent, evolve, and share compact Language Symbolism Frameworks (LSFs), while a latent-free router adaptively selects and composes these languages per query to optimize the accuracy-token trade-off. Unlike prompt optimization that refines surface instructions, CLSR treats each LSF as a reusable symbolic protocol with compact symbols, usage rules, and a message-passing contract, and improves it through an evolutionary loop driven by correctness and token cost. At inference time, the router may invoke a single low-cost LSF call, ensemble multiple LSFs, or execute a multi-round LSF composition protocol on harder queries. Across challenging benchmarks, CLSR reduces latency-oriented generated token completion by $3\sim 6\times$ compared to standard CoT while maintaining accuracy. We further derive an information-theoretic lower bound on token cost under arbitrary symbolism and show that, under an interpreter-realizability premise, multi-round LSF protocols conditionally subsume program-execution pipelines. Code is publicly available (https://github.com/pzqpzq/LSF_MDia).</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把多智能体推理中的“交流内容”从冗长自然语言 CoT，转向可复用、可进化的紧凑符号协议，从而在尽量保持准确率的同时显著降低生成 token 和延迟成本。方法上，作者提出 CLSR：多个 LLM agent 在测试时自动发明和迭代 Language Symbolism Frameworks，包括符号、使用规则和消息传递约定；再由一个无潜变量路由器根据题目难度选择单个协议、多个协议集成或多轮协议组合。它值得关注，因为这不是简单做 prompt 压缩，而是在探索 LLM 之间是否能形成更接近“机器内部语言”的通信机制，并把准确率—成本权衡作为核心优化目标。若结果可靠，这类工作可能为多智能体系统、低延迟推理和可组合符号推理提供一种新的工程路线。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.29354v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.29354v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">3</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.31648v1" target="_blank">Think in English, Answer in Korean: Efficient Adaptation of Multilingual Tool-Using Agents</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 12.3</span><span class="sep">·</span><span>2026-06-30</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Utsav Garg, Sungjin Hong, Jason Jung, Justin Lee, Shaan Desai et al.</div>
+  <div class="why">why: foundation_models:reasoning model, agents_reasoning:agentic, agents_reasoning:tool-use, agents_reasoning:mathematical reasoning, ai_systems:quantization</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">We present LuckyStar 111B, a 111B-parameter hybrid reasoning model developed through a collaboration between Cohere and LG CNS for Korean-English enterprise agents under practical memory and serving constraints. The model trains from Cohere's fully post-trained Command A model rather than a new pretraining run, and uses preamble conditioning to switch between concise non-reasoning behavior and longer tool-oriented reasoning. We study four choices for scaling tool-using agents efficiently: multilingual supervised fine-tuning, reinforcement learning with verifiable rewards for multi-step tool-use tasks, language-consistency rewards for Korean user-facing responses, and 4-bit quantization for single-GPU serving. The adapted model improves mathematical reasoning, function calling, and agentic natural-language-to-SQL (NL2SQL) performance while preserving general Korean and English instruction-following quality. These results provide a practical recipe and failure-mode analysis for adapting post-trained multilingual models to verifiable agentic workflows under memory-constrained deployment.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是提出了 LuckyStar 111B：一个面向韩英企业场景的多语种工具调用智能体，在不重新预训练大模型的前提下，通过后训练适配实现更强的推理、函数调用和 NL2SQL 能力。方法上，它基于 Cohere Command A 继续训练，结合多语种监督微调、可验证奖励的强化学习、面向韩语回答一致性的奖励设计，以及 4-bit 量化来满足单卡部署需求；同时用提示前缀控制模型在“简洁回答”和“长链路工具推理”之间切换。值得关注的是，这篇工作展示了一条更现实的企业级路线：不是堆更大预训练，而是在已有多语模型上做面向工具使用和部署约束的高效改造。对“AI paper of the day”来说，它的价值在于把多语种、Agent、RLVR、量化部署这些热门方向结合到一个可落地的系统案例中。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.31648v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.31648v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">4</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.31200v1" target="_blank">Agentic RAG-VLM: Affordance-Aware Retrieval-Augmented Generation with Self-Reflective Planning for Robotic Grasping</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 11.3</span><span class="sep">·</span><span>2026-06-30</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Tao Chen, Lizheng Liu, Jiaxu Wang, Ziyue Jiang, Ruiqi Tian et al.</div>
+  <div class="why">why: foundation_models:vision-language model, agents_reasoning:agentic, embodied_ai:manipulation, ai_systems:retrieval-augmented generation, ai_systems:rag</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Generalizable robotic grasping in cluttered environments is essential for deploying manipulators in unstructured human spaces, yet existing VLM-based methods rely on visual similarity for object matching, neglecting physical affordances such as handle graspability and material fragility, and operate open-loop without spatial reasoning or failure recovery, limiting their effectiveness when objects are densely packed or physically diverse. We present Agentic RAG-VLM, a unified framework that bridges VLM-based semantic understanding and physically grounded grasp execution by integrating retrieval-augmented generation (RAG) with vision-language models (VLMs) and agentic self-reflective planning. Agentic RAG-VLM introduces three tightly coupled components: (1) a Hierarchical Affordance-Aware RAG (HAA-RAG) that encodes four-dimensional affordance descriptors, including type, material, fragility, and graspable region, and retrieves strategies by functional affordance compatibility rather than visual appearance; (2) a Scene Graph Constraint Reasoner that constructs spatial relationship graphs from VLM perception and translates proximity, occlusion, and support constraints into concrete grasp parameter adjustments; and (3) an Agentic Self-Reflective Pipeline with a 14-type failure taxonomy and three-level adaptive retry for closed-loop grasp refinement. Evaluated on a 12-task benchmark spanning single-grasp, interactive, and long-horizon scenarios with 360 trials per configuration, Agentic RAG-VLM achieves 78.3 percent overall success, a 53.3 percentage-point absolute gain over VLM-only baselines, demonstrating that affordance-aware retrieval, scene graph reasoning, and agentic recovery are jointly essential for robust manipulation.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把 RAG、VLM 和闭环智能体规划结合起来，用于更可靠的机器人抓取，重点从“看起来像什么”转向“这个物体应该怎么被抓”。  
+方法上，它通过可供性描述来检索抓取策略，例如物体类型、材质、易碎性和可抓区域；再用场景图推理物体间的遮挡、支撑和邻近关系，动态调整抓取参数。  
+此外，系统内置失败分类和多级重试机制，使机器人在抓取失败后能自我反思并修正动作，而不是一次性开环执行。  
+它值得关注的地方在于，论文展示了 VLM 在机器人操作中从语义理解走向物理执行的一种更完整范式，并在复杂、拥挤场景中显著优于纯 VLM 基线。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.31200v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.31200v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">5</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2606.29824v1" target="_blank">Neural Procedural Memory: Empowering LLM Agents with Implicit Activation Steering</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 11.1</span><span class="sep">·</span><span>2026-06-29</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Chengfeng Zhao, Yuqiao Tan, Shizhu He, Yequan Wang, Jun Zhao et al.</div>
+  <div class="why">why: foundation_models:large language model, foundation_models:llm, agents_reasoning:llm agent, ai_systems:retrieval-augmented generation, ai_systems:rag</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">While Large Language Models (LLMs) excel as static solvers, transforming them into autonomous agents remains challenging. This transition requires continuous environmental interaction, yet current agents lack the necessary persistent procedural memory. Existing approaches predominantly employ Retrieval-Augmented Generation (RAG) to inject explicit textual guidelines into model contexts. However, relying solely on symbolic instructions can introduce a text-action disconnect, frequently failing to activate the internal representations necessary for correct task execution. To address this, the paper introduces Neural Procedural Memory (NPM), a training-free framework that represents agent memory through implicit activation steering rather than explicit instructions. By distilling procedural skills from historical contrastive experiences into steering vectors in the activation space, NPM directly activates the task-relevant neural mechanisms to guide task execution. Evaluations across four agent benchmarks show that NPM performs comparably to baselines using explicit textual instructions. Furthermore, the results show that combining implicit steering with explicit workflows provides complementary advantages, leading to more robust task execution. Representational analyses indicate that these steering vectors encode consistent task logic, forming organized structures within the activation space. These findings suggest that implicit activation steering provides a promising approach for managing agent memory.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文把“智能体记忆”从以往的文本化经验/规则，推进到一种更隐式的神经表征层面：不是把历史经验写进 prompt，而是用激活向量直接影响 LLM 的内部状态。方法上，它从过往成功/失败的对比经验中提取“程序性技能”对应的 steering vectors，在执行任务时注入模型激活空间，以触发更合适的行为模式；同时也验证了它能和显式工作流/RAG 指令互补。实验显示，NPM 在多个智能体基准上能达到接近文本记忆方法的效果，并且结合显式指导后更稳健。它值得关注，因为它提出了一条训练-free、非文本化的 agent memory 路线，可能缓解“知道规则但做不出来”的 text-action gap 问题。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2606.29824v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2606.29824v1" target="_blank">PDF</a>
+  </div>
+</div></section>
+  </main>
+</div>
+</div>
+<footer>
+  <span>Generated by Zhisheng Zheng · 2026-06-30</span>
+  <a href="index.html">查看全部归档 →</a>
+</footer>
+</body>
+</html>
