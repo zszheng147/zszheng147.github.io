@@ -13,12 +13,33 @@
     "title": "When LLMs Develop Languages: Symbolic Communication for Efficient Multi-Agent Reasoning",
     "url": "https://arxiv.org/abs/2606.29354v1"
   },
+  "2606.29526": {
+    "score": 15.0,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "The Mirage of Optimizing Training Policies: Monotonic Inference Policies as the Real Objective for LLM Reinforcement Learning",
+    "url": "https://arxiv.org/abs/2606.29526v1"
+  },
+  "2606.29534": {
+    "score": 8.2,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "Preference-ASR: A Preference-Aware Test Set for Benchmarking ASR in the Era of Speech LLMs",
+    "url": "https://arxiv.org/abs/2606.29534v1"
+  },
   "2606.29573": {
     "score": 20.1,
     "seen_at": "2026-07-01T06:33:49.114033+00:00",
     "source": "arXiv",
     "title": "Reliability-Prioritized Fine-Grained Generation in Multimodal Large",
     "url": "https://arxiv.org/abs/2606.29573v1"
+  },
+  "2606.29700": {
+    "score": 13.5,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "Toward Secure and Reliable PDDL Formalization of Large Language Models with Planner-in-the-Loop Feedback",
+    "url": "https://arxiv.org/abs/2606.29700v1"
   },
   "2606.29758": {
     "score": 21.0,
@@ -34,6 +55,13 @@
     "title": "Clearer Sight, Fewer Lies: Oriented Pickup Preference Optimization for Multimodal Hallucination Mitigation",
     "url": "https://arxiv.org/abs/2606.29805v2"
   },
+  "2606.29812": {
+    "score": 13.7,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "Consistency as Inductive Bias: Learning Cross-View Invariance for Robust Multimodal Reasoning",
+    "url": "https://arxiv.org/abs/2606.29812v1"
+  },
   "2606.29824": {
     "score": 11.1,
     "seen_at": "2026-07-01T06:33:49.114033+00:00",
@@ -48,12 +76,40 @@
     "title": "Semi-Supervised Sound Event Detection with Conditional Mixup and Embedding-Level Contrastive Loss",
     "url": "https://arxiv.org/abs/2606.29901v1"
   },
+  "2606.29915": {
+    "score": 14.9,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "H-GRPO: Permutation-Invariant Reinforcement Learning for Grounded Visual Reasoning",
+    "url": "https://arxiv.org/abs/2606.29915v1"
+  },
   "2606.29984": {
     "score": 17.1,
     "seen_at": "2026-07-01T06:33:49.114033+00:00",
     "source": "arXiv",
     "title": "Be Faithful When Response: Returning Fluent and Grounded Answers for Vision-Language Models Reinforcement Learning",
     "url": "https://arxiv.org/abs/2606.29984v1"
+  },
+  "2606.30116": {
+    "score": 13.5,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "Open Problems in Constitutional Preference Reconstruction",
+    "url": "https://arxiv.org/abs/2606.30116v1"
+  },
+  "2606.30339": {
+    "score": 5.0,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "REAR: Test-time Preference Realignment through Reward Decomposition",
+    "url": "https://arxiv.org/abs/2606.30339v1"
+  },
+  "2606.30345": {
+    "score": 15.5,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "DRIFT: Difficulty Routing Self-DIstillation with Rhythm-Gated Exploration and Success BuFfer Training",
+    "url": "https://arxiv.org/abs/2606.30345v1"
   },
   "2606.30378": {
     "score": 17.6,
@@ -76,12 +132,40 @@
     "title": "Training Vision-Language-Action Models with Dense Embodied Chain-of-Thought Supervision",
     "url": "https://arxiv.org/abs/2606.30552v1"
   },
+  "2606.30698": {
+    "score": 15.4,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "Vision-Language Procedural Reasoning for Context-Aware Reward Modeling of Robotic Endovascular Guidewire Navigation",
+    "url": "https://arxiv.org/abs/2606.30698v1"
+  },
   "2606.30704": {
     "score": 19.5,
     "seen_at": "2026-07-01T06:33:49.114033+00:00",
     "source": "arXiv",
     "title": "From Search to Synthesis: Training LLMs as Zero-Shot Workflow Generators",
     "url": "https://arxiv.org/abs/2606.30704v1"
+  },
+  "2606.30789": {
+    "score": 13.5,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "Predictable GRPO: A Closed-Form Model of Training Dynamics",
+    "url": "https://arxiv.org/abs/2606.30789v1"
+  },
+  "2606.30851": {
+    "score": 17.0,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "Test-Time Verification for Text-to-SQL via Outcome Reward Models",
+    "url": "https://arxiv.org/abs/2606.30851v1"
+  },
+  "2606.30906": {
+    "score": 10.5,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "Investigating Multi-Agent Deliberation in Law",
+    "url": "https://arxiv.org/abs/2606.30906v1"
   },
   "2606.30944": {
     "score": 13.0,
@@ -90,12 +174,33 @@
     "title": "Preserving Speech-to-Text LLM Capabilities in Speech-to-Speech Generation",
     "url": "https://arxiv.org/abs/2606.30944v1"
   },
+  "2606.31046": {
+    "score": 10.5,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "OpenLife: Toward Open-World Artificial Life with Autonomous LLM Agents",
+    "url": "https://arxiv.org/abs/2606.31046v1"
+  },
   "2606.31054": {
     "score": 20.6,
     "seen_at": "2026-07-01T06:33:49.114033+00:00",
     "source": "arXiv",
     "title": "ADAPT: Attention Dynamics Alignment with Preference Tuning for Faithful MLLMs",
     "url": "https://arxiv.org/abs/2606.31054v1"
+  },
+  "2606.31134": {
+    "score": 10.5,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "Beyond the Library: An Agentic Framework for Autoformalizing Research Mathematics",
+    "url": "https://arxiv.org/abs/2606.31134v1"
+  },
+  "2606.31158": {
+    "score": 10.2,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "LLM-Powered Interactive Robotic Action Synthesis from Multimodal Speech, Gestures, and Music",
+    "url": "https://arxiv.org/abs/2606.31158v1"
   },
   "2606.31200": {
     "score": 11.3,
@@ -111,12 +216,33 @@
     "title": "FlexiSLM: A Dynamic and Controllable Frame Rate Spoken Language Model",
     "url": "https://arxiv.org/abs/2606.31247v1"
   },
+  "2606.31259": {
+    "score": 7.5,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "SwiftAudio: Data-Efficient Caption-Only Distillation for One-Step Text-to-Audio Diffusion-based Generation",
+    "url": "https://arxiv.org/abs/2606.31259v1"
+  },
   "2606.31338": {
     "score": 8.7,
     "seen_at": "2026-07-01T06:33:49.114033+00:00",
     "source": "arXiv",
     "title": "Beyond Binary Instrument QA: Probing Instrument Grounding in Music Audio-Language Models",
     "url": "https://arxiv.org/abs/2606.31338v1"
+  },
+  "2606.31410": {
+    "score": 12.7,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "Xiaomi-GUI-0 Technical Report",
+    "url": "https://arxiv.org/abs/2606.31410v1"
+  },
+  "2606.31411": {
+    "score": 5.7,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "Linguistic Bias Mitigation for Spoofing Detection via Gradient Reversal and A Variational Information Bottleneck",
+    "url": "https://arxiv.org/abs/2606.31411v1"
   },
   "2606.31575": {
     "score": 22.0,
@@ -125,12 +251,26 @@
     "title": "Which Tokens Matter? Adaptive Token Selection for RLVR with the Relative Surprisal Index",
     "url": "https://arxiv.org/abs/2606.31575v1"
   },
+  "2606.31587": {
+    "score": 5.7,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "ZEBRA: Zero-Shot Entropy-Regularized Prompt Learning for Base-to-Novel Generalization in Audio-Language Models",
+    "url": "https://arxiv.org/abs/2606.31587v1"
+  },
   "2606.31648": {
     "score": 12.3,
     "seen_at": "2026-07-01T06:33:49.114033+00:00",
     "source": "arXiv",
     "title": "Think in English, Answer in Korean: Efficient Adaptation of Multilingual Tool-Using Agents",
     "url": "https://arxiv.org/abs/2606.31648v1"
+  },
+  "2606.31693": {
+    "score": 10.5,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "ShopX: A Foundation Model for Intent-to-Item Fulfillment in Agentic Shopping",
+    "url": "https://arxiv.org/abs/2606.31693v1"
   },
   "2606.31729": {
     "score": 13.5,
@@ -146,6 +286,13 @@
     "title": "UniCoder: Unified Visual-to-Code Generation via Symbolic Rewards and Reference-Guided Code Optimization",
     "url": "https://arxiv.org/abs/2606.31732v1"
   },
+  "2606.31748": {
+    "score": 13.5,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "Addressing Over-Refusal in LLMs with Competing Rewards",
+    "url": "https://arxiv.org/abs/2606.31748v1"
+  },
   "2606.31813": {
     "score": 19.5,
     "seen_at": "2026-07-01T06:33:49.114033+00:00",
@@ -153,8 +300,15 @@
     "title": "Geometry-Preserving Orthonormal Initialization for Low-Rank Adaptation in RLVR",
     "url": "https://arxiv.org/abs/2606.31813v1"
   },
+  "2606.31984": {
+    "score": 13.5,
+    "seen_at": "2026-07-01T17:25:42.659894+00:00",
+    "source": "arXiv",
+    "title": "GR2 Technical Report",
+    "url": "https://arxiv.org/abs/2606.31984v1"
+  },
   "_meta": {
-    "last_run_at": "2026-07-01T06:33:49.114085+00:00",
-    "last_run_date": "2026-06-30"
+    "last_run_at": "2026-07-01T17:25:42.659952+00:00",
+    "last_run_date": "2026-07-01"
   }
 }
