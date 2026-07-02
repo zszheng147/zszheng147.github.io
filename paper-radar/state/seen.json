@@ -132,6 +132,13 @@
     "title": "Training Vision-Language-Action Models with Dense Embodied Chain-of-Thought Supervision",
     "url": "https://arxiv.org/abs/2606.30552v1"
   },
+  "2606.30571": {
+    "score": 10.0,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "Attractor States Emerge in Multi-Turn LLM Conversations",
+    "url": "https://arxiv.org/abs/2606.30571v1"
+  },
   "2606.30698": {
     "score": 15.4,
     "seen_at": "2026-07-01T17:25:42.659894+00:00",
@@ -216,6 +223,13 @@
     "title": "FlexiSLM: A Dynamic and Controllable Frame Rate Spoken Language Model",
     "url": "https://arxiv.org/abs/2606.31247v1"
   },
+  "2606.31252": {
+    "score": 10.5,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "Embodied CAD: Solver-Grounded LLM Agents for Parametric B-Rep Assembly Modeling",
+    "url": "https://arxiv.org/abs/2606.31252v1"
+  },
   "2606.31259": {
     "score": 7.5,
     "seen_at": "2026-07-01T17:25:42.659894+00:00",
@@ -229,6 +243,13 @@
     "source": "arXiv",
     "title": "Beyond Binary Instrument QA: Probing Instrument Grounding in Music Audio-Language Models",
     "url": "https://arxiv.org/abs/2606.31338v1"
+  },
+  "2606.31392": {
+    "score": 11.9,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "ReGRPO: Reflection-Augmented Policy Optimization for Tool-Using Agents",
+    "url": "https://arxiv.org/abs/2606.31392v1"
   },
   "2606.31410": {
     "score": 12.7,
@@ -300,6 +321,13 @@
     "title": "Geometry-Preserving Orthonormal Initialization for Low-Rank Adaptation in RLVR",
     "url": "https://arxiv.org/abs/2606.31813v1"
   },
+  "2606.31909": {
+    "score": 11.9,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "CoDex: Learning Compositional Dexterous Functional Manipulation without Demonstrations",
+    "url": "https://arxiv.org/abs/2606.31909v1"
+  },
   "2606.31984": {
     "score": 13.5,
     "seen_at": "2026-07-01T17:25:42.659894+00:00",
@@ -307,8 +335,127 @@
     "title": "GR2 Technical Report",
     "url": "https://arxiv.org/abs/2606.31984v1"
   },
+  "2606.32032": {
+    "score": 11.0,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "Reinforcement Learning with Metacognitive Feedback Elicits Faithful Uncertainty Expression in LLMs",
+    "url": "https://arxiv.org/abs/2606.32032v1"
+  },
+  "2607.00152": {
+    "score": 13.5,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "GRPO, Dr. GRPO, and DAPO Are Three Operations on One Number: The Group-Standard-Deviation Identity",
+    "url": "https://arxiv.org/abs/2607.00152v1"
+  },
+  "2607.00208": {
+    "score": 10.5,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "SLIM-RL: Risk-Budgeted Random-Masking RL for Diffusion LLMs Without Trajectory Slicing",
+    "url": "https://arxiv.org/abs/2607.00208v1"
+  },
+  "2607.00247": {
+    "score": 8.7,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "Adaptive Perturbation Selection for Contrastive Audio Decoding",
+    "url": "https://arxiv.org/abs/2607.00247v1"
+  },
+  "2607.00272": {
+    "score": 9.9,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "ASPIRE: Agentic /Skills Discovery for Robotics",
+    "url": "https://arxiv.org/abs/2607.00272v1"
+  },
+  "2607.00309": {
+    "score": 13.5,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "A Text-Steerable Instrument for Sketching Procedural Soundscapes via Language Models",
+    "url": "https://arxiv.org/abs/2607.00309v1"
+  },
+  "2607.00382": {
+    "score": 11.0,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "Vitality-Aware Compression for Efficient Image-to-Shape Diffusion Transformers",
+    "url": "https://arxiv.org/abs/2607.00382v1"
+  },
+  "2607.00423": {
+    "score": 12.4,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "Selective Test-Time Debiasing for CLIP via Reward Gating",
+    "url": "https://arxiv.org/abs/2607.00423v1"
+  },
+  "2607.00483": {
+    "score": 17.6,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "VLM-AR3L: Vision-Language Models for Absolute and Relative Rewards in Reinforcement Learning",
+    "url": "https://arxiv.org/abs/2607.00483v1"
+  },
+  "2607.00627": {
+    "score": 10.5,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "AGI Maze as a Benchmark Framework for World-Modeling Agents",
+    "url": "https://arxiv.org/abs/2607.00627v1"
+  },
+  "2607.00641": {
+    "score": 8.5,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "What's a Credit Worth? A Market Framework for Attribution-Aware Compensation in Generative Music",
+    "url": "https://arxiv.org/abs/2607.00641v1"
+  },
+  "2607.00654": {
+    "score": 17.4,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "Linguistic Relative Policy Optimization for Video Anomaly Reasoning",
+    "url": "https://arxiv.org/abs/2607.00654v1"
+  },
+  "2607.00946": {
+    "score": 17.7,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "A Geometric Perspective on Composable Emotion Steering in Text-to-Speech Models",
+    "url": "https://arxiv.org/abs/2607.00946v1"
+  },
+  "2607.01084": {
+    "score": 10.5,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "Can Agents Generalize to the Open World? Unveiling the Fragility of Static Training in Tool Use",
+    "url": "https://arxiv.org/abs/2607.01084v1"
+  },
+  "2607.01115": {
+    "score": 11.6,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "Towards Developing a Multimodal Chat Assistant for University Stakeholders: RAG-based Approach",
+    "url": "https://arxiv.org/abs/2607.01115v1"
+  },
+  "2607.01191": {
+    "score": 13.2,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "Perceive-to-Reason: Decoupling Perception and Reasoning for Fine-Grained Visual Reasoning",
+    "url": "https://arxiv.org/abs/2607.01191v1"
+  },
+  "2607.01232": {
+    "score": 18.5,
+    "seen_at": "2026-07-02T17:03:26.126993+00:00",
+    "source": "arXiv",
+    "title": "Is One Layer Enough? Training A Single Transformer Layer Can Match Full-Parameter RL Training",
+    "url": "https://arxiv.org/abs/2607.01232v1"
+  },
   "_meta": {
-    "last_run_at": "2026-07-01T17:25:42.659952+00:00",
-    "last_run_date": "2026-07-01"
+    "last_run_at": "2026-07-02T17:03:26.127078+00:00",
+    "last_run_date": "2026-07-02"
   }
 }
