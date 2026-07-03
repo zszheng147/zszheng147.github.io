@@ -454,8 +454,155 @@
     "title": "Is One Layer Enough? Training A Single Transformer Layer Can Match Full-Parameter RL Training",
     "url": "https://arxiv.org/abs/2607.01232v1"
   },
+  "2607.01392": {
+    "score": 14.0,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "Multi-Objective Exploration and Preference Optimization via Mutual Information",
+    "url": "https://arxiv.org/abs/2607.01392v1"
+  },
+  "2607.01465": {
+    "score": 19.5,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "Beyond Next-Token Prediction: An RLVR Proof of Concept for Tool-Use Agents on Atlassian Workflows",
+    "url": "https://arxiv.org/abs/2607.01465v1"
+  },
+  "2607.01480": {
+    "score": 17.0,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "Procedural Memory Distillation: Online Reflection for Self-Improving Language Models",
+    "url": "https://arxiv.org/abs/2607.01480v1"
+  },
+  "2607.01595": {
+    "score": 13.0,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "Safe and Adaptive Cloud Healing: Verifying LLM-Generated Recovery Plans with a Neural-Symbolic World Model",
+    "url": "https://arxiv.org/abs/2607.01595v1"
+  },
+  "2607.01600": {
+    "score": 10.5,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "BOUNDARY_SYNC: Measuring Communication-Induced Representational Coupling in Multi-Agent LLM Systems",
+    "url": "https://arxiv.org/abs/2607.01600v1"
+  },
+  "2607.01669": {
+    "score": 12.5,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "UT-AISTimprt submission for ICME 2026 Grand Challenge on Academic Text-to-Music Generation",
+    "url": "https://arxiv.org/abs/2607.01669v1"
+  },
+  "2607.01721": {
+    "score": 12.4,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "CoRe: Combined Rewards with Vision-Language Model Feedback for Preference-Aligned Reinforcement Learning",
+    "url": "https://arxiv.org/abs/2607.01721v1"
+  },
+  "2607.01763": {
+    "score": 13.5,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "Denser $\\neq$ Better: Limits of On-Policy Self-Distillation for Continual Post-Training",
+    "url": "https://arxiv.org/abs/2607.01763v1"
+  },
+  "2607.01772": {
+    "score": 10.2,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "LLM-Empowered Multimodal Fusion Framework for Autonomous Driving: Semantic Enhancement and Channel-Adaptive Design",
+    "url": "https://arxiv.org/abs/2607.01772v1"
+  },
+  "2607.01830": {
+    "score": 28.5,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "Many Voices, One Reward: Multi-Role Rubric Generation for LLM Judging and Reward Modeling",
+    "url": "https://arxiv.org/abs/2607.01830v1"
+  },
+  "2607.01831": {
+    "score": 11.6,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "Lynx: Progressive Speculative Quantization for accelerating KV Transfer in Long-Context Inference",
+    "url": "https://arxiv.org/abs/2607.01831v1"
+  },
+  "2607.01865": {
+    "score": 11.5,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "Neural Audio Codec with Adjustable Token Temporal Resolution Using Sampling-Frequency-Independent Convolutional Layers",
+    "url": "https://arxiv.org/abs/2607.01865v1"
+  },
+  "2607.01897": {
+    "score": 20.9,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "Rank-Then-Act: Reward-Free Control from Frame-Order Progress",
+    "url": "https://arxiv.org/abs/2607.01897v1"
+  },
+  "2607.02119": {
+    "score": 11.5,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "An Efficient vLLM-Based Inference Pipeline for Unified Audio Understanding and Generation",
+    "url": "https://arxiv.org/abs/2607.02119v1"
+  },
+  "2607.02195": {
+    "score": 11.8,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "Bridge-WA: Predicting Where and How the World Changes for Robotic Action",
+    "url": "https://arxiv.org/abs/2607.02195v1"
+  },
+  "2607.02214": {
+    "score": 5.5,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "Unlocking Speech-Text Compositional Powers: Instruction-Following Speech Language Models without Instruction Tuning",
+    "url": "https://arxiv.org/abs/2607.02214v1"
+  },
+  "2607.02374": {
+    "score": 14.0,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "DRIFTLENS: Measuring Memory-Induced Reasoning Drift in Personalized Language Models",
+    "url": "https://arxiv.org/abs/2607.02374v1"
+  },
+  "2607.02390": {
+    "score": 13.5,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "DecompRL: Solving Harder Problems by Learning Modular Code Generation",
+    "url": "https://arxiv.org/abs/2607.02390v1"
+  },
+  "2607.02460": {
+    "score": 13.5,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "Neuron-Aware Data Selection for Annotation-Free LLM Self-Distillation",
+    "url": "https://arxiv.org/abs/2607.02460v1"
+  },
+  "2607.02479": {
+    "score": 20.1,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "EAGLE-360: Embodied Active Global-to-Local Exploration in 360$^\\circ$",
+    "url": "https://arxiv.org/abs/2607.02479v1"
+  },
+  "2607.02504": {
+    "score": 10.5,
+    "seen_at": "2026-07-03T16:46:39.353497+00:00",
+    "source": "arXiv",
+    "title": "Reasoning LLM Improves Speaker Recognition in Long-form TV Dramas",
+    "url": "https://arxiv.org/abs/2607.02504v1"
+  },
   "_meta": {
-    "last_run_at": "2026-07-02T17:03:26.127078+00:00",
-    "last_run_date": "2026-07-02"
+    "last_run_at": "2026-07-03T16:46:39.353555+00:00",
+    "last_run_date": "2026-07-03"
   }
 }

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Paper Radar · 2026-07-03</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F4F2EC; --surface:#FFFFFF; --surface-2:#FBFAF6;
+  --ink:#1A1915; --ink-2:#57544B; --ink-3:#8A867A;
+  --accent:#CC785C; --accent-deep:#A8512F;
+  --border:#E4E0D4; --border-2:#D6D1C2; --tint:#F2EAE2;
+  --serif:"Tiempos Headline",ui-serif,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,Cambria,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans); color:var(--ink); line-height:1.7; -webkit-font-smoothing:antialiased;
+  padding:0 20px 80px; background-color:var(--bg);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+body::before{
+  content:""; position:fixed; top:0; left:0; right:0; height:3px; z-index:50;
+  background:linear-gradient(90deg,var(--accent),#E2A98E,var(--accent-deep));
+}
+.container{max-width:760px;margin:0 auto}
+a{color:var(--accent)}
+/* ---- Editorial header ---- */
+.hero{max-width:760px; margin:0 auto; padding:64px 0 32px}
+.eyebrow{
+  display:inline-block; font-size:.74rem; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin-bottom:20px;
+}
+.hero h1{
+  font-family:var(--serif); font-weight:600; font-size:2.7rem; line-height:1.1;
+  letter-spacing:-.018em; color:var(--ink); margin-bottom:16px;
+}
+.hero .sub{color:var(--ink-2); font-size:1rem; font-weight:400}
+.hero .sub b{color:var(--ink); font-weight:600}
+.rule{max-width:760px; margin:0 auto 40px; border:none; border-top:1px solid var(--border)}
+/* ---- Nav ---- */
+.nav{margin-bottom:40px}
+.nav a{
+  font-size:.88rem; text-decoration:none; color:var(--ink-2); transition:color .15s;
+}
+.nav a:hover{color:var(--accent)}
+.digest-layout{display:grid; gap:24px}
+.toc{display:flex; gap:8px; overflow-x:auto; padding:12px; border:1px solid var(--border); border-radius:10px; background:var(--surface-2)}
+.toc-label{flex:none; padding:7px 8px; color:var(--ink-3); font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase}
+.toc a{display:flex; align-items:baseline; gap:7px; flex:none; padding:7px 10px; border-radius:7px; color:var(--ink-2); font-size:.86rem; line-height:1.25; text-decoration:none; transition:background .15s,color .15s}
+.toc a:hover{background:var(--tint); color:var(--accent-deep)}
+.toc a span{color:var(--accent); font-family:var(--serif); font-size:1rem; font-weight:600}
+.toc a b{color:var(--ink-3); font-size:.72rem; font-weight:500}
+.digest-content{min-width:0}
+.topic{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:28px 30px; box-shadow:0 2px 10px rgba(39,34,23,.025)}
+.topic + .topic{margin-top:28px}
+.topic-head{display:flex; justify-content:space-between; align-items:baseline; gap:16px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border)}
+.topic-title{font-family:var(--serif); font-size:1.75rem; font-weight:600; line-height:1.2; letter-spacing:-.012em}
+.topic-count{flex:none; color:var(--accent); font-size:.9rem; font-weight:600}
+.topic .topic-head + .paper{border-top:none; padding-top:0}
+.topic-empty{text-align:left; padding:14px 0 22px}
+.empty{color:var(--ink-2); text-align:center; padding:72px 0; font-size:1.05rem}
+.empty .big{font-family:var(--serif); font-size:2rem; color:var(--ink-3); margin-bottom:10px}
+/* ---- Paper as article ---- */
+.paper{
+  position:relative; padding:32px 0; border-top:1px solid var(--border);
+}
+.paper:first-of-type{border-top:none; padding-top:0}
+.p-head{display:flex; gap:16px; align-items:baseline; margin-bottom:14px}
+.idx{
+  flex:none; font-family:var(--serif); font-size:2.1rem; font-weight:600;
+  color:#D8A286; line-height:1; min-width:1em;
+}
+.paper-title{font-family:var(--serif); font-size:1.5rem; font-weight:600; line-height:1.28; letter-spacing:-.012em}
+.paper-title a{color:var(--ink); text-decoration:none; transition:color .15s}
+.paper-title a:hover{color:var(--accent)}
+.meta-line{font-size:.8rem; color:var(--ink-2); margin:0 0 11px 0}
+.meta-line .sep{margin:0 9px; color:var(--border-2)}
+.score{font-weight:600; color:var(--accent)}
+.score.hot{color:var(--accent-deep)}
+.tags{display:flex; flex-wrap:wrap; gap:7px; margin:0 0 16px 0}
+.tag{font-size:.72rem; font-weight:600; letter-spacing:.02em; padding:3px 11px; border-radius:999px}
+.tag.c0{color:#A8512F; background:#F1E2D9}
+.tag.c1{color:#5E6B39; background:#E8EAD9}
+.tag.c2{color:#4D7287; background:#DEE8ED}
+.tag.c3{color:#94712C; background:#EFE6CE}
+.tag.c4{color:#855272; background:#EDE0E7}
+.meta-row{font-size:.92rem; color:var(--ink-2); margin:0 0 4px 0}
+.why{
+  font-size:.82rem; color:var(--ink-3); margin:0 0 20px 0; font-style:italic;
+}
+.section-label{
+  font-family:var(--sans); font-size:.72rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.1em; color:var(--ink-3); margin:0 0 8px 0;
+}
+.abstract{
+  font-size:1rem; color:var(--ink); margin:0 0 22px 0; white-space:pre-wrap; line-height:1.75;
+}
+.interp{
+  font-size:1rem; color:var(--ink); white-space:pre-wrap; line-height:1.78;
+  background:var(--tint); border-left:3px solid var(--accent);
+  padding:18px 22px; border-radius:2px 10px 10px 2px;
+}
+.interp .section-label{color:var(--accent-deep)}
+.links{display:flex; gap:20px; margin:20px 0 0 0}
+.links a{
+  font-size:.9rem; font-weight:500; text-decoration:none; color:var(--accent);
+}
+.links a:hover{color:var(--accent-deep); text-decoration:underline}
+footer{
+  max-width:760px; margin:64px auto 0; padding-top:28px; border-top:1px solid var(--border);
+  font-size:.84rem; color:var(--ink-3); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+}
+footer a{color:var(--ink-3); text-decoration:none} footer a:hover{color:var(--accent)}
+@media(max-width:560px){
+  .hero{padding:44px 0 24px} .hero h1{font-size:2rem}
+  .paper-title{font-size:1.28rem}
+  .topic{padding:22px 20px}
+}
+@media(min-width:980px){
+  .daily-container{max-width:1030px}
+  .digest-layout{grid-template-columns:205px minmax(0,1fr); align-items:start; gap:32px}
+  .toc{position:sticky; top:24px; display:flex; flex-direction:column; overflow:visible; padding:12px}
+  .toc a{justify-content:flex-start}
+}
+</style>
+</head>
+<body>
+<div class="hero">
+  <span class="eyebrow">Daily Radar</span>
+  <h1>AI Paper Radar</h1>
+  <div class="sub"><b>2026-07-03</b> &nbsp;·&nbsp; 21 篇精选论文</div>
+</div>
+<hr class="rule">
+<div class="container daily-container">
+<nav class="nav"><a href="index.html">← 全部归档</a></nav>
+<div class="digest-layout">
+  <aside class="toc" aria-label="论文栏目目录">
+    <span class="toc-label">目录</span>
+    <a href="#section-1"><span>1</span>RL + LLM/MLLM<b>12 篇</b></a>
+    <a href="#section-2"><span>2</span>Speech-Audio-Music<b>4 篇</b></a>
+    <a href="#section-3"><span>3</span>AI paper of the day<b>5 篇</b></a>
+  </aside>
+  <main class="digest-content">
+    <section class="topic" id="section-1"><div class="topic-head"><h2 class="topic-title">RL + LLM/MLLM</h2><span class="topic-count">12 篇</span></div><div class="paper">
+  <div class="p-head">
+    <span class="idx">1</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.01830v1" target="_blank">Many Voices, One Reward: Multi-Role Rubric Generation for LLM Judging and Reward Modeling</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 28.5</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Dazhi Fu, Jiuding Yang, Yiwen Guo, Jicong Fan</div>
+  <div class="why">why: rl_core:reinforcement learning, preference_alignment:reward model, preference_alignment:reward modeling, preference_alignment:human preference, verifiable_reasoning:grpo, verifiable_reasoning:rlvr</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Reliable reward and preference signals are critical for evaluating and optimizing large language models on open-ended tasks. Rubric-based judges offer a transparent way to decompose such judgments into explicit evaluation criteria, but existing annotation-free rubric generators typically rely on a single generic evaluator. As a result, they may overlook important dimensions of human preference, a failure mode we term dimensional blind spots. To address this limitation, we propose Multi-Role Rubric Generation (MRRG), a training-free and reference-free framework that elicits evaluation criteria from multiple complementary roles and consolidates them into an auditable rubric-based scorer. This scorer can be used both to validate pairwise preferences and to provide rewards for GRPO-style Reinforcement Learning with Verifiable Rewards (RLVR). Experiments on preference validation benchmarks show that MRRG consistently outperforms single-role rubric generation baselines across multiple backbone models. Further RLVR experiments demonstrate that MRRG yields a stronger reward signal for improving open-ended generation.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文关注 LLM-as-judge / reward modeling 中一个常见问题：由单一评审视角自动生成评价标准时，容易漏掉人类偏好的某些维度，导致奖励信号不完整。作者提出 MRRG，让多个“角色”分别从不同角度生成评价准则，再合并成可审计的 rubric 评分器，用于偏好验证和作为 GRPO/RLVR 中的奖励来源。实验显示，多角色 rubric 相比单角色基线在偏好判断上更稳健，也能为开放式生成任务提供更有效的强化学习奖励。它值得 RL + LLM/MLLM 栏目关注，因为它提供了一种无需训练、无需参考答案的奖励构造方式，直接服务于开放式任务中的 LLM 对齐与 RL 优化。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.01830v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.01830v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">2</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.01897v1" target="_blank">Rank-Then-Act: Reward-Free Control from Frame-Order Progress</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 20.9</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Yuriy Maksyuta, George Bredis, Ruslan Rakhimov, Daniil Gavrilov</div>
+  <div class="why">why: rl_core:reinforcement learning, rl_core:policy optimization, preference_alignment:reward model, verifiable_reasoning:grpo, agentic_rl:environment reward, llm_core:language model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">We introduce Rank-Then-Act (RTA), a framework for learning control policies from expert video demonstrations without environment rewards. RTA trains a Vision-Language Model (VLM) offline as a progress-based ordinal scorer, using a Group Relative Policy Optimization (GRPO) objective over shuffled frame sequences, which forces the model to recover temporal ordering from visual semantics rather than trivial time cues. Importantly, instead of using the scorer directly as a scalar reward model, we propose a correlation-based reward function for reinforcement learning: at each interaction window, we compute the Spearman rank correlation between predicted progress rankings and true temporal indices, yielding a bounded, scale-invariant learning signal. This design decouples reward learning from absolute calibration and enables stable transfer across tasks and environments. We evaluate RTA on discrete control benchmarks (PyBoy: Catrap, Kirby) and continuous control tasks (PointMaze, MetaWorld). RTA consistently matches or outperforms prior video-based reward learning methods and rank-based baselines, while demonstrating strong cross-task reuse of a single pretrained progress scorer. Our results suggest that correlation-structured supervision over video-derived ordinal signals is sufficient for policy learning, offering a scalable alternative to explicit reward design.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把“专家视频中的进度顺序”转化为可用于强化学习的监督信号，从而在没有环境奖励的情况下学习控制策略。方法上，它先离线训练一个 VLM，让模型从打乱的视频帧中判断任务进展顺序；随后不直接把 VLM 输出当作奖励，而是在交互窗口内计算预测排序与真实时间顺序的 Spearman 相关性，作为稳定、尺度无关的奖励信号。这样做避免了传统视频奖励模型中“分数标定不准、跨任务迁移差”的问题，并支持一个预训练进度评分器复用于多个任务。它值得 RL + LLM/MLLM 栏目关注，因为它展示了多模态大模型不仅能理解视频语义，还能通过序关系为 RL 提供可泛化的控制监督。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.01897v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.01897v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">3</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.02479v1" target="_blank">EAGLE-360: Embodied Active Global-to-Local Exploration in 360$^\circ$</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 20.1</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c3">cs.CV</span></div>
+  <div class="meta-row">Jingtao Xu, Zizhuo Lin, Jianwen Sun, Yi Yang, Yawei Luo</div>
+  <div class="why">why: rl_core:policy optimization, verifiable_reasoning:grpo, llm_core:large language model, llm_core:large language models, llm_core:language model, mllm_vlm:multimodal large language model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">While Multimodal Large Language Models (MLLMs) have demonstrated exceptional capabilities in standard visual understanding, adapting them for active visual search in 360$^\circ$ panoramic environments exposes fundamental limitations. Specifically, standard MLLMs struggle to effectively model inherent panoramic properties, such as severe polar distortion and continuous cylindrical topologies, which significantly degrades target detection accuracy. Consequently, existing panoramic search methods attempt to compensate by relying heavily on fragmented local viewpoints. Burdened by rigid initialization and a lack of global panoramic priors, these approaches suffer from myopic, inefficient exploration and struggle with robust error recovery when targets are out of view. To overcome these challenges, we propose EAGLE-360, a novel Embodied Active Global-to-Local Exploration framework. Rather than performing exhaustive local searches, EAGLE-360 leverages global priors to establish an initial holistic perspective, iteratively reasoning and progressively narrowing the search space. Architecturally, we adapt RoPE Rolling, a coordinate-shifting positional encoding mechanism, to seamlessly model the continuous topologies of panoramas. To facilitate this paradigm, we construct the large-scale EAGLE-360 dataset, comprising 14,000+ 4K panoramas and 70,000+ rounds of high-quality VQA dialogues. By employing a training pipeline that integrates Supervised Fine-Tuning (SFT) with Group Relative Policy Optimization (GRPO), we effectively elicit complex spatial reasoning and tool-calling capabilities. Extensive experiments demonstrate that EAGLE-360 establishes a new state-of-the-art for 360$^\circ$ visual search, achieving nearly an 8-fold increase in accuracy over the base model while significantly enhancing exploration efficiency.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文聚焦 360° 全景环境中的主动视觉搜索，指出普通 MLLM 直接看全景图会受到极区畸变、环形连续拓扑等影响，而只看局部视角又容易陷入低效、短视搜索。  
+EAGLE-360 的核心思路是“先全局、后局部”：先利用全景全局先验建立整体空间理解，再通过迭代推理和工具调用逐步缩小目标区域；模型层面引入 RoPE Rolling 来更好建模全景图的连续坐标结构。  
+作者还构建了包含 1.4 万余张 4K 全景图和 7 万余轮 VQA 对话的数据集，并结合 SFT 与 GRPO 训练，使模型具备空间推理、主动探索和错误恢复能力。  
+它值得 RL + LLM/MLLM 栏目关注，因为它把多模态大模型从静态视觉理解推进到具身主动搜索任务，并展示了强化学习优化在复杂空间决策与视觉工具调用中的价值。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.02479v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.02479v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">4</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.01465v1" target="_blank">Beyond Next-Token Prediction: An RLVR Proof of Concept for Tool-Use Agents on Atlassian Workflows</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 19.5</span><span class="sep">·</span><span>2026-07-01</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Karthikeya Aditya Vissa, Sankalp Mane, Ananya Mantravadi, Harshit Rajgarhia, Abhishek Mukherji</div>
+  <div class="why">why: rl_core:reinforcement learning, verifiable_reasoning:grpo, verifiable_reasoning:rlvr, verifiable_reasoning:reinforcement learning with verifiable rewards, llm_core:large language model, llm_core:large language models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Large language models are trained to predict the next token, not to act inside a specific API. In niche enterprise SaaS workflows -- where success means hitting the right endpoint with the right nested arguments in the right order -- this objective mismatch shows up as silent failures: dropped required fields, hallucinated tools, or early stops after a single read. We ask whether Reinforcement Learning with Verifiable Rewards (RLVR), applied directly in the target environment, closes the gap. As a proof of concept we build a suite of five synthetic environments emulating the Jira REST v3 and Confluence v2 APIs at schema fidelity; rewards are computed entirely from the tool-call trace, with no live API, no learned judge, and no human label in the loop. Scoring prompted Qwen3-1.7B and Qwen3.5-4B on the same checkers that drive GRPO training, we find that on the four scenarios whose rewards are non-degenerate the RL-trained policy lifts average reward from a 4B-baseline range of 0.35--0.92 to 0.95--1.00, with the largest single gain on Confluence page creation ($0.35 \rightarrow 1.00$). We position this as a preliminary step toward outcome-optimised small models for niche enterprise APIs, and foreground two limitations a workshop reader should weigh: hand-crafting verifiable rewards does not scale beyond the handful of endpoints reported here, and one of our five scenarios (ticket-transition) has a saturating reward shape that the prompted 4B already maxes out.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把“可验证奖励的强化学习”（RLVR）直接用于企业 SaaS 工具调用场景，证明小模型可以通过环境反馈学会更可靠地执行 Jira/Confluence 这类复杂 API 工作流，而不只是依赖 next-token prediction。方法上，作者构建了 5 个高保真模拟环境，用工具调用轨迹自动打分，并用 GRPO 训练 Qwen 小模型，使其在多个非退化任务上显著提升端点选择、参数填写和多步调用能力。结果显示，RL 训练后的策略在多数场景接近满分，尤其是 Confluence 页面创建从较低基线提升到完美表现，说明可验证奖励能有效弥补 LLM 在结构化动作空间中的执行缺陷。它值得 RL + LLM/MLLM 栏目关注，因为它展示了一个面向真实企业 API 代理的 RL 落地范式，同时也暴露了奖励手工设计难扩展、部分任务奖励过易饱和等关键问题。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.01465v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.01465v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">5</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.01480v1" target="_blank">Procedural Memory Distillation: Online Reflection for Self-Improving Language Models</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 17.0</span><span class="sep">·</span><span>2026-07-01</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Ye Liu, Srijan Bansal, Bo Pang, Yang Li, Zeyu Leo Liu et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, verifiable_reasoning:rlvr, verifiable_reasoning:reinforcement learning with verifiable rewards, verifiable_reasoning:verifiable reward, llm_core:language model, llm_core:language models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Reinforcement learning with verifiable rewards (RLVR), along with recent selfdistillation variants such as SDPO, evaluates each rollout against a verifier and updates the policy from that episode-level signal. However, the richer procedural information in the rollout is rarely retained or reused. Across episodes and epochs, the model repeatedly encounters related problems under a changing policy, producing cross-episode signals that episode-local updates cannot capture: which strategies consistently pass verification, which failure modes persist, which patterns recur. We propose Procedural Memory Distillation (PMD), which converts these crossepisode signals into reusable procedural memory and distills it into the policy's weights during training. This memory functions as a training scaffold, absorbed into the policy itself, yielding a memory-free model at inference. PMD organizes the memory at three levels of abstraction: raw trajectories, self-reflected strategies and lessons, and higher-level behavioral patterns that recur across problems, all extracted online from the model's own trajectories. A memory-conditioned self-teacher draws on the accumulated experience to supervise the student on its own rollouts, enabling student to progressively internalize procedural knowledge within its parameters. The central design principle is co-evolution: the policy generates rollouts that update the memory, and memory shapes the supervision that updates the policy. Empirically, across Qwen3-8B and OLMo3-Instruct-7B, PMD improves over SDPO by 3.8-5.5% on SCIKNOWEVAL and 7.9-13.6% on LIVECODEBENCH. Co-evolution powers these gains: freezing either the memory or the policy trails PMD by more than 10% across SCIKNOWEVAL domains.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把 RLVR/自蒸馏中“用完即丢”的 rollout 经验，转化为可持续积累并最终写入模型参数的“程序性记忆”，让模型不只从单次验证奖励学习，而是从跨 episode 的成功策略、失败模式和重复行为中学习。方法上，PMD 在线收集模型轨迹，抽取三层记忆：原始轨迹、反思得到的策略/教训、跨任务复现的高层行为模式，再由一个带记忆的 self-teacher 对当前模型生成的样本进行监督蒸馏，形成“模型产生经验—记忆更新—记忆反过来训练模型”的共进化闭环。实验显示它在科学问答和代码任务上显著优于 SDPO，且冻结记忆或策略都会明显掉点，说明收益主要来自动态积累与内化经验。对 RL + LLM/MLLM 栏目值得关注，因为它提供了一条介于 RLVR 奖励学习和长期记忆/反思机制之间的新路线：训练时利用外部过程记忆提升学习效率，推理时仍保持无记忆、无额外检索开销。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.01480v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.01480v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">6</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.02374v1" target="_blank">DRIFTLENS: Measuring Memory-Induced Reasoning Drift in Personalized Language Models</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 14.0</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Xi Fang, Weijie Xu, Yingqiang Ge, Yuhui Xu, Stephanie Eckman et al.</div>
+  <div class="why">why: preference_alignment:dpo, verifiable_reasoning:grpo, llm_core:llms, llm_core:language model, llm_core:language models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Personalization changes what a model says to a user; we show that it can also change the reasoning trajectory used to justify the response. Modern LLMs personalize interactions by storing user attributes, preferences, and prior context, then injecting this information into future prompts. We study whether such memory reshapes reasoning on open-ended questions where no single ground-truth answer exists. To quantify this effect, we introduce DRIFTLENS, a ground-truth-free framework that maps each expressed reasoning step to a value category and measures divergence between a question's no-memory trajectory and its trajectory under injected user-attribute memory. We first validate that DRIFTLENS distinguishes content-free pragmatic noise from substantive reasoning changes. Across four LLMs and 10 user-attribute categories, including age, occupation, and disability, user-attribute memory induces medium-to-large reasoning drift above each model's pragmatic-noise floor, even when final answers remain fluent, on-topic, and plausible. We then evaluate GRPO- and DPO-based post-training methods for reducing drift. Both reduce drift, but neither uniformly dominates; effects on downstream capability, helpfulness, and instruction following are model-and reward-dependent. These results suggest that memory-induced reasoning drift is a measurable and only partly mitigated failure mode of personalized language models.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文提出了一个新的风险视角：个性化记忆不只是影响 LLM 的措辞或最终答案，还可能改变模型“如何推理”，即在开放式问题中因用户属性记忆而产生推理路径漂移。  
+作者设计了 DRIFTLENS，一个不依赖标准答案的评测框架，将模型表达出的推理步骤映射到价值/立场类别，并比较无记忆与注入用户属性记忆时的推理轨迹差异，同时区分普通表述噪声和实质性推理变化。  
+实验显示，在多个 LLM 和年龄、职业、残障等用户属性下，这种漂移普遍存在，即使最终回答看起来合理、流畅；进一步用 GRPO 和 DPO 做后训练可一定程度降低漂移，但效果不稳定，且可能影响能力、帮助性或指令遵循。  
+它值得 RL + LLM/MLLM 栏目关注，因为它把个性化记忆带来的隐性对齐问题量化出来，并直接检验了 RLHF/RLAIF 类后训练方法在缓解该问题上的边界。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.02374v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.02374v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">7</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.01392v1" target="_blank">Multi-Objective Exploration and Preference Optimization via Mutual Information</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 14.0</span><span class="sep">·</span><span>2026-07-01</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span></div>
+  <div class="meta-row">Hongyan Xie, Yikun Ban, Ruiyu Fang, Zixuang Huang, Deqing Wang et al.</div>
+  <div class="why">why: preference_alignment:preference optimization, preference_alignment:direct preference optimization, llm_core:large language model, llm_core:large language models, llm_core:language model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Aligning large language models with diverse and heterogeneous human values requires multi-objective alignment methods to effectively trade off conflicting preference dimensions. Current methods achieve this trade-off by training policies conditioned on preference vectors and leveraging online direct preference optimization. However, exploration uncertainty can cause the reward distributions of responses generated under different preference vectors to overlap, and the generated responses may fail to effectively align with the corresponding preference vectors. In this paper, we propose Multi-Objective Exploration and Preference Optimization via Mutual Information (MI-EPO), an information-theoretic framework. It unifies multi-objective exploration and alignment by maximizing the joint conditional mutual information among generated responses, preference feedback, and preference vectors. By incorporating a probabilistic routing mechanism, MI-EPO naturally decomposes objective alignment and preference-aware exploration, encouraging the model to generate responses that are distinguishable and aligned with different preference conditions. Experiments on safe alignment and helpful assistant tasks show that MI-EPO significantly improves the alignment between generated responses and preference vectors, makes the outputs more controllable, and achieves stable trade-offs across multiple objectives.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文针对 LLM 多目标对齐中“偏好条件不同但生成结果区分不明显”的问题，提出 MI-EPO，使模型不仅追求总体偏好最优，还能按不同偏好权重生成可控、可区分的回答。  
+方法上，它把生成回复、偏好反馈和偏好向量之间的条件互信息作为优化目标，并通过概率路由机制将“对齐具体目标”和“面向偏好的探索”拆开，从而减少不同偏好下奖励分布重叠带来的训练不稳定。  
+对 RL + LLM/MLLM 栏目值得关注的是，它把信息论探索引入多目标偏好优化，为安全性、帮助性等冲突目标之间的稳定权衡提供了比简单条件化 DPO 更系统的思路。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.01392v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.01392v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">8</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.02460v1" target="_blank">Neuron-Aware Data Selection for Annotation-Free LLM Self-Distillation</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 13.5</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Zhuowei Chen, Xiang Lorraine Li</div>
+  <div class="why">why: rl_core:offline rl, verifiable_reasoning:grpo, llm_core:large language model, llm_core:large language models, llm_core:llm</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Post-training large language models (LLMs) without real-world interaction feedback or human-labeled supervision remains challenging, particularly in specialized domains where expert annotations are costly to obtain. Recent annotation-free self-evolution methods address this by using the model's own outputs as supervision signals, constructing a teacher via additional context and aggregating predictions across multiple rollouts through majority voting to produce pseudo-labels. However, these approaches are not without drawbacks: SFT- and GRPO-based variants suffer out-of-domain performance degradation, while reward-based on-policy RL inflates calibration error. In this paper, we propose Neuron On-Policy Self-Distillation (Neuron-OPSD), a data-centric framework for annotation-free self-distillation that leverages internal neuron activations to guide both training-data selection and teacher context construction. The model is then trained via on-policy distillation from the teacher distribution, requiring no ground-truth labels at any stage. Across specialized-domain benchmarks, Neuron-OPSD improves in-domain task performance while preserving cross-domain generalization and mitigating calibration collapse over prior annotation-free baselines. This framework is particularly relevant to settings where online interaction or external supervision is costly or infeasible, and is conceptually distinct from offline RL approaches that rely on logged, reward-labeled trajectories.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是提出一种无需人工标注、无需真实交互反馈的 LLM 自蒸馏框架，目标是在专业领域提升模型能力，同时避免以往自演化方法常见的跨域退化和校准变差问题。方法上，它利用模型内部神经元激活来筛选更适合训练的数据，并构造更有效的“教师”上下文，再通过 on-policy 的方式让学生模型蒸馏教师分布，而不是依赖真实标签或奖励标注轨迹。相比简单多数投票伪标签、SFT/GRPO 自训练或 reward-based RL，该方法更强调“数据选择 + 内部表征信号”对自蒸馏稳定性的作用。它值得 RL + LLM/MLLM 栏目关注，因为它提供了一条介于自训练、策略优化和蒸馏之间的 annotation-free 后训练路线，尤其适合专家反馈昂贵、在线交互不可行的垂直领域模型优化。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.02460v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.02460v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">9</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.02390v1" target="_blank">DecompRL: Solving Harder Problems by Learning Modular Code Generation</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 13.5</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Juliette Decugis, Fabian Gloeckle, Francis Bach, Taco Cohen, Gabriel Synnaeve</div>
+  <div class="why">why: rl_core:reinforcement learning, verifiable_reasoning:verifiable reward, llm_core:large language model, llm_core:large language models, llm_core:llms</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">How can Large Language Models (LLMs) solve problems they currently cannot? Repeated sampling scales test-time compute but GPU cost grows linearly with attempts, while reinforcement learning (RL) with verifiable rewards improves single-attempt accuracy at the expense of sample diversity. Both strategies ultimately fail when the base policy has near-zero probability of producing a correct solution: no amount of sampling or gradient signal can overcome a search space that is simply too large. We take a different approach: rather than sampling harder, we make the task easier by decomposing problems into smaller, independently solvable sub-functions whose implementations can be recombined. Since off-the-shelf models are not trained for this modular generation, we introduce DecompRL, an RL algorithm that explicitly learns to decompose and implement hierarchical code structures. Recombining $k$ implementations of $n$ modules yields up to $k^{n}$ candidate solutions, shifting the bottleneck from GPU inference to cheap CPU evaluation and cutting GPU token cost by $\sim$50$\times$. On LiveCodeBench and CodeContests (Qwen~2.5~7B, Code World Model~32B), DecompRL outperforms standard and diversity-optimized RL baselines beyond $10^5$ tokens per problem, solving problems that standard generation cannot reach.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把“多采样碰运气”的代码生成范式，转向“先拆解、再组合”的模块化求解，使 LLM 能处理原本单次生成几乎不可能成功的难题。方法上，DecompRL 用可验证奖励训练模型生成层级化代码结构：先把问题分解成若干子函数，再分别生成多个实现，最后通过组合与测试筛选出正确程序，从而把大量搜索从昂贵的 GPU 生成转移到便宜的 CPU 执行验证。相比标准 RL 或鼓励多样性的 RL，它不是单纯提高单条完整解的概率，而是扩大可重组的解空间，因此在高 test-time compute 场景下更有效。它值得 RL + LLM/MLLM 栏目关注，因为它展示了 RL 不仅能优化答案质量，还能学习一种新的问题表示与搜索结构，为复杂推理和代码任务提供了可扩展的新路径。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.02390v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.02390v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">10</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.01763v1" target="_blank">Denser $\neq$ Better: Limits of On-Policy Self-Distillation for Continual Post-Training</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 13.5</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span><span class="tag c3">cs.CL</span></div>
+  <div class="meta-row">Meng Wang, Haohan Zhao, Wenzhuo Liu, Lu Yang, Geng Liu et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, rl_core:policy optimization, verifiable_reasoning:grpo, llm_core:foundation model, llm_core:foundation models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Continual post-training enables foundation models to acquire new knowledge while preserving existing capabilities. Recent work suggests that on-policy learning can mitigate forgetting, with on-policy self-distillation emerging as a particularly attractive approach. In this work, we revisit this optimistic view through self-distillation policy optimization (SDPO). Our experiments show that SDPO can accelerate in-domain specialization when teacher signals are stable and well aligned, but it struggles to generalize to out-of-distribution scenarios. In continual post-training, SDPO exhibits stronger forgetting and can even collapse, whereas on-policy reinforcement learning methods such as GRPO adapt more conservatively and better preserve prior capabilities. Further analyses reveal that denser self-distillation induces larger drift in both parameter space and response space, and can amplify high-frequency formatting artifacts through a self-reinforcing teacher--student loop. These findings suggest that on-policy data alone is insufficient for continual learning. Dense self-distillation can accelerate specialization when teacher targets are stable and token-level supervision is reliable, but it should not be treated as a default stabilizer for continual post-training. Our code is available at https://github.com/Moenupa/SDPO-CL.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文挑战了“on-policy 自蒸馏能天然缓解遗忘”的乐观看法，指出在持续后训练中，更密集的 token 级自蒸馏信号并不一定带来更稳健的能力保留，反而可能加剧遗忘甚至导致模型退化。作者以 SDPO 为主要对象，将其与 GRPO 等 on-policy RL 方法对比，分析了域内适配、分布外泛化、参数漂移、输出漂移以及格式噪声放大的现象。核心发现是：自蒸馏在教师信号稳定且目标对齐时能加速专门化，但在持续学习场景中容易形成“教师—学生”自强化闭环，把错误或格式伪迹越放越大。对 RL + LLM/MLLM 栏目而言，这篇工作提醒我们：on-policy 数据和稠密监督并不是持续后训练的万能稳定器，RL 式更保守的更新机制可能在保留旧能力上更有价值。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.01763v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.01763v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">11</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.01595v1" target="_blank">Safe and Adaptive Cloud Healing: Verifying LLM-Generated Recovery Plans with a Neural-Symbolic World Model</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 13.0</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span><span class="tag c3">cs.CL</span></div>
+  <div class="meta-row">Junyan Tan, Haoran Lin, Siyuan Guo, Yichen Fang, Xinyue Luo et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, rl_core:policy optimization, llm_core:large language model, llm_core:large language models, llm_core:llm</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">As the scale and complexity of cloud-based AI systems continue to escalate, ensuring service reliability through rapid fault detection and adaptive recovery has become a critical challenge. While existing approaches integrate Large Language Models (LLMs) for semantic understanding and Deep Reinforcement Learning (DRL) for policy optimization, they often rely on sequential, loosely coupled architectures that underutilize the generative and reasoning capabilities of LLMs. In this paper, we propose a paradigm shift with PASE, a Planning-Aware Semantic self-healing engine, a novel fault self-healing framework that reconceptualizes recovery as a neuro-symbolic program synthesis task. PASE employs an LLM as a core Plan Synthesis Engine to generate structured recovery plans from a library of semantic primitives. A Neural-Symbolic World Model verifies plan feasibility through simulation, while a Meta-Prompt Optimizer, trained via DRL, learns to generate optimal prompts that guide the LLM's planning process. This tight reason-plan-verify-adapt loop enables dynamic, context-aware recovery strategy generation beyond predefined action spaces. Experiments on a real-world cloud fault injection dataset demonstrate that PASE significantly outperforms state-of-the-art methods, reducing average system recovery time by over 40% and improving fault detection accuracy in unknown fault scenarios. Our framework advances autonomous system management by unifying LLM-based reasoning with model-assisted verification and meta-learned guidance.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把云系统故障自愈从“固定策略选择”提升为“可验证的恢复计划生成”：LLM 不只是做语义解析，而是直接合成结构化恢复方案。方法上，PASE 将 LLM 生成计划、神经符号世界模型仿真验证、以及由 DRL 训练的 Meta-Prompt 优化器结合起来，形成“推理—规划—验证—自适应”的闭环，减少错误恢复动作的风险。相比传统 LLM+DRL 松耦合架构，它允许在未知故障和复杂上下文中动态组合恢复原语，而不是受限于预定义动作空间。对 RL + LLM/MLLM 栏目值得关注的是，它展示了 RL 不直接控制系统动作，而是优化 LLM 的提示与规划行为，并通过世界模型提供安全约束与可执行性检查。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.01595v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.01595v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">12</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.01721v1" target="_blank">CoRe: Combined Rewards with Vision-Language Model Feedback for Preference-Aligned Reinforcement Learning</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 12.4</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c1">cs.RO</span></div>
+  <div class="meta-row">Hexian Ni, Tao Lu, Yinghao Cai</div>
+  <div class="why">why: rl_core:reinforcement learning, llm_core:language model, llm_core:language models, mllm_vlm:vision-language model, mllm_vlm:vlms</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Reward design remains a central challenge in reinforcement learning (RL). Hand-crafted rewards are often difficult to specify and may lead to suboptimal policies, while learned rewards from preferences can suffer from inefficiency and unstable training. Inspired by the dual nature of human learning explored in cognitive science, we decompose rewards into two complementary components: Formal Rewards (FR), explicitly designed based on task knowledge, and Residual Rewards (RR), learned from observations to capture implicit and nuanced preferences. Based on this decomposition, we propose CoRe, a hybrid framework that integrates FR and RR with vision-language models (VLMs) feedback to achieve preference-aligned policies without human involvement. Our contributions are twofold: (1) We propose a Formal Reward Module (FRM) that leverages VLMs to iteratively design and optimize FR based on task knowledge and preference feedback, enabling the continual improvement of policy during training; (2) We introduce a Residual Reward Module (RRM) that learns RR from video-level preference by employing VLMs to generate preference labels and capturing nuanced rewards that complement FR, ensuring alignment with human intent. Through the synergy of FRM and RRM, CoRe enables the automatic construction of reliable rewards that are efficient and preference-aligned. Extensive experiments demonstrate that CoRe outperforms existing approaches in terms of policy learning effectiveness and efficiency on ten robotic manipulation tasks in simulation and five real-worlds. Videos can be found on our project website: https://core-2026.github.io/</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把 RL 中的奖励拆成“可显式设计的任务奖励”和“从偏好中学习的残差奖励”，试图同时解决手工奖励不够对齐、偏好奖励训练低效不稳定的问题。方法上，CoRe 用 VLM 自动参与两件事：一方面根据任务知识和训练反馈迭代改写/优化形式化奖励，另一方面从视频轨迹中生成偏好标签来训练残差奖励模型，补足那些难以写成规则的细微人类偏好。它的价值在于把 VLM 从“评估器/打标签器”进一步用作奖励设计与偏好建模的闭环组件，减少人工奖励工程和人工偏好标注。对于 RL + LLM/MLLM 栏目，这篇工作值得关注，因为它展示了多模态大模型如何直接介入机器人强化学习的奖励构造，并在仿真和真实操作任务中提升样本效率与策略对齐效果。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.01721v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.01721v1" target="_blank">PDF</a>
+  </div>
+</div></section>
+<section class="topic" id="section-2"><div class="topic-head"><h2 class="topic-title">Speech-Audio-Music</h2><span class="topic-count">4 篇</span></div><div class="paper">
+  <div class="p-head">
+    <span class="idx">1</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.01669v1" target="_blank">UT-AISTimprt submission for ICME 2026 Grand Challenge on Academic Text-to-Music Generation</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 12.5</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c1">cs.SD</span></div>
+  <div class="meta-row">Shunsuke Yoshida, Yu-Hua Chen, Satoru Fukayama</div>
+  <div class="why">why: speech_audio_music:audio, speech_audio_music:music, audio_models:music generation, audio_models:text-to-audio, audio_models:text-to-music</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">This work investigates the effect of batch sampling strategies during training for text-to-audio music generation under low-data and small-scale model settings. This paper describes our approach and findings for the ICME 2026 Grand Challenge on Academic Text-to-Music Generation. Training data are clustered using either text embeddings or audio embeddings, and samples with similar characteristics are grouped within the same mini-batch to mitigate gradient interference. The effects of modality and cluster granularity on clustering are analyzed. Results show that clustering based on text embeddings achieves better performance on objective evaluation metrics than clustering based on audio embeddings. In addition, different cluster granularity leads to different behaviors across evaluation criteria: a moderate number of clusters performs best on objective metrics, while a larger number of clusters tends to exhibit music with more coherent structure in listening tests.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文关注低数据、小模型条件下的文本生成音乐任务，核心贡献是系统分析了“如何组 batch”对训练效果的影响，而不是单纯改模型结构。方法上，作者先用文本或音频表征对训练样本聚类，再让相似样本进入同一个 mini-batch，以减少不同样本梯度方向冲突，并比较了不同模态特征和聚类粒度的效果。实验发现，基于文本嵌入的聚类通常比基于音频嵌入更有利于客观指标，而聚类数量会在客观分数和主观听感结构连贯性之间产生不同取舍。对 Speech-Audio-Music 栏目而言，这项工作提示了一个实用方向：在资源受限的音乐生成场景中，训练采样策略本身也可能显著影响生成质量。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.01669v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.01669v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">2</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.02119v1" target="_blank">An Efficient vLLM-Based Inference Pipeline for Unified Audio Understanding and Generation</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 11.5</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c1">eess.AS</span><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Haoran Wang, Jinchuan Tian, Siddhant Arora, Shinji Watanabe</div>
+  <div class="why">why: speech_audio_music:speech, speech_audio_music:audio, speech_audio_music:acoustic, audio_models:speech language model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">While Large Multimodal Models excel in comprehension, high-throughput inference engines lack native support for multimodal generation. This is severe in Speech Language Models, where generating multi-layered audio tokens via decoupled AR+NAR or synchronous Multi-Token Prediction (MTP) with delay-pattern interleaving conflicts with standard single-stream loops. We present a vLLM-based inference pipeline for unified speech understanding and generation. We extend autoregressive decoding to natively execute delay-pattern de-interleaving and coordinated multi-stream sampling, integrating an on-GPU acoustic decoder for end-to-end waveform synthesis. Crucially, we overcome the shared intuition that Classifier-Free Guidance (CFG) halves throughput. By co-scheduling paired conditional and unconditional requests within a continuous batch, our CFG implementation sustains 80% of non-CFG throughput, absorbing dual-request and logit merging overheads. We open-source our framework.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把 vLLM 这类高吞吐推理框架扩展到“语音理解 + 语音生成”的统一场景，不再只适合文本式单流自回归输出。方法上，它针对语音模型常见的多层音频 token、AR/NAR 组合、MTP 延迟交织等机制，改造了解码循环，支持多流协同采样、延迟模式还原，并把声学解码器放到 GPU 上完成端到端波形生成。一个亮点是对 CFG 推理做了批处理调度优化，将条件/无条件请求成对并入 continuous batching，使启用 CFG 时仍能保持接近非 CFG 的吞吐。对 Speech-Audio-Music 栏目而言，这项工作关注的是语音生成模型从“能跑”到“高效可服务化部署”的关键工程瓶颈，具有较强的实用价值。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.02119v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.02119v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">3</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.01865v1" target="_blank">Neural Audio Codec with Adjustable Token Temporal Resolution Using Sampling-Frequency-Independent Convolutional Layers</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 11.5</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c1">eess.AS</span><span class="tag c1">cs.SD</span></div>
+  <div class="meta-row">Tomohiko Nakamura, Wataru Nakata, Kanami Imamura, Yuki Saito</div>
+  <div class="why">why: speech_audio_music:audio, speech_audio_music:acoustic, speech_audio_music:sound, audio_models:audio generation</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Discrete tokens obtained from neural audio codecs (NACs) have been used as compact representations in audio generation and understanding models. In such token-based systems, token temporal resolution (TTR), defined as the time interval between adjacent token frames, is important because it controls the trade-off between representing rapid acoustic events and reducing token-sequence length. However, most NACs are trained at a single TTR and require separate training for each TTR. This paper proposes a mechanism that enables a single NAC to operate at multiple TTRs using sampling-frequency-independent convolutional layers. The mechanism regards TTR as the sampling period of the token sequence and generates TTR-dependent convolutional kernels from a shared parameter set, while adjusting the kernel size and stride for each TTR. We incorporate the mechanism into Descript Audio Codec, leaving the quantizer unchanged. Experiments on environmental sound reconstruction show that the proposed model outperforms a single-model baseline that switches TTR-specific layers for each TTR.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是让一个神经音频编解码器能够在多种 token 时间分辨率下工作，而不必为每个分辨率单独训练模型。其思路是把 token 时间间隔视为“采样周期”，用采样频率无关的卷积层从共享参数中生成适配不同 TTR 的卷积核，并相应调整卷积核大小和步幅，同时保持量化器不变。作者将该机制接入 Descript Audio Codec，在环境声重建实验中优于简单切换不同 TTR 专用层的单模型基线。对 Speech-Audio-Music 栏目而言，它值得关注，因为可调 TTR 能更灵活地平衡音频细节表达与 token 序列长度，对后续音频生成、理解和多模态建模都很实用。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.01865v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.01865v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">4</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.02214v1" target="_blank">Unlocking Speech-Text Compositional Powers: Instruction-Following Speech Language Models without Instruction Tuning</a></div>
+  </div>
+  <div class="meta-line"><span class="score">score 5.5</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span><span class="tag c1">eess.AS</span></div>
+  <div class="meta-row">Congrui Du, Yang Zhang, Kaizhi Qian, Shiyu Chang</div>
+  <div class="why">why: speech_audio_music:speech, audio_models:speech language model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Instruction tuning for speech language models (SLMs) is substantially more challenging than for text-based large language models (LLMs), as it requires learning a new modality and a wide range of speech-specific instructions in addition to those supported by text LLMs. Existing SLM training approaches largely replicate the text LLM training paradigm by synthesizing large-scale speech pre-training and instruction-tuning datasets. However, this strategy is difficult to scale, since speech sequences are significantly longer than text sequences. In this paper, we propose SpeechCombine, an instruction-following speech language model trained without any instruction tuning, using only a single round of speech pre-training on 30k hours of data. Starting from a text LLM base model, we perform continuous pre-training on speech utterances to obtain a speech-adapted model, and then directly combine its weights with the weight difference between the instruction-tuned and base versions of the text LLM. Our results show that this simple combination strategy not only preserves the knowledge and capabilities of the original text LLM, but also effectively transfers them to the speech domain. These findings suggest a new direction for SLM training that avoids reliance on massive speech data.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是提出了 **SpeechCombine**：让语音语言模型在没有语音指令微调的情况下，也能具备一定的指令跟随与语音-文本组合能力。其思路很直接：先用约 3 万小时语音对文本 LLM 做连续预训练，使其适配语音输入；再把文本 LLM“指令微调前后”的参数差值迁移到这个语音适配模型上，相当于把文本侧学到的指令能力嫁接到语音侧。实验表明，这种权重组合既能保留原文本模型的知识与推理能力，又能把部分能力扩展到语音模态。对 Speech-Audio-Music 栏目而言，它值得关注，因为它挑战了“必须大规模构造语音指令数据”的主流路线，为低成本训练可交互语音大模型提供了新方向。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.02214v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.02214v1" target="_blank">PDF</a>
+  </div>
+</div></section>
+<section class="topic" id="section-3"><div class="topic-head"><h2 class="topic-title">AI paper of the day</h2><span class="topic-count">5 篇</span></div><div class="paper">
+  <div class="p-head">
+    <span class="idx">1</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.02195v1" target="_blank">Bridge-WA: Predicting Where and How the World Changes for Robotic Action</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 11.8</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c1">cs.RO</span></div>
+  <div class="meta-row">Yongjie Bai, Hanting Wang, Mingtong Dai, Qijun Zhong, Yang Liu et al.</div>
+  <div class="why">why: generative_world_models:image generation, generative_world_models:world model, generative_world_models:world models, embodied_ai:vision-language-action, embodied_ai:manipulation</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">General-purpose vision-language-action models benefit from large vision-language priors, but effective manipulation also requires anticipating action-relevant scene changes. Existing world-action models often rely on large generative world models or dense future rollouts, which are expensive and spend capacity on visual details weakly coupled to control. We present Bridge-WA, a lightweight world-action framework that distills a frozen future-change teacher into three compact priors: future tokens for intended outcomes, change maps for intervention support, and motion-flow maps for local transition direction. A WorldBridge conditions the action transformer on these priors through multi-source attention memories and spatial-temporal biases, while the teacher model is removed at inference. Across VLABench, RoboTwin2.0, LIBERO-Plus and real-robot evaluations, Bridge-WA improves task success, progress, and robustness, with particularly clear gains under out-of-distribution visual shifts. By focusing action generation on where and how the scene will change, Bridge-WA suppresses nuisance appearance factors such as background, lighting, and distractors, leading to better generalization without deployment-time dense future-image generation. Code and visualizations are available at: https://hcplab-sysu.github.io/BRIDGE-WA .</div>
+  <div class="section-label">解读</div><div class="interp">Bridge-WA 的核心贡献是把机器人操作中的“世界会怎么变”从昂贵的未来图像生成问题，转化为更轻量、对动作更有用的变化预测问题。它先用冻结的未来变化教师模型蒸馏出三类先验：目标结果 token、变化区域图和局部运动流，再通过 WorldBridge 将这些信息注入动作 Transformer，让策略关注物体会在哪里、以什么方向发生变化，而不是背景、光照等无关视觉细节。实验显示它在多个仿真基准和真实机器人上提升了成功率与鲁棒性，尤其在视觉分布外场景中收益明显。它值得关注，因为它提供了一条介于纯 VLA 策略和重型世界模型之间的路线：不在部署时生成密集未来画面，却能把“预测后果”有效用于控制决策。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.02195v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.02195v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">2</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.01831v1" target="_blank">Lynx: Progressive Speculative Quantization for accelerating KV Transfer in Long-Context Inference</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 11.6</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c0">cs.DC</span><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Wenchen Han, Gingfung Matthew Yeung, Marco Barletta, William Toner, Amory Hoste et al.</div>
+  <div class="why">why: foundation_models:large language model, foundation_models:llm, agents_reasoning:agentic, ai_systems:quantization, ai_systems:retrieval-augmented generation</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Long-context inference is increasingly common in large language model (LLM) serving, driven by retrieval-augmented generation and agentic systems. In disaggregated inference, these workloads require transferring large Key-Value (KV) caches across the network, where decoding cannot begin until the transfer completes. Recent KV quantization techniques reduce data volume and alleviate this bottleneck, but existing schemes fail to achieve both low network-exposed latency and high inference accuracy. We challenge the assumption that the KV cache is an indivisible unit that must be fully received before use. We leverage the observation that different bits in the KV cache contribute unequally to attention computation and inference precision: the most significant bits capture the coarse structure of attention and the least significant bits refine precision. This property enables partial use of the KV cache during decoding. We present Lynx, a system that enables progressive, split-stream KV transfer by partitioning the KV cache into a high-priority Anchor stream carrying the most significant bits and a low-priority Residual stream carrying remaining precision. Decoding begins upon receipt of the Anchor stream and proceeds speculatively while the Residual stream is transferred concurrently, followed by verification that ensures equivalence to higher-precision decoding. Across multiple models and serving workloads, Lynx achieves Time-to-First-Token (TTFT) comparable to aggressive 4-bit KV quantization, while matching the accuracy of high-precision (BF16) inference, improving TTFT over standard 8-bit KV quantization by up to $1.43\times$ and improving accuracy over state-of-the-art by up to $5.1\%$.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是提出了 Lynx：把长上下文推理中庞大的 KV cache 传输从“一次性等全量到达”改成“先用关键部分启动解码、再补齐精度”的渐进式机制，从而降低解码前的网络等待时间。其关键思路是利用 KV 量化位的重要性差异：高位信息先作为 Anchor 流传输，用于近似注意力计算并提前生成 token；低位 Residual 流随后并行传输，并通过验证机制保证最终结果等价于更高精度推理。相比单纯压低 KV 精度，Lynx 试图同时兼顾低 TTFT 和高准确率，在分离式推理、RAG 和长上下文服务中很有实际系统价值。它值得关注，因为它把“KV cache 是否必须完整可用”这一默认假设打破了，为长上下文 LLM serving 的网络瓶颈提供了一个更细粒度、可验证的系统级优化方向。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.01831v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.01831v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">3</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.02504v1" target="_blank">Reasoning LLM Improves Speaker Recognition in Long-form TV Dramas</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 10.5</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span><span class="tag c3">cs.AI</span><span class="tag c3">cs.CV</span></div>
+  <div class="meta-row">Yuxuan Li, Lingxi Xie, Xinyue Huo, Jihao Qiu, Jiacheng Shao et al.</div>
+  <div class="why">why: foundation_models:llm, foundation_models:multimodal, foundation_models:reasoning model, agents_reasoning:tool-use</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Long-form TV dramas present a formidable challenge for comprehensive video understanding, where deciphering complex storyline often relies on \textbf{speaker recognition}, the task of accurately attributing each spoken utterance to its respective character. In this paper, we advance this field through two primary contributions. (1) We introduce \textbf{DramaSR-532K}, a large-scale benchmark comprising 532K annotated dialogue lines across more than 900 unique characters, necessitating the integration of auditory, linguistic, and visual cues for speaker recognition. (2) We propose \textbf{DramaSR-LRM}, a robust approach built upon a large reasoning model (LRM). DramaSR-LRM is designed to autonomously aggregate contextual evidence via multimodal tool-use, synthesizing diverse inputs to achieve high-fidelity attribution. Experimental results demonstrate that DramaSR-LRM significantly outperforms existing baselines, particularly on short utterances where acoustic biometrics are inherently unreliable. \textit{All the data and code will be made publicly available at the project page: https://www.github.com/198808xc/DramaSR-LRM.}</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文聚焦长篇电视剧中的“谁在说话”问题，提出了一个大规模基准 DramaSR-532K，覆盖 53.2 万句对白和 900 多个角色，为影视剧情理解提供了更系统的评测资源。方法上，作者构建 DramaSR-LRM，把大推理模型作为核心，让模型主动调用/整合音频、台词语义、画面人物等多模态线索，而不是只依赖声纹匹配。实验显示，这种推理式多证据融合在短句、弱声纹信息等困难场景下明显优于传统基线。它值得关注是因为它把“推理型 LLM + 多模态工具使用”落到一个真实复杂的视频理解任务中，展示了 LLM 在长上下文影视分析中的实用潜力。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.02504v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.02504v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">4</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.01600v1" target="_blank">BOUNDARY_SYNC: Measuring Communication-Induced Representational Coupling in Multi-Agent LLM Systems</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 10.5</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span><span class="tag c3">cs.CL</span></div>
+  <div class="meta-row">Zewen Liu</div>
+  <div class="why">why: foundation_models:large language model, foundation_models:llm, agents_reasoning:llm agent, agents_reasoning:multi-agent</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">As large language models (LLMs) are deployed as communicating agents, does inter-agent communication cause outputs to converge? We introduce BOUNDARY_SYNC, a protocol measuring representational coupling via the Coupling Amplification Factor (CAF = JSD_cond / JSD_baseline), where CAF &lt; 1 indicates homogenization and CAF &gt; 1 indicates diversification. In controlled GPT-4o experiments (N=30, ~9,900 API calls), we measure coupling in text and image communication. Key findings: (1) text communication causes significant homogenization (CAF=0.803 [0.740, 0.873], d=1.30, p&lt;0.001), confirmed by no-communication ablation and prompt-perturbation controls; (2) image communication also homogenizes under within-modality baselines (CAF=0.834 [0.811, 0.858]), with comparable proportional effect; (3) group size moderates coupling direction -- K=5 produces homogenization while K=3 yields CAF &gt; 1.0 (point estimates 1.14 and 1.06, CI pending), suggesting a directional shift toward diversification; (4) cross-model replication shows extreme variation (CAF 0.034-0.803), with DeepSeek dominated by format artifacts; (5) coupling is stateless -- driven by prompt context rather than cumulative updating, with continuous consensus producing monotonic convergence. These results establish LLM agent coupling as real, measurable, and controllable at the prompt level, with direct implications for multi-agent system design.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文把多智能体 LLM 之间“越聊越像”这一现象形式化为可测量指标，提出 BOUNDARY_SYNC 协议和 CAF 指标，用来判断通信后输出分布是趋同还是发散。作者通过控制变量实验比较无通信、文本通信、图像通信、不同群体规模、不同模型和不同提示设置，发现通信本身会显著增强表征耦合，尤其文本与图像交流都可能导致同质化，而群体规模和提示结构会改变这种方向。值得关注的是，它把多智能体系统中的“群体思维”“共识收敛”从直觉问题变成了可量化、可调控的实验对象。对 AI agent 设计而言，这提示我们不能只追求更充分的交流，还要设计机制来避免不必要的答案同质化或格式伪影。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.01600v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.01600v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">5</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.01772v1" target="_blank">LLM-Empowered Multimodal Fusion Framework for Autonomous Driving: Semantic Enhancement and Channel-Adaptive Design</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 10.2</span><span class="sep">·</span><span>2026-07-02</span></div>
+  <div class="tags"><span class="tag c3">cs.CV</span><span class="tag c1">eess.SP</span></div>
+  <div class="meta-row">Wen Wang, Yaping Sun, Yejun He, Hao Chen, Zhiyong Chen et al.</div>
+  <div class="why">why: foundation_models:large language model, foundation_models:llm, foundation_models:multimodal, embodied_ai:autonomous driving</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Vision-radar fusion is central to robust autonomous driving, combining dense visual semantics with precise range and velocity measurements from radar. However, real-world fusion quality is fundamentally challenged by dynamically varying input quality, stemming from occlusion, adverse weather, and channel noise. To address this, we re-frame the problem from static data fusion to channel-aware semantic reasoning and propose a Large Language Model-centric Semantic-layer Channel-aware Integrated Perception (LM-SCIP) framework. It places a Large Language Model (LLM) as a central reasoning core to fuse a local visual stream with a quality-varying external radar stream used to cover perception-blind spots. Concretely, LM-SCIP couples a hierarchical radar-vision encoder with a Channel-Adaptive Semantic Module (CASM) that maps link indicators into a &quot;Channel Prompt&quot; to dynamically gate external radar features. A parameter-efficient, LoRA-tuned LLM, in conjunction with a heterogeneous Mixture-of-Experts (H-MoE), then arbitrates between local visual cues and the channel-conditioned radar context. Finally, a decoupled multi-task decoder outputs localization, trajectory forecasting, and image reconstruction. Experiments on nuScenes and VIRAT validate our approach. On nuScenes, under a controlled toggle of radar input, LM-SCIP reduces localization RMSE by 40.0% versus a vision-only baseline. On VIRAT, the model attains a 0.214m localization RMSE and 0.179m minFDE (k=1). These results reveal that the proposed LM-SCIP enables a robust vision-dominant fallback at low SNR and synergistic fusion at high SNR.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把自动驾驶中的视觉-雷达融合从“固定融合”改成“根据信道质量动态决策”的语义推理问题，重点解决遮挡、恶劣天气、雷达噪声等导致的输入不稳定。  
+方法上，作者用层次化视觉/雷达编码器提取特征，再通过信道自适应模块把 SNR 等链路状态转成提示信息，引导 LoRA 微调的 LLM 与异构 MoE 在视觉线索和雷达上下文之间进行权衡。  
+其输出同时覆盖定位、轨迹预测和图像重建，实验显示在雷达可靠时能增强融合效果，在雷达质量差时又能退回到更稳健的视觉主导模式。  
+它值得关注的地方在于：LLM 不只是做语言解释，而被放进多模态感知系统中承担“质量感知的融合仲裁器”角色，代表了大模型进入自动驾驶底层感知决策的一种新方向。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.01772v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.01772v1" target="_blank">PDF</a>
+  </div>
+</div></section>
+  </main>
+</div>
+</div>
+<footer>
+  <span>Generated by Zhisheng Zheng · 2026-07-03</span>
+  <a href="index.html">查看全部归档 →</a>
+</footer>
+</body>
+</html>
