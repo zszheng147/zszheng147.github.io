@@ -601,8 +601,162 @@
     "title": "Reasoning LLM Improves Speaker Recognition in Long-form TV Dramas",
     "url": "https://arxiv.org/abs/2607.02504v1"
   },
+  "2607.04140": {
+    "score": 13.0,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "DELTA-TTS: Adapting Autoregressive Model into Diffusion Language Model for Text-to-Speech",
+    "url": "https://arxiv.org/abs/2607.04140v1"
+  },
+  "2607.04171": {
+    "score": 11.7,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "XS-VLA: Coupling Coarse-grained Spatial Distillation with Latent Flow Matching for Lightweight Robotic Control",
+    "url": "https://arxiv.org/abs/2607.04171v1"
+  },
+  "2607.04179": {
+    "score": 14.1,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "CritiqueDriveVLM: From Verifier-Guided Reinforcement Learning to Latent Thought Distillation for Autonomous Driving",
+    "url": "https://arxiv.org/abs/2607.04179v1"
+  },
+  "2607.04242": {
+    "score": 12.5,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "Progress- and Reliability-Oriented Group Policy Optimization for Agentic Reinforcement Learning",
+    "url": "https://arxiv.org/abs/2607.04242v1"
+  },
+  "2607.04364": {
+    "score": 15.2,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "RL Forgets! Towards Continual Policy Optimization",
+    "url": "https://arxiv.org/abs/2607.04364v1"
+  },
+  "2607.04383": {
+    "score": 9.7,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "Auto-AEG: Scalable Data Construction for Open-Vocabulary Audio Event Grounding",
+    "url": "https://arxiv.org/abs/2607.04383v1"
+  },
+  "2607.04391": {
+    "score": 11.1,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "Memory-Orchestrated Semantic System (MOSS): An Auditable Agentic Memory Architecture",
+    "url": "https://arxiv.org/abs/2607.04391v1"
+  },
+  "2607.04395": {
+    "score": 10.5,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "NKI-Agent: Domain-Specific Fine-Tuning and Agentic Tool Use for Neuron Kernel Generation",
+    "url": "https://arxiv.org/abs/2607.04395v1"
+  },
+  "2607.04428": {
+    "score": 10.5,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "dOPSD: On-Policy Self-Distillation for Diffusion Language Models",
+    "url": "https://arxiv.org/abs/2607.04428v1"
+  },
+  "2607.04433": {
+    "score": 13.0,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "Autonomous Information Seeking: A Roadmap for Agentic Recommender Systems",
+    "url": "https://arxiv.org/abs/2607.04433v1"
+  },
+  "2607.04470": {
+    "score": 13.0,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "Regime-Conditional Stabilisation of LLM-Augmented Cooperative Multi-Agent Reinforcement Learning",
+    "url": "https://arxiv.org/abs/2607.04470v1"
+  },
+  "2607.04515": {
+    "score": 13.5,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "Towards Digital Preservation of Efik: TTS for a Low-Resource African Language",
+    "url": "https://arxiv.org/abs/2607.04515v1"
+  },
+  "2607.04637": {
+    "score": 15.4,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "PixelPilot: Scalable Vision-Language-Action Models for End-to-End Autonomous Driving",
+    "url": "https://arxiv.org/abs/2607.04637v1"
+  },
+  "2607.04713": {
+    "score": 24.5,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "RSPO: Reward-Swap Policy Optimization for Multi-Turn LLM Agents",
+    "url": "https://arxiv.org/abs/2607.04713v1"
+  },
+  "2607.04728": {
+    "score": 15.5,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "Turning Off-Policy Tokens On-Policy: A Plug-in Approach for Improving LLM Alignment",
+    "url": "https://arxiv.org/abs/2607.04728v1"
+  },
+  "2607.04854": {
+    "score": 10.5,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "CARL: Constraint-Aware Reinforcement Learning for Planning with LLMs",
+    "url": "https://arxiv.org/abs/2607.04854v1"
+  },
+  "2607.04927": {
+    "score": 12.0,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "DSWAM: A Dual-System World Action Foundation Model for Fine-Grained Robot Manipulation",
+    "url": "https://arxiv.org/abs/2607.04927v1"
+  },
+  "2607.04963": {
+    "score": 13.0,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "STAPO: Selective Trajectory-Aware Policy Optimization for LLM Agent Training",
+    "url": "https://arxiv.org/abs/2607.04963v1"
+  },
+  "2607.05089": {
+    "score": 13.5,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "TimeThink: Reasoning with Time for Video LLMs",
+    "url": "https://arxiv.org/abs/2607.05089v1"
+  },
+  "2607.05131": {
+    "score": 10.5,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "TacReasoner: A Dynamic Tactile-Language Framework for Interactive Reasoning in Real-World Scenarios",
+    "url": "https://arxiv.org/abs/2607.05131v1"
+  },
+  "2607.05196": {
+    "score": 13.5,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "Unified Audio Intelligence Without Regressing on Text Intelligence",
+    "url": "https://arxiv.org/abs/2607.05196v1"
+  },
+  "2607.05276": {
+    "score": 13.5,
+    "seen_at": "2026-07-07T17:28:15.364811+00:00",
+    "source": "arXiv",
+    "title": "ProPS: Prompted Profile Synthesis for Natural Language-Conditioned Speaker Embedding Distributions",
+    "url": "https://arxiv.org/abs/2607.05276v1"
+  },
   "_meta": {
-    "last_run_at": "2026-07-06T17:50:21.493637+00:00",
-    "last_run_date": "2026-07-06"
+    "last_run_at": "2026-07-07T17:28:15.364883+00:00",
+    "last_run_date": "2026-07-07"
   }
 }
