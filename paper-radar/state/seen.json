@@ -755,8 +755,162 @@
     "title": "ProPS: Prompted Profile Synthesis for Natural Language-Conditioned Speaker Embedding Distributions",
     "url": "https://arxiv.org/abs/2607.05276v1"
   },
+  "2607.05458": {
+    "score": 10.0,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "Learning to Control LLM Agent Harnesses with Offline Reinforcement Learning",
+    "url": "https://arxiv.org/abs/2607.05458v1"
+  },
+  "2607.05541": {
+    "score": 19.0,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "Self-Review Reinforcement Learning (SRRL) with Cross-Episode Memory and Policy Distillation",
+    "url": "https://arxiv.org/abs/2607.05541v1"
+  },
+  "2607.05573": {
+    "score": 10.5,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "Foundation Models for Automatic CAD Generation",
+    "url": "https://arxiv.org/abs/2607.05573v1"
+  },
+  "2607.05615": {
+    "score": 11.0,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "A Coin Flip Per Token: Bernoulli Sparse Steering of Large Language Models",
+    "url": "https://arxiv.org/abs/2607.05615v1"
+  },
+  "2607.05752": {
+    "score": 11.0,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "When Should LLMs Search? Counterfactual Supervision for Search Routing",
+    "url": "https://arxiv.org/abs/2607.05752v1"
+  },
+  "2607.05773": {
+    "score": 15.5,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "Beyond Static Evaluation: Building Simulation Environments for Scalable Agentic Reinforcement Learning",
+    "url": "https://arxiv.org/abs/2607.05773v1"
+  },
+  "2607.05775": {
+    "score": 13.0,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "Beyond the Leaderboard: A Synthesis of Tool-Use, Planning, and Reasoning Failures in Large Language Model Agents",
+    "url": "https://arxiv.org/abs/2607.05775v1"
+  },
+  "2607.05861": {
+    "score": 10.5,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "Mitigating Factual Hallucination in Large Reasoning Models via Mixed-Mode Advantage Regularization",
+    "url": "https://arxiv.org/abs/2607.05861v1"
+  },
+  "2607.05863": {
+    "score": 19.5,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "Strategic Bargaining in Multi-Buyer Markets: Reinforcement Learning from Verifiable Rewards for LLM Negotiations",
+    "url": "https://arxiv.org/abs/2607.05863v1"
+  },
+  "2607.05902": {
+    "score": 11.5,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "From Textural Counterpoint to Feature Encoding: A Multi-Dimensional Machine Representation Study of Haydn's \"The Lark\" Integrating Electroacoustic Analysis",
+    "url": "https://arxiv.org/abs/2607.05902v1"
+  },
+  "2607.06008": {
+    "score": 13.0,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "PolyWorkBench: Benchmarking Multilingual Long-Horizon LLM Agents",
+    "url": "https://arxiv.org/abs/2607.06008v1"
+  },
+  "2607.06027": {
+    "score": 13.5,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "Fr\u00e9chet Distance Loss on Speech Representations for Text-to-Speech Synthesis",
+    "url": "https://arxiv.org/abs/2607.06027v1"
+  },
+  "2607.06140": {
+    "score": 10.5,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "CurateEvo: Data-Curation Evolving for Agentic Post-Training",
+    "url": "https://arxiv.org/abs/2607.06140v1"
+  },
+  "2607.06157": {
+    "score": 10.5,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "LLM Agents for Deliberative Collaboration: A Study on Joint Decision Making Under Partial Observability",
+    "url": "https://arxiv.org/abs/2607.06157v1"
+  },
+  "2607.06175": {
+    "score": 15.5,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "Improving LLM-Generated Process Model Quality Through Reinforcement Learning: The Role of Reward Function Design",
+    "url": "https://arxiv.org/abs/2607.06175v1"
+  },
+  "2607.06223": {
+    "score": 13.0,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "Information Gain-based Rollout Policy Optimization: An Adaptive Tree-Structured Rollout Approach for Multi-Turn LLM Agents",
+    "url": "https://arxiv.org/abs/2607.06223v1"
+  },
+  "2607.06326": {
+    "score": 11.0,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "DT-Guard: Intent-Driven Reasoning-Active Training for Reasoning-Free LLM Safety Guardrail",
+    "url": "https://arxiv.org/abs/2607.06326v1"
+  },
+  "2607.06374": {
+    "score": 15.1,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "VaseMuseum: Digital Intelligent Museum for Ancient Greek Pottery",
+    "url": "https://arxiv.org/abs/2607.06374v1"
+  },
+  "2607.06401": {
+    "score": 11.8,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "A Definition and Roadmap for World Models",
+    "url": "https://arxiv.org/abs/2607.06401v1"
+  },
+  "2607.06405": {
+    "score": 10.5,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "Precise Video-to-Audio Generation with Cross-Modal Alignment in Latent Space",
+    "url": "https://arxiv.org/abs/2607.06405v1"
+  },
+  "2607.06461": {
+    "score": 13.5,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "WordVoice: Explicit and Decoupled Multi-Dimensional Word-Level Control for LLM-Based TTS",
+    "url": "https://arxiv.org/abs/2607.06461v1"
+  },
+  "2607.06540": {
+    "score": 13.7,
+    "seen_at": "2026-07-08T16:51:20.398159+00:00",
+    "source": "arXiv",
+    "title": "Hierarchical Acoustic-Semantic Modeling: Modality Separation and Semantic Coherence for Full-Duplex SLMs",
+    "url": "https://arxiv.org/abs/2607.06540v1"
+  },
   "_meta": {
-    "last_run_at": "2026-07-07T17:28:15.364883+00:00",
-    "last_run_date": "2026-07-07"
+    "last_run_at": "2026-07-08T16:51:20.398259+00:00",
+    "last_run_date": "2026-07-08"
   }
 }
