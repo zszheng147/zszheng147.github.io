@@ -832,6 +832,13 @@
     "title": "PolyWorkBench: Benchmarking Multilingual Long-Horizon LLM Agents",
     "url": "https://arxiv.org/abs/2607.06008v1"
   },
+  "2607.06014": {
+    "score": 8.2,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "Escaping the Procrustean Bed: Groupwise Orthogonal Connectors for Audio-Language Models",
+    "url": "https://arxiv.org/abs/2607.06014v1"
+  },
   "2607.06027": {
     "score": 13.5,
     "seen_at": "2026-07-08T16:51:20.398159+00:00",
@@ -909,8 +916,155 @@
     "title": "Hierarchical Acoustic-Semantic Modeling: Modality Separation and Semantic Coherence for Full-Duplex SLMs",
     "url": "https://arxiv.org/abs/2607.06540v1"
   },
+  "2607.06611": {
+    "score": 11.2,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "Audio Sentiment Analysis via Distillation and Cross-Modal Integration of Generated Multilingual Transcripts",
+    "url": "https://arxiv.org/abs/2607.06611v1"
+  },
+  "2607.06706": {
+    "score": 12.0,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "Vision Language Action (VLA) Models for Unmanned Aerial Robotics and Bimanual Manipulation: A Review",
+    "url": "https://arxiv.org/abs/2607.06706v1"
+  },
+  "2607.06720": {
+    "score": 16.5,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "When Does In-Context Search Help? A Sampling-Complexity Theory of Reflection-Driven Reasoning",
+    "url": "https://arxiv.org/abs/2607.06720v1"
+  },
+  "2607.06818": {
+    "score": 10.5,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "Ad Headline Generation using Self-Critical Masked Language Model",
+    "url": "https://arxiv.org/abs/2607.06818v1"
+  },
+  "2607.06820": {
+    "score": 10.5,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "Evaluating SageMath-Augmented LLM Agents for Computational and Experimental Mathematics",
+    "url": "https://arxiv.org/abs/2607.06820v1"
+  },
+  "2607.06827": {
+    "score": 8.7,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "Compress the Cache, Not the Speech Embedding: KV Compression for Efficient Speech LLMs",
+    "url": "https://arxiv.org/abs/2607.06827v1"
+  },
+  "2607.06831": {
+    "score": 11.7,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "Gradient-Based Speech-to-Text Alignment for Any ASR Model: From CTC to Speech LLMs",
+    "url": "https://arxiv.org/abs/2607.06831v1"
+  },
+  "2607.06854": {
+    "score": 15.5,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "A Gold-Standard Study of What Makes a Lightweight Game-Playing Agent Strong",
+    "url": "https://arxiv.org/abs/2607.06854v1"
+  },
+  "2607.06964": {
+    "score": 11.0,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "End-to-End LLM Flight Planning with RAG-based Memory and Multi-modal Coach Agent",
+    "url": "https://arxiv.org/abs/2607.06964v1"
+  },
+  "2607.06987": {
+    "score": 18.5,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "UP: Unbounded Positive Asymmetric Optimization for Breaking the Exploration-Stability Dilemma",
+    "url": "https://arxiv.org/abs/2607.06987v1"
+  },
+  "2607.06990": {
+    "score": 15.2,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "A Closed-Loop Multi-Agent Framework for Robust Multi-Robot Manipulation",
+    "url": "https://arxiv.org/abs/2607.06990v1"
+  },
+  "2607.06993": {
+    "score": 14.0,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "Large Behavior Model: A Promptable Digital Twin of the Retail Customer",
+    "url": "https://arxiv.org/abs/2607.06993v1"
+  },
+  "2607.07001": {
+    "score": 8.5,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "Ego-Human Motion Prediction with 3D-Aware LLM",
+    "url": "https://arxiv.org/abs/2607.07001v1"
+  },
+  "2607.07015": {
+    "score": 10.7,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "EscFOA: Enhancing Spatial Learning for Visually Impaired Learners via Generative Spatial Audio in 360-Degree Educational Environments",
+    "url": "https://arxiv.org/abs/2607.07015v1"
+  },
+  "2607.07117": {
+    "score": 10.3,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "Tree-of-Thoughts Reasoning for Text-to-Image In-Context Learning",
+    "url": "https://arxiv.org/abs/2607.07117v1"
+  },
+  "2607.07178": {
+    "score": 18.5,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "Entropy Pacing Policy Optimization for Multi-Task Agentic Reinforcement Learning",
+    "url": "https://arxiv.org/abs/2607.07178v1"
+  },
+  "2607.07321": {
+    "score": 10.5,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "From Atomic Actions to Standard Operating Procedures: Iterative Tool Optimization for Self-Evolving LLM Agents",
+    "url": "https://arxiv.org/abs/2607.07321v1"
+  },
+  "2607.07350": {
+    "score": 9.4,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "Towards Reliable Aerial Ground Vehicle Collaboration: An Integrated Planning and Autonomy Framework for Field Deployment",
+    "url": "https://arxiv.org/abs/2607.07350v1"
+  },
+  "2607.07361": {
+    "score": 14.6,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "BUS: Brain-Inspired Unsupervised Self-Reflection for Advanced Multimodal Reasoning",
+    "url": "https://arxiv.org/abs/2607.07361v1"
+  },
+  "2607.07508": {
+    "score": 16.0,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "Single-Rollout Asynchronous Optimization for Agentic Reinforcement Learning",
+    "url": "https://arxiv.org/abs/2607.07508v1"
+  },
+  "2607.07690": {
+    "score": 17.5,
+    "seen_at": "2026-07-09T17:28:03.260873+00:00",
+    "source": "arXiv",
+    "title": "Agon: Competitive Cross-Model RL with Implicit Rival Grading of Reasoning",
+    "url": "https://arxiv.org/abs/2607.07690v1"
+  },
   "_meta": {
-    "last_run_at": "2026-07-08T16:51:20.398259+00:00",
-    "last_run_date": "2026-07-08"
+    "last_run_at": "2026-07-09T17:28:03.260957+00:00",
+    "last_run_date": "2026-07-09"
   }
 }

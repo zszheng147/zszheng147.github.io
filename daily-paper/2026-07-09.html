@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Paper Radar · 2026-07-09</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F4F2EC; --surface:#FFFFFF; --surface-2:#FBFAF6;
+  --ink:#1A1915; --ink-2:#57544B; --ink-3:#8A867A;
+  --accent:#CC785C; --accent-deep:#A8512F;
+  --border:#E4E0D4; --border-2:#D6D1C2; --tint:#F2EAE2;
+  --serif:"Tiempos Headline",ui-serif,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,Cambria,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans); color:var(--ink); line-height:1.7; -webkit-font-smoothing:antialiased;
+  padding:0 20px 80px; background-color:var(--bg);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+body::before{
+  content:""; position:fixed; top:0; left:0; right:0; height:3px; z-index:50;
+  background:linear-gradient(90deg,var(--accent),#E2A98E,var(--accent-deep));
+}
+.container{max-width:760px;margin:0 auto}
+a{color:var(--accent)}
+/* ---- Editorial header ---- */
+.hero{max-width:760px; margin:0 auto; padding:64px 0 32px}
+.eyebrow{
+  display:inline-block; font-size:.74rem; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin-bottom:20px;
+}
+.hero h1{
+  font-family:var(--serif); font-weight:600; font-size:2.7rem; line-height:1.1;
+  letter-spacing:-.018em; color:var(--ink); margin-bottom:16px;
+}
+.hero .sub{color:var(--ink-2); font-size:1rem; font-weight:400}
+.hero .sub b{color:var(--ink); font-weight:600}
+.rule{max-width:760px; margin:0 auto 40px; border:none; border-top:1px solid var(--border)}
+/* ---- Nav ---- */
+.nav{margin-bottom:40px}
+.nav a{
+  font-size:.88rem; text-decoration:none; color:var(--ink-2); transition:color .15s;
+}
+.nav a:hover{color:var(--accent)}
+.digest-layout{display:grid; gap:24px}
+.toc{display:flex; gap:8px; overflow-x:auto; padding:12px; border:1px solid var(--border); border-radius:10px; background:var(--surface-2)}
+.toc-label{flex:none; padding:7px 8px; color:var(--ink-3); font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase}
+.toc a{display:flex; align-items:baseline; gap:7px; flex:none; padding:7px 10px; border-radius:7px; color:var(--ink-2); font-size:.86rem; line-height:1.25; text-decoration:none; transition:background .15s,color .15s}
+.toc a:hover{background:var(--tint); color:var(--accent-deep)}
+.toc a span{color:var(--accent); font-family:var(--serif); font-size:1rem; font-weight:600}
+.toc a b{color:var(--ink-3); font-size:.72rem; font-weight:500}
+.digest-content{min-width:0}
+.topic{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:28px 30px; box-shadow:0 2px 10px rgba(39,34,23,.025)}
+.topic + .topic{margin-top:28px}
+.topic-head{display:flex; justify-content:space-between; align-items:baseline; gap:16px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border)}
+.topic-title{font-family:var(--serif); font-size:1.75rem; font-weight:600; line-height:1.2; letter-spacing:-.012em}
+.topic-count{flex:none; color:var(--accent); font-size:.9rem; font-weight:600}
+.topic .topic-head + .paper{border-top:none; padding-top:0}
+.topic-empty{text-align:left; padding:14px 0 22px}
+.empty{color:var(--ink-2); text-align:center; padding:72px 0; font-size:1.05rem}
+.empty .big{font-family:var(--serif); font-size:2rem; color:var(--ink-3); margin-bottom:10px}
+/* ---- Paper as article ---- */
+.paper{
+  position:relative; padding:32px 0; border-top:1px solid var(--border);
+}
+.paper:first-of-type{border-top:none; padding-top:0}
+.p-head{display:flex; gap:16px; align-items:baseline; margin-bottom:14px}
+.idx{
+  flex:none; font-family:var(--serif); font-size:2.1rem; font-weight:600;
+  color:#D8A286; line-height:1; min-width:1em;
+}
+.paper-title{font-family:var(--serif); font-size:1.5rem; font-weight:600; line-height:1.28; letter-spacing:-.012em}
+.paper-title a{color:var(--ink); text-decoration:none; transition:color .15s}
+.paper-title a:hover{color:var(--accent)}
+.meta-line{font-size:.8rem; color:var(--ink-2); margin:0 0 11px 0}
+.meta-line .sep{margin:0 9px; color:var(--border-2)}
+.score{font-weight:600; color:var(--accent)}
+.score.hot{color:var(--accent-deep)}
+.tags{display:flex; flex-wrap:wrap; gap:7px; margin:0 0 16px 0}
+.tag{font-size:.72rem; font-weight:600; letter-spacing:.02em; padding:3px 11px; border-radius:999px}
+.tag.c0{color:#A8512F; background:#F1E2D9}
+.tag.c1{color:#5E6B39; background:#E8EAD9}
+.tag.c2{color:#4D7287; background:#DEE8ED}
+.tag.c3{color:#94712C; background:#EFE6CE}
+.tag.c4{color:#855272; background:#EDE0E7}
+.meta-row{font-size:.92rem; color:var(--ink-2); margin:0 0 4px 0}
+.why{
+  font-size:.82rem; color:var(--ink-3); margin:0 0 20px 0; font-style:italic;
+}
+.section-label{
+  font-family:var(--sans); font-size:.72rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.1em; color:var(--ink-3); margin:0 0 8px 0;
+}
+.abstract{
+  font-size:1rem; color:var(--ink); margin:0 0 22px 0; white-space:pre-wrap; line-height:1.75;
+}
+.interp{
+  font-size:1rem; color:var(--ink); white-space:pre-wrap; line-height:1.78;
+  background:var(--tint); border-left:3px solid var(--accent);
+  padding:18px 22px; border-radius:2px 10px 10px 2px;
+}
+.interp .section-label{color:var(--accent-deep)}
+.links{display:flex; gap:20px; margin:20px 0 0 0}
+.links a{
+  font-size:.9rem; font-weight:500; text-decoration:none; color:var(--accent);
+}
+.links a:hover{color:var(--accent-deep); text-decoration:underline}
+footer{
+  max-width:760px; margin:64px auto 0; padding-top:28px; border-top:1px solid var(--border);
+  font-size:.84rem; color:var(--ink-3); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+}
+footer a{color:var(--ink-3); text-decoration:none} footer a:hover{color:var(--accent)}
+@media(max-width:560px){
+  .hero{padding:44px 0 24px} .hero h1{font-size:2rem}
+  .paper-title{font-size:1.28rem}
+  .topic{padding:22px 20px}
+}
+@media(min-width:980px){
+  .daily-container{max-width:1030px}
+  .digest-layout{grid-template-columns:205px minmax(0,1fr); align-items:start; gap:32px}
+  .toc{position:sticky; top:24px; display:flex; flex-direction:column; overflow:visible; padding:12px}
+  .toc a{justify-content:flex-start}
+}
+</style>
+</head>
+<body>
+<div class="hero">
+  <span class="eyebrow">Daily Radar</span>
+  <h1>AI Paper Radar</h1>
+  <div class="sub"><b>2026-07-09</b> &nbsp;·&nbsp; 22 篇精选论文</div>
+</div>
+<hr class="rule">
+<div class="container daily-container">
+<nav class="nav"><a href="index.html">← 全部归档</a></nav>
+<div class="digest-layout">
+  <aside class="toc" aria-label="论文栏目目录">
+    <span class="toc-label">目录</span>
+    <a href="#section-1"><span>1</span>RL + LLM/MLLM<b>12 篇</b></a>
+    <a href="#section-2"><span>2</span>Speech-Audio-Music<b>5 篇</b></a>
+    <a href="#section-3"><span>3</span>AI paper of the day<b>5 篇</b></a>
+  </aside>
+  <main class="digest-content">
+    <section class="topic" id="section-1"><div class="topic-head"><h2 class="topic-title">RL + LLM/MLLM</h2><span class="topic-count">12 篇</span></div><div class="paper">
+  <div class="p-head">
+    <span class="idx">1</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.07178v1" target="_blank">Entropy Pacing Policy Optimization for Multi-Task Agentic Reinforcement Learning</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 18.5</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Zetian Hu, Shunyu Liu, Junjie Zhang, Yongcheng Jing, Ting-En Lin et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, rl_core:policy optimization, verifiable_reasoning:grpo, agentic_rl:agentic reinforcement learning, llm_core:large language model, llm_core:llm</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Recent breakthroughs of Reinforcement Learning (RL) have highlighted its potential for complex agentic Large Language Model (LLM) tasks. However, existing efforts largely focus on single-task settings, whereas real-world deployment necessitates a generalist agent capable of solving multiple tasks simultaneously. In this work, we identify a critical yet underexplored phenomenon in multi-task agentic RL: different tasks can exhibit exploration-exploitation pace mismatch. Specifically, easier tasks may converge early to low-entropy policies that hinder learning on harder tasks, while harder tasks can, in turn, push easier tasks back toward high-entropy exploration. This back-and-forth interaction creates inter-task entropy crossovers and frequent entropy spikes. Inspired by this observation, we introduce Entropy Pacing Policy Optimization (EPPO) for multi-task agentic LLMs, which coordinates entropy across tasks to stabilize multi-task optimization. At the core of EPPO is a task-wise dynamic clipping mechanism that replaces the fixed clipping threshold in Group Relative Policy Optimization (GRPO) with a task entropy-aware adaptive bound, tightening updates for over-confident tasks while relaxing them for under-explored ones. Experiments on the multi-task agentic benchmarks demonstrate that the proposed EPPO yields results superior to its counterparts.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文指出，多任务智能体 RL 训练中不同任务的学习节奏不一致：简单任务过早变得“确定”，困难任务仍需探索，二者会相互干扰并造成策略熵反复波动。为此，作者提出 EPPO，在 GRPO 的基础上引入按任务自适应的裁剪阈值，用任务级熵来调节更新幅度：对过度自信的任务收紧更新，对探索不足的任务放宽更新。其核心贡献是把“熵节奏协调”作为多任务 LLM agent RL 的稳定化机制，而不是仅依赖统一的 PPO/GRPO 超参数。对 RL + LLM/MLLM 栏目而言，它关注的是从单任务 agent 训练走向通用多任务 agent 时的关键优化问题，具有较强的实际部署意义。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.07178v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.07178v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">2</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.06987v1" target="_blank">UP: Unbounded Positive Asymmetric Optimization for Breaking the Exploration-Stability Dilemma</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 18.5</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Chongyu Fan, Pengfei Liu, Jingjia Huang, Sijia Liu, Yi Lin</div>
+  <div class="why">why: rl_core:reinforcement learning, rl_core:rl-based, rl_core:dapo, verifiable_reasoning:grpo, llm_core:large language model, llm_core:large language models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Reinforcement learning (RL) has become the standard paradigm for enhancing the complex reasoning capabilities of large language models (LLMs). To achieve sample efficiency, modern RL frameworks rely on importance sampling (IS). However, these algorithms suffer from an exploration-stability dilemma. Pure IS often leads to catastrophic training instability, while standard clipping mechanisms used to mitigate this instability strictly constrain the policy update budget. By formalizing the concept of Probability Capacity (Cap), we reveal that conservative clipping structurally stifles exploration by prematurely truncating the update budget for correct but low-confidence reasoning paths. To break free from these constraints, we propose Unbounded Positive Asymmetric Optimization (UP), a universal and plug-and-play objective. UP theoretically restructures the optimization process by anchoring the policy to its current state via the stop-gradient operator. This asymmetric design unleashes unclipped, stable gradients for positive advantages to maximize exploration, while maintaining standard clipping safeguards for negative advantages to prevent training instability. Furthermore, our formulation readily extends across different optimization granularities, including token-level (GRPO, DAPO) and sequence-level (GSPO) frameworks. Extensive experiments demonstrate that UP enhances exploration capacity and achieves superior reasoning accuracy across diverse RL algorithms (DAPO, GSPO, and GRPO), model architectures (Dense, MoE, and vision-language), and training modalities (language and multimodal), validating UP as a truly universal plug-and-play enhancement for RL-based training.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文针对 LLM/MLLM 强化学习训练中的“探索 vs. 稳定”矛盾：重要性采样能提高样本效率，但容易不稳定；而 PPO/GRPO 类裁剪又会过早限制那些“答案正确但当前概率低”的推理路径，削弱探索。  
+作者提出 UP（Unbounded Positive Asymmetric Optimization），核心思路是对正优势样本放开裁剪、允许更大的策略提升，同时通过 stop-gradient 将更新锚定在当前策略，并对负优势样本保留裁剪以避免灾难性更新。  
+这个目标函数可以直接插入 GRPO、DAPO、GSPO 等不同粒度的 RL 框架，覆盖 token-level 和 sequence-level 优化。  
+对 RL + LLM/MLLM 栏目值得关注的是，它不是提出一个全新训练框架，而是一个通用的目标函数改造，可能提升大模型推理 RL 训练中的探索能力、稳定性和最终准确率。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.06987v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.06987v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">3</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.07690v1" target="_blank">Agon: Competitive Cross-Model RL with Implicit Rival Grading of Reasoning</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 17.5</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span><span class="tag c3">cs.AI</span><span class="tag c3">cs.CL</span></div>
+  <div class="meta-row">Vladislav Beliaev</div>
+  <div class="why">why: rl_core:reinforcement learning, preference_alignment:reward model, verifiable_reasoning:grpo, verifiable_reasoning:reinforcement learning from verifiable rewards, verifiable_reasoning:verifiable reward, llm_core:reasoning model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Reinforcement learning from verifiable rewards (e.g. GRPO) is the engine behind today's reasoning models, yet it grades only the final answer. On hard problems this trains models to write more rather than to think better, since the trace itself is never graded and no label for good thinking exists. We introduce Agon, which makes two competing models each other's graders. Both attempt the same problem; in alternating roles, one drafts a solution and the other reads it while solving, and each is rewarded for out-solving the other. To win, a model must out-reason a rival that has seen its work, so reasoning is judged implicitly during training, with no process labels and no reward model. Because both models are optimized, each faces a progressively stronger rival, which single-model RL cannot provide. The two need only be comparably strong and behaviorally different. At inference the pair deploys as it trains, a two-stage cascade in which one model drafts and the other answers after reading the draft. On the hard split of DeepMath with Qwen3, this doubles GRPO's pass@1, roughly eight times the gain of an untrained Mixture-of-Agents pass over the same base. The ordering replicates on competitive-programming code and across model families (Qwen3.5, Gemma 4). For now the models talk in text; the next step is to let them reason together in latent space.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把“推理过程难以打分”的问题转化为模型间竞争：不再只看最终答案是否正确，而是让一个模型的推理草稿成为另一个模型解题时要超越的对象。方法上，Agon 训练两个能力相近但行为不同的模型轮流出题式竞争：一方先写解法，另一方阅读后作答，奖励来自谁最终解得更好，因此推理质量被竞争结果间接约束，而不需要过程标注或额外奖励模型。相比单模型 GRPO，它提供了一个会同步变强的“对手环境”，避免模型只靠拉长思维链来刷最终奖励。它值得 RL + LLM/MLLM 栏目关注，因为它提出了一种面向推理模型的新型自博弈 RL 框架，并在数学、代码和不同模型家族上显示出比普通集成或单模型 RL 更强的增益。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.07690v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.07690v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">4</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.06720v1" target="_blank">When Does In-Context Search Help? A Sampling-Complexity Theory of Reflection-Driven Reasoning</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 16.5</span><span class="sep">·</span><span>2026-07-07</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span><span class="tag c3">cs.CL</span></div>
+  <div class="meta-row">Yotam Wolf, Noam Wies, Amnon Shashua</div>
+  <div class="why">why: rl_core:reinforcement learning, verifiable_reasoning:reinforcement learning with verifiable rewards, verifiable_reasoning:verifiable reward, llm_core:large language model, llm_core:large language models, llm_core:llms</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Training large language models (LLMs) with extended reasoning has enabled in-context search, in which models iteratively generate, critique, and revise solution attempts. We provide a theoretical analysis of in-context search by modeling it as approximate inference over reasoning traces, where the base model defines a prior and self-reflection provides feedback for posterior updates, and study the resulting inference-time sampling complexity - the number of sequential attempts needed to achieve high success probability. We show that when reflections reliably localize early mistakes, in-context search can yield exponential improvements over the base model, solving problems with exponentially small zero-shot pass rates using only a polynomial number of sequential attempts, whereas when this property fails, conditioning on past attempts offers no asymptotic benefit over parallel sampling. We further show that these gains are robust and learnable: approximate posterior updates suffice, and cross-entropy training on search rollouts recovers the required behavior with polynomial sample complexity. Finally, we show that under a stagewise abstraction of reinforcement learning with verifiable rewards, the optimal policy extension implements the same posterior reweighting rule. We validate key qualitative predictions of the theory on real large reasoning models.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文给“LLM 反思—修改—再尝试”的 in-context search 提供了一个采样复杂度理论：它指出，只有当模型的自我反思能较稳定地定位到推理链中较早的错误时，顺序搜索才可能相比简单并行采样带来指数级收益。  
+方法上，作者把多轮推理看成对“推理轨迹”的近似贝叶斯推断：基础模型给出先验，反思信号用于更新后验，并分析需要多少轮尝试才能高概率成功。  
+论文还进一步说明，这种后验重加权行为可以通过搜索轨迹上的交叉熵训练学到，并与带可验证奖励的强化学习最优策略形式相一致。  
+它值得 RL + LLM/MLLM 栏目关注，因为它把当前常见的 test-time compute、self-reflection、RL with verifiable rewards 等实践现象统一到一个理论框架中，解释了什么时候“多想几轮”真的有效、什么时候只是换一种采样。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.06720v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.06720v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">5</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.07508v1" target="_blank">Single-Rollout Asynchronous Optimization for Agentic Reinforcement Learning</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 16.0</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Zhenyu Hou, Yujiang Li, Jie Tang, Yuxiao Dong</div>
+  <div class="why">why: rl_core:reinforcement learning, verifiable_reasoning:grpo, agentic_rl:agentic reinforcement learning, llm_core:large language model, llm_core:large language models, llm_core:llms</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Reinforcement learning (RL) is becoming increasingly important for post-training large language models (LLMs). Previous RL pipelines for LLMs were mostly synchronous and batch-interleaved, which is inefficient for long-horizon agentic tasks. Recently, asynchronous RL has emerged as a more efficient alternative by updating the model as rollouts arrive. However, existing asynchronous RL systems often emphasize throughput, while leaving training stability and task effectiveness largely underexplored. For example, a key challenge is that group-wise sampling in the widely-used GRPO framework does not naturally fit asynchronous agentic training. In this paper, we present Single-rollout Asynchronous Optimization (SAO) to address the stability and off-policy challenges in asynchronous RL. To reduce off-policy effects and improve generalization, we replace group-wise sampling with single-rollout sampling, that is, using one rollout per prompt. We further improve this single-rollout strategy with practical value-model training designs. To improve optimization stability, we introduce a strict double-side token-level clipping strategy. SAO is able to train stably for one thousand steps and consistently outperform GRPO and its variants on agentic coding and reasoning benchmarks, such as SWE-Bench Verified, BeyondAIME, and IMOAnswerBench. We also demonstrate that single-rollout RL is particularly effective in a simulated online learning setting, where the model must adapt to changing evolving environments. To this end, SAO is successfully deployed in the agentic RL pipeline for training the open GLM-5.2 model (750B-A40B).</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文针对长时程 Agent 任务中同步 RL 效率低、异步 RL 又容易不稳定和偏离当前策略的问题，提出了 Single-rollout Asynchronous Optimization（SAO），核心贡献是在异步训练框架下实现更稳定、有效的 LLM/Agent 强化学习。  
+方法上，它放弃 GRPO 常见的同一 prompt 多 rollout 分组采样，改为每个 prompt 只采一个 rollout，并配合价值模型训练设计来降低 off-policy 影响；同时引入更严格的 token 级双侧 clipping 来抑制更新过大导致的训练震荡。  
+实验显示 SAO 在代码 Agent、数学/推理等 benchmark 上优于 GRPO 及其变体，并能稳定训练较长步数，还被用于 GLM-5.2 的 Agentic RL 训练流程。  
+它值得 RL + LLM/MLLM 栏目关注，因为论文讨论的不是单纯“提升吞吐”，而是面向真实 Agent 长任务的异步 RL 训练范式，涉及后训练效率、稳定性和在线适应能力等关键问题。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.07508v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.07508v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">6</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.06854v1" target="_blank">A Gold-Standard Study of What Makes a Lightweight Game-Playing Agent Strong</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 15.5</span><span class="sep">·</span><span>2026-07-07</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span><span class="tag c3">cs.AI</span><span class="tag c0">cs.GT</span></div>
+  <div class="meta-row">Nima Kelidari, Mohammadsaeed Haghi, Mahdi Salmani</div>
+  <div class="why">why: rl_core:reinforcement learning, rl_core:reward shaping, agentic_rl:reinforcement learning agents, agentic_rl:self-play, llm_core:large language model, llm_core:language model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Reinforcement learning agents for imperfect-information card games are only as strong as the opponents they train against, and they are hard to grade, since they beat a random opponent over 99 percent of the time and only tie copies of themselves. So we build a strong, fixed, rule-based expert for Gin Rummy and use it only as a yardstick, never for training. It beats every agent we trained 70 to 99 percent of the time. Across more than a hundred runs, we isolate what makes a lightweight agent stronger. Trust region updates, a well-aimed reward, a curriculum of tougher opponents, warm starting, and keeping the best checkpoint all help, and stacking them lifts a self-play champion from about 30 to 36 percent against the expert. Several ideas did not pay off. Short-term and longer-term reward shaping, learned state embeddings, imitation and DAgger, and a live large language model opponent were each unhelpful, too slow, or too heavy to train at scale. Comparing MLP, convolutional, set-based, attention, and recurrent encoders shows that extra capacity does little to break the ceiling, suggesting the limit is information rather than network size. We add standard baselines (neural fictitious self-play and information set Monte Carlo search) and confirm the approach carries over to Leduc Hold'em, where the optimum is computable. The result is a lightweight, game-agnostic recipe that trains competitive agents without training on the expert, for any game a small model can handle, reported with robust statistics and released as a reusable package.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是为轻量级不完全信息博弈智能体建立了一套更可靠的评测与训练经验：用一个固定的强规则专家作为“金标准”评估器，而不是依赖随机对手或自我对弈胜率，从而更清楚地区分不同训练策略的真实强弱。方法上，作者系统比较了信赖域更新、奖励设计、课程式对手、自热启动、保留最佳 checkpoint 等因素，并测试了更复杂网络、模仿学习、DAgger、LLM 对手、奖励塑形等方案，发现简单但稳健的 RL 训练配方比堆模型容量或引入大模型更有效。论文还通过 Gin Rummy 和 Leduc Hold’em、NFSP 与 ISMCTS 等基线验证结论，强调瓶颈更多来自信息不完备和训练机制，而不只是模型规模。对 RL + LLM/MLLM 栏目值得关注的是，它提供了一个反“大模型万能”的实证视角：在游戏智能体中，LLM 作为在线对手未必划算，而可复现、轻量、评测扎实的 RL pipeline 可能更具实际价值。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.06854v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.06854v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">7</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.07361v1" target="_blank">BUS: Brain-Inspired Unsupervised Self-Reflection for Advanced Multimodal Reasoning</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 14.6</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c3">cs.CV</span></div>
+  <div class="meta-row">Jiacheng Yang, Tongying Xiao, Yunkai Dang, Cong Wang, Yuekun Yang et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, llm_core:language model, llm_core:language models, mllm_vlm:vision-language model, mllm_vlm:vlm, mllm_vlm:vlms</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Current Vision-Language Models (VLMs) often struggle to handle complex visual tasks that require consistent and fine-grained reasoning. Recent methods aim to train models to facilitate self-reflective reasoning, i.e., reviewing and improving the generated reasoning. However, they require large volumes of annotated data and lack explicit reflective behavior during test time. This work aims to bridge this gap through inspiration from neuroscience. The human brain exhibits efficient backward prediction, i.e., predicting which current states are likely to precede a given future state. In this work, we first verify that mainstream VLMs can perform backward prediction, similar to the human brain. Then, we propose Brain-inspired Unsupervised Self-reflection (BUS), a label-free training framework to enhance reflective reasoning capability in challenging image analysis. BUS enables VLMs to perform backward prediction and provide explicit learning signals on data without ground-truth labels. In this way, BUS eliminates reliance on annotated data while improving reasoning performance. Notably, BUS is compatible with popular fine-tuning methods, such as Supervised Fine-Tuning (SFT) and Reinforcement Learning (RL). Finally, extensive experiments on 8 benchmarks demonstrate the effectiveness of BUS across a wide range of complex visual tasks. It achieves notable improvements over the base model while using only unlabeled training data. Our experimental findings validate that backward prediction capability is critical for VLM reasoning.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是提出了 BUS：一种不依赖人工标注的多模态自反思训练框架，用来提升 VLM 在复杂视觉推理中的一致性和细粒度分析能力。其关键思路是借鉴大脑的“反向预测”机制，让模型从目标/未来状态倒推可能的当前状态，并利用这种能力在无标签数据上构造自监督学习信号，从而训练模型显式检查和修正自身推理。方法上，BUS 可与 SFT、RL 等常见微调范式结合，因此不是替代现有训练流程，而是为它们提供一种低成本的反思能力增强模块。它值得 RL + LLM/MLLM 栏目关注，因为它把“自我反思”从依赖标注或奖励模型的范式，推进到无监督信号构造，为多模态推理中的可扩展训练和测试时反思提供了新方向。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.07361v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.07361v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">8</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.06993v1" target="_blank">Large Behavior Model: A Promptable Digital Twin of the Retail Customer</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 14.0</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Wachiravit Modecrua, Krittin Pachtrachai, Touchapon Kraisingkorn</div>
+  <div class="why">why: rl_core:reinforcement learning, verifiable_reasoning:reinforcement learning with verifiable rewards, verifiable_reasoning:verifiable reward, llm_core:language model, llm_core:language models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Customer behavior modeling underpins recommendation, marketing, and decision support, yet existing approaches either optimize predictive accuracy without explaining decisions or simulate users without grounding them in real behavioral data. We present the Large Behavioral Model (LBM) that learns customer decision making directly from large-scale retail transactions through a unified Person-Environment formulation. Customer state is represented by a behavioral profile derived from historical purchases, while product context is incorporated through retrieval-augmented generation. The model is trained using continued pre-training on verbalized behavioral data, supervised fine-tuning for decision generation, and reinforcement learning with verifiable rewards for evidence-based calibration. We evaluate the proposed framework on purchase prediction, hard-negative discrimination, basket completion, promotion response, and cross-domain voucher redemption. The model consistently outperforms frontier general-purpose language models on in-domain retail tasks while demonstrating strong zero-shot and fine-tuned transfer across retailers and decision domains. Ablation studies show that continued pre-training is the primary driver of behavioral generalization, retrieval is most effective when applied during both training and inference, and reinforcement learning improves reliance on explicit behavioral evidence over generic language-model priors. These results demonstrate that behavioral knowledge encoded in transaction histories can be effectively learned by language models, providing a scalable foundation for customer digital twins and behavior simulation.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把零售顾客的交易历史转化为可被 LLM 学习的“行为知识”，构建了一个可提示、可迁移的顾客数字孪生模型，用于预测购买、补全购物篮、判断促销响应等任务。方法上，它将用户历史购买抽象成行为画像，并通过检索增强引入商品/环境上下文，再结合继续预训练、监督微调和带可验证奖励的强化学习来校准模型决策，使输出更依赖真实行为证据而非通用语言先验。实验显示，继续预训练对行为泛化最关键，训练与推理阶段都使用检索效果更好，RL 则提升了证据一致性和可解释性。它值得 RL + LLM/MLLM 栏目关注，因为这是一个将大模型从“语言生成”推进到“基于真实行为数据的决策模拟”的典型案例，也展示了 RL 在商业行为建模中用于校准和约束模型的重要价值。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.06993v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.06993v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">9</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.06964v1" target="_blank">End-to-End LLM Flight Planning with RAG-based Memory and Multi-modal Coach Agent</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 11.0</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c1">cs.RO</span><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Amin Tabrizian, Arsyi Aziz, Aarifah Ullah, Mahyar Ghazanfari, Pouria Razzaghi et al.</div>
+  <div class="why">why: preference_alignment:human preference, llm_core:large language model, llm_core:llm, llm_core:llms</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Bridging the gap between human pilot intent and autonomous flight operation is critical for real-world electric vertical takeoff and landing (eVTOL) aircraft deployment. Flight planning traditionally relies on classic algorithms that struggle to incorporate flexible human preferences. We present FRAMe, an End-to-End Large Language Model (LLM) Flight Planning tool with RAG-based Memory and Multi-modal Coach Agent. Our system integrates a planner LLM with a multi-modal coach agent and retrieval augmented generation (RAG)-based memory to generate flight plans that satisfy mission constraints while aligning with human flight operator preferences. We demonstrate the system in a range of real-world-inspired scenarios of varying difficulty levels. Across four LLMs, the full FRAMe system (RAG and coach) yields the highest validity for every planner (up to 93.8% aggregate, 99% on Easy scenarios for the strongest planner) and shifts preference-relevant metrics in the operator-favored direction where the metric has headroom. FRAMe signifies how advanced LLMs can be deployed for human-centric mission planning, translating natural language instructions into safe, efficient, and flexible flight routes. The code is available at: github.com/amin-tabrizian/FlightPlanningLLMs</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是提出 FRAMe，把自然语言中的飞行员/运营者意图直接转化为 eVTOL 飞行计划，重点解决传统路径规划难以表达和满足人类偏好的问题。方法上，它用一个 LLM 作为主规划器，结合 RAG 记忆模块检索历史偏好与任务经验，再通过多模态 coach agent 对路线、约束和偏好满足情况进行反馈修正，形成端到端的规划闭环。实验显示，在不同难度场景和多种 LLM 上，加入 RAG 与 coach 后能显著提升计划有效性，并让航线指标更贴近操作者偏好。它值得 RL + LLM/MLLM 栏目关注，因为它展示了 LLM/多模态智能体在真实物理任务规划中的落地方式，可作为未来结合强化学习、偏好优化和安全约束规划的应用范例。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.06964v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.06964v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">10</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.06818v1" target="_blank">Ad Headline Generation using Self-Critical Masked Language Model</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 10.5</span><span class="sep">·</span><span>2026-07-07</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span><span class="tag c3">cs.AI</span><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Yashal Shakti Kanungo, Sumit Negi, Aruna Rajan</div>
+  <div class="why">why: rl_core:reinforcement learning, rl_core:policy gradient, llm_core:language model, llm_core:language models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">For any E-commerce website it is a nontrivial problem to build enduring advertisements that attract shoppers. It is hard to pass the creative quality bar of the website, especially at a large scale. We thus propose a programmatic solution to generate product advertising headlines using retail content. We propose a state of the art application of Reinforcement Learning (RL) Policy gradient methods on Transformer based Masked Language Models. Our method creates the advertising headline by jointly conditioning on multiple products that a seller wishes to advertise. We demonstrate that our method outperforms existing Transformer and LSTM + RL methods in overlap metrics and quality audits. We also show that our model-generated headlines outperform human submitted headlines in terms of both grammar and creative quality as determined by audits.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把广告标题生成从“单商品文案改写”扩展到“基于多个待推广商品联合生成标题”，面向电商大规模广告创意生产场景，提升标题的语法质量和吸引力。方法上，它将 Transformer 掩码语言模型作为生成策略，并引入 self-critical policy gradient 强化学习，用自动指标/质量反馈来优化生成结果，而不是只依赖最大似然训练。实验显示，该方法相比传统 Transformer 基线和 LSTM+RL 在文本重叠指标与人工质检上更优，甚至在部分审核标准上超过商家人工提交标题。它值得 RL + LLM/MLLM 栏目关注，因为它是较早将强化学习策略优化用于 Transformer 语言模型商业文案生成的应用案例，体现了 RL 在对齐“创意质量、可读性、业务目标”等非纯监督信号上的价值。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.06818v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.06818v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">11</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.07350v1" target="_blank">Towards Reliable Aerial Ground Vehicle Collaboration: An Integrated Planning and Autonomy Framework for Field Deployment</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 9.4</span><span class="sep">·</span><span>2026-07-07</span></div>
+  <div class="tags"><span class="tag c1">cs.RO</span></div>
+  <div class="meta-row">Md Safwan Mondal, Luca Russo, James D. Humann, James M. Dotterweich, Pranav Bhounsule</div>
+  <div class="why">why: rl_core:reinforcement learning, llm_core:language model, mllm_vlm:vision language model, mllm_vlm:vlm</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Limited flight endurance significantly restricts the operational range of unmanned aerial vehicles (UAVs) in long duration missions such as surveillance and inspection, where multiple spatially distributed Areas of Interest (AOIs) must be visited. These tasks require efficient routing determining the sequence of visits which directly impacts mission time, energy consumption, and overall feasibility. Pairing UAVs with unmanned ground vehicles (UGVs) for mobile recharging offers a promising solution, but introduces a tightly coupled cooperative routing problem involving UAV route planning, UGV road constrained movement, energy management, and rendezvous scheduling under uncertainty. In this work, we present an integrated planning and autonomy framework for reliable field deployment. We formulate the problem as an energy constrained cooperative routing task and solve it using a Deep Reinforcement Learning (DRL) based planner that jointly optimizes the UAV visitation sequence and rendezvous locations with the UGV, outperforming baseline heuristics in minimizing total mission time. To bridge the gap between planning and execution, we introduce a standardized two layer YAML based mission API that captures environment states and structures lightweight, synchronized action sequences. This framework is supported by a complete autonomy stack using PX4/MAVSDK for UAV control and ROS 2/Nav2 for UGV navigation. Furthermore, we propose a lightweight Rendezvous Aware Replanner (RARP) that operates online to handle environmental uncertainties, reducing energy margin violations from 83.33% to 20.00%. The full system is validated through outdoor field experiments, demonstrating robust cooperative navigation and adaptability in dynamic tasks, including a search and rescue scenario with vision language model (VLM) based hazard detection</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文面向“无人机续航受限但任务点分散”的真实场景，提出了一个空地协同部署框架：让 UAV 负责访问 AOI，UGV 作为可移动充电/会合平台，从而联合优化访问顺序、会合位置和任务总耗时。方法上，它将问题建模为带能量约束的协同路径规划任务，用深度强化学习生成全局计划，并通过 YAML 任务接口、PX4/MAVSDK、ROS2/Nav2 将规划结果落到真实机器人系统中；同时设计了在线 RARP 重规划器来应对执行中的不确定性。论文的亮点不只是算法指标优于启发式方法，还强调从 DRL 规划到户外实地部署的完整闭环，并展示了能显著降低能量安全裕度违规。对 RL + LLM/MLLM 栏目值得关注的是，它结合了强化学习决策、机器人自治栈和 VLM 视觉语义感知，在搜索救援等动态任务中体现了“学习规划 + 多模态理解 + 实体机器人执行”的集成趋势。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.07350v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.07350v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">12</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.07001v1" target="_blank">Ego-Human Motion Prediction with 3D-Aware LLM</a></div>
+  </div>
+  <div class="meta-line"><span class="score">score 8.5</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c3">cs.CV</span></div>
+  <div class="meta-row">Yujin Bae, Jaewoo Jeong, Hyeonseong Kim, Kuk-Jin Yoon</div>
+  <div class="why">why: verifiable_reasoning:grpo, llm_core:llm, llm_core:instruction tuning</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Anticipating human motion from an egocentric perspective is fundamental for proactive assistance in AR/VR, human-robot collaboration, and embodied AI. While recent works incorporate language as a semantic prior to reduce the ill-posed nature of egocentric forecasting, they largely neglect the 3D spatial and semantic context that governs how motion unfolds, and treat pose and language prediction as separate inference streams. We introduce Ego3DLM, built on two core principles: accurate motion forecasting requires explicit spatial and semantic understanding of the 3D environment, and pose and language must be predicted holistically in a single pass, since motion is inherently tied to the semantic interpretation of actions being performed. Given three-point tracking, 3D scene features, and egocentric video, Ego3DLM simultaneously decodes past pose, future pose, past narration, and future narration in a single autoregressive pass, grounding predicted poses and descriptions in one another to enforce cross-modal and temporal consistency. We adopt a three-stage training scheme: (1) spatial-semantic scene awareness pretraining; (2) holistic instruction tuning over all four outputs in a single pass; and (3) GRPO-based reinforcement finetuning with intra- and inter-modal rewards that directly optimize pose-language fidelity. Experiments on the Nymeria benchmark demonstrate that Ego3DLM achieves state-of-the-art performance across future motion prediction, past motion tracking, and motion description, showing that 3D scene grounding and holistic cross-modal prediction yield physically plausible and semantically coherent motion forecasts. The project page is available at https://jaewoo97.github.io/Ego3DLM/.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文提出 Ego3DLM，把第一视角人体运动预测从“只看历史姿态/视频”的问题，扩展为结合 3D 场景几何、语义和语言理解的多模态生成问题。方法上，它用 LLM/MLLM 式的自回归框架，在一次推理中同时生成过去/未来姿态与过去/未来动作描述，并通过三阶段训练：3D 场景感知预训练、整体指令微调，以及基于 GRPO 的强化学习微调来提升姿态与语言的一致性。其关键价值在于把运动预测、动作语义解释和 3D 环境 grounding 统一起来，使预测结果更符合物理场景约束和人类行为意图。对 RL + LLM/MLLM 栏目值得关注的是，它展示了如何用语言模型作为跨模态决策/预测骨架，并用强化学习奖励直接优化多模态时空一致性。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.07001v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.07001v1" target="_blank">PDF</a>
+  </div>
+</div></section>
+<section class="topic" id="section-2"><div class="topic-head"><h2 class="topic-title">Speech-Audio-Music</h2><span class="topic-count">5 篇</span></div><div class="paper">
+  <div class="p-head">
+    <span class="idx">1</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.06831v1" target="_blank">Gradient-Based Speech-to-Text Alignment for Any ASR Model: From CTC to Speech LLMs</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 11.7</span><span class="sep">·</span><span>2026-07-07</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span><span class="tag c3">cs.AI</span><span class="tag c3">cs.CV</span><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Albert Zeyer, Ralf Schlüter, Hermann Ney</div>
+  <div class="why">why: speech_audio_music:speech, speech_audio_music:audio, speech_audio_music:asr, frontier_audio_ai:speech llm</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Speech-to-text alignment means finding the temporal boundaries of each word in the audio. Some models provide such an alignment directly and others do not. Connectionist temporal classification (CTC) and transducer models have an alignment by construction, whereas attention-based encoder-decoders (AED) and speech large language models (LLMs) do not, and their word timings are usually read off the attention weights instead. All of these signals live on the encoder frame grid, which bounds their temporal precision. We study a generic gradient-based alignment that applies to any differentiable ASR model. We take the gradient of each teacher-forced token log probability with respect to the input, reduce it to a per-frame saliency, and decode the resulting matrix into word boundaries with a single dynamic-programming pass. The method needs no training, no model modification and no alignment heads, works across all model families including the speech LLMs, and aligns on the input grid rather than on the coarser encoder grid. We evaluate it on sixteen models from four families, on read (TIMIT) and spontaneous (Buckeye) speech, each against the model's own native or attention-based alignment. We find that the gradient yields a usable alignment for every model, that it is usually somewhat behind a strong native aligner but better where the native alignment is weak, as for the streaming models, and that its main disadvantage is the cost of one backward pass per token.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文提出了一种“模型无关”的语音-文本对齐方法：不依赖 CTC、Transducer 的内建对齐，也不依赖注意力权重，而是用梯度来估计每个输出 token 对输入音频各时间点的贡献。具体做法是在 teacher forcing 下，对每个 token 的 log probability 对输入求梯度，将其压缩成逐帧显著性矩阵，再用一次动态规划解码出词边界；因此无需训练、无需改模型，也能用于 AED 和 speech LLM。它的优势是对齐发生在原始输入时间网格上，理论上比 encoder 帧级信号更细，并且在 16 个不同 ASR 模型上的实验显示普遍可用，尤其在原生对齐较弱的流式模型上有价值。对 Speech-Audio-Music 栏目而言，这篇工作值得关注，因为它为各种 ASR/语音大模型提供了统一的时间定位工具，有助于字幕、语音编辑、可解释性分析和多模态对齐等任务。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.06831v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.06831v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">2</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.06611v1" target="_blank">Audio Sentiment Analysis via Distillation and Cross-Modal Integration of Generated Multilingual Transcripts</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 11.2</span><span class="sep">·</span><span>2026-07-07</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span><span class="tag c3">cs.AI</span><span class="tag c2">cs.LG</span><span class="tag c1">cs.SD</span></div>
+  <div class="meta-row">Andrei-George Durdun, Victor Constantinescu, Radu Tudor Ionescu</div>
+  <div class="why">why: speech_audio_music:speech, speech_audio_music:audio, speech_audio_music:vocal, frontier_audio_ai:audio foundation model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Automatically recognizing the sentiment, positive or negative, from speech is a challenging task, requiring both the analysis of vocal inflections and the interpretation of uttered words. Recent solutions rely on audio foundation models to solve the task, but it remains unclear if such models can take all aspects into account. To this end, we propose a multimodal solution that integrates audio and text information via cross-modal transformers, where text transcripts are automatically generated via an automatic speech recognition (ASR) tool. Moreover, we create multiple text modalities by automatically translating the transcripts into multiple languages via machine translation tools. Audio and multilingual text features are combined via a cascaded architecture comprising cross-modal transformer blocks that integrate modalities one by one. We further distill knowledge from the multimodal model, called teacher, into a unimodal (audio only) model, called student. We conduct experiments on a large-scale dataset, demonstrating that the automatically generated textual information can bring significant performance boosts in multimodal sentiment polarity classification. Our ablation study confirms that both automatic transcripts and automatic translations are helpful. Moreover, we show that the audio-only model can be enhanced via distillation, boosting performance without any computational overhead during inference. To reproduce the reported results, we publicly release our code at https://github.com/andreidurdun/cross-modal-audio-sentiment.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文针对语音情感极性识别中“声音线索”和“语言内容”难以同时建模的问题，提出把音频特征与自动生成的文本转录结合起来，并进一步引入机器翻译得到的多语种文本作为额外模态。方法上，它使用级联的跨模态 Transformer 逐步融合音频、原始转录和多语言翻译文本，同时将多模态教师模型的知识蒸馏到仅用音频的学生模型中。实验表明，ASR 转录和翻译文本都能提升情感分类效果，而蒸馏后的音频模型在推理时不增加额外计算成本也能获得性能增益。对于 Speech-Audio-Music 栏目，这项工作值得关注，因为它展示了生成式文本管线、多语言信息和模型蒸馏如何共同增强语音理解任务。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.06611v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.06611v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">3</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.07015v1" target="_blank">EscFOA: Enhancing Spatial Learning for Visually Impaired Learners via Generative Spatial Audio in 360-Degree Educational Environments</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 10.7</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c1">cs.SD</span></div>
+  <div class="meta-row">Ziyu Luo, Xiaowei Dai, Siying Zhu, Xiaoming Chen</div>
+  <div class="why">why: speech_audio_music:audio, speech_audio_music:acoustic, frontier_audio_ai:generative audio, audio_models:audio generation</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Immersive 360-degree educational environments often lack accessible spatial structure, limiting visually impaired learners' ability to orient, explore, and construct mental representations. This paper proposes EscFOA, a geometry-aware spatial audio generation framework designed as an \emph{acoustic scaffolding} to support spatial cognition. By integrating 3D Gaussian Splatting (3DGS) with conditional diffusion models, EscFOA reconstructs scene geometry from 360-degree videos to synthesize high-fidelity spatial audio consistent with the environmental structure. Explicitly targeting learning outcomes like independent spatial orientation and reduced cognitive load, EscFOA significantly outperforms conventional monaural and stereo audio in supporting spatial learning behaviors among blindfolded sighted participants (simulating visually impaired learners). These findings demonstrate that geometry-consistent generative audio can effectively enable inclusive access to complex spatial learning materials.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是提出了 EscFOA，把 360 度教育场景中的空间结构转化为可听的“声学脚手架”，帮助视障学习者建立方向感和空间心理地图。方法上，它先用 3D Gaussian Splatting 从全景视频中恢复几何结构，再结合条件扩散模型生成与场景布局一致的空间音频，而不是简单播放单声道或立体声提示。实验显示，相比传统音频形式，这种几何一致的生成式空间音频能更好支持定位、探索并降低认知负担。它值得 Speech-Audio-Music 栏目关注，因为它展示了生成式音频不只是提升听感，还可以作为无障碍教育和空间认知支持的关键交互媒介。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.07015v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.07015v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">4</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.06827v1" target="_blank">Compress the Cache, Not the Speech Embedding: KV Compression for Efficient Speech LLMs</a></div>
+  </div>
+  <div class="meta-line"><span class="score">score 8.7</span><span class="sep">·</span><span>2026-07-07</span></div>
+  <div class="tags"><span class="tag c1">eess.AS</span><span class="tag c1">cs.SD</span></div>
+  <div class="meta-row">Ke-Han Lu, Keqi Deng, Ruchao Fan, Rui Zhao, Jinyu Li</div>
+  <div class="why">why: speech_audio_music:speech, speech_audio_music:audio, frontier_audio_ai:speech llm</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Speech large language models (Speech LLMs) typically encode speech into sequences far longer than text, creating a major efficiency bottleneck during autoregressive decoding. A common remedy is to compress the speech sequence at the adapter level to remove temporal redundancy before it enters the LLM; however, such early downsampling risks discarding fine-grained information that cannot be recovered. We propose SpeechKV, which applies a learned pooling to the KV cache of speech tokens inside the LLM. This design allows the LLM to fuse speech and text internally while directly accelerating decoding. Trained on 71K hours of speech data, SpeechKV compresses the speech to approximately text-level granularity yet maintains performance on par with or even slightly better than the uncompressed baseline, with relative gains of 6.6% on out-of-domain entity recognition and 2.3% on OpenASR, while delivering at least 1.49 times decoding speedup that scales with audio length.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把语音 LLM 的效率瓶颈从“压缩输入语音表示”转向“压缩 LLM 内部的 KV cache”，从而避免过早下采样导致的细粒度语音信息丢失。方法上，SpeechKV 在模型内部对语音 token 对应的 KV 缓存做可学习池化，让 LLM 先完成语音与文本的融合，再以更短的缓存参与自回归解码。实验显示，它能把语音侧长度压到接近文本粒度，同时基本保持甚至略提升识别与理解性能，并带来随音频变长更明显的解码加速。对 Speech-Audio-Music 栏目而言，这项工作值得关注，因为它提供了一种面向长语音交互、多轮语音助手和实时语音理解场景的实用加速路径。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.06827v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.06827v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">5</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.06014v1" target="_blank">Escaping the Procrustean Bed: Groupwise Orthogonal Connectors for Audio-Language Models</a></div>
+  </div>
+  <div class="meta-line"><span class="score">score 8.2</span><span class="sep">·</span><span>2026-07-07</span></div>
+  <div class="tags"><span class="tag c1">cs.SD</span></div>
+  <div class="meta-row">Ho-Lam Chung, Ke-Han Lu, Yi-Cheng Lin, Guan-Ting Lin, Yiming Chen et al.</div>
+  <div class="why">why: speech_audio_music:speech, speech_audio_music:audio, frontier_audio_ai:audio-language model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Audio-language models compress a speech encoder's output through a Querying Transformer (Q-Former) connector before feeding it to a large language model. We identify two failures in this compression. The connector's output vectors collapse to a single direction, and different speakers produce nearly indistinguishable outputs, with paralinguistic cues such as speaker identity, gender, and prosody lost along the way. Our method, ORCA, reverses this collapse by splitting the queries into groups whose outputs are constrained to point in different directions. On SAKURA multi-hop reasoning, ORCA gains 26.4 points over an identically trained 4B baseline, reaching 75.2% (vs. 49.0% for the 8B Audio Flamingo-3). At the connector level, the same change cuts query redundancy by 12x and raises cross-speaker variance by 75x.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文指出当前音频-语言模型中的 Q-Former 连接器会把语音编码器的信息过度压缩，导致输出表示趋同，并丢失说话人身份、性别、韵律等副语言信息。作者提出 ORCA，将查询向量分组，并对不同组的输出施加正交约束，使它们保留互补信息、避免坍缩到相似方向。实验显示，这种看似只改连接器的设计显著提升了多跳语音推理性能，同时大幅降低查询冗余、增强跨说话人差异表达。它值得 Speech-Audio-Music 栏目关注，因为它揭示并缓解了音频到语言模型接口中的关键信息瓶颈，对构建更懂语音细节的多模态大模型有直接意义。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.06014v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.06014v1" target="_blank">PDF</a>
+  </div>
+</div></section>
+<section class="topic" id="section-3"><div class="topic-head"><h2 class="topic-title">AI paper of the day</h2><span class="topic-count">5 篇</span></div><div class="paper">
+  <div class="p-head">
+    <span class="idx">1</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.06990v1" target="_blank">A Closed-Loop Multi-Agent Framework for Robust Multi-Robot Manipulation</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 15.2</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c1">cs.RO</span></div>
+  <div class="meta-row">Yi-Xiang He, Lan Wei, Haoming Cen, Jian-Jian Jiang, Zhuohao Li et al.</div>
+  <div class="why">why: foundation_models:large language model, foundation_models:llm, agents_reasoning:agentic, agents_reasoning:tool use, agents_reasoning:multi-agent, embodied_ai:manipulation</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Multi-robot systems provide the parallelism and redundancy necessary for long-horizon tasks, while Large Language Models (LLMs) offer the reasoning capabilities to decompose these objectives into actionable plans. However, effectively grounding this high-level reasoning in physical multi-robot execution remains an open challenge. Existing LLM-based approaches fall mainly into two categories: Single-robot methods achieve robust contact-rich manipulation but lack the coordination mechanisms required for tasks spanning multiple workspaces. Current multi-robot frameworks focus on high-level planning, often treating manipulation as an idealized primitive that fails to account for real-world execution uncertainties. To address this, we propose a hierarchical closed-loop agentic LLM-based framework to ensure robust multi-robot manipulation. Our system consists of three specialized agents: the Planning Agent decomposes instructions into allocated sub-tasks, the Manipulation Agent for each robot executes actions via adaptive tool use, and the Verification Agent closes the loop by monitoring physical outcomes and feeding back semantic corrections. Extensive real-world experiments demonstrate that our framework achieves superior success rates, ensures robust adaptability ranging from single to cross workspace manipulation, and offers a generalizable approach for diverse manipulation tasks.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把 LLM 的任务分解能力真正接到多机器人真实操作中，重点解决“会规划但落不了地、能操作但难协同”的断层问题。方法上，它设计了一个分层闭环多智能体框架：规划智能体负责任务拆解和机器人分工，操作智能体根据现场情况调用工具执行动作，验证智能体持续检查物理结果并把错误反馈给系统修正。相比只做高层多机器人规划的工作，它强调执行过程中的不确定性、跨工作空间协作和失败恢复，因此更接近真实机器人应用场景。它值得关注，因为这是 LLM-agent 与机器人操作结合从“开放式指令规划”走向“闭环、可验证、多机器人执行”的一个代表性方向。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.06990v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.06990v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">2</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.06706v1" target="_blank">Vision Language Action (VLA) Models for Unmanned Aerial Robotics and Bimanual Manipulation: A Review</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 12.0</span><span class="sep">·</span><span>2026-07-07</span></div>
+  <div class="tags"><span class="tag c1">cs.RO</span><span class="tag c3">cs.AI</span><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Inkyu Sa, Chanoh Park, Hea-Min Lee, Donghee Noh, Ho Seok Ahn</div>
+  <div class="why">why: foundation_models:foundation model, generative_world_models:world model, generative_world_models:world models, embodied_ai:robotics, embodied_ai:manipulation</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Vision Language Action (VLA) models unify visual perception, natural-language understanding, and action generation within a single foundation model, allowing a robot to follow instructions such as fold the towel or fly to the red building directly from camera images. Because VLAs inherit world knowledge from internet-scale pre-training, they have become the dominant framework for learning-based manipulation, with bimanual coordination serving as the most demanding testbed: two arms with 7 degrees of freedom each must move in concert to fold, assemble, and reorient objects. Unmanned aerial robotics faces a structurally similar challenge: a drone must coordinate thrust, attitude, and increasingly gripper commands from visual observations under strict latency and payload constraints. This review covers 183 contributions spanning 2017-2026 and organized along seven dimensions: VLA architectures, training recipes, action representations, bimanual coordination (2022-2026), unmanned aerial vehicle (UAV) navigation and control (2017-2026), language grounding, and cross-cutting concerns including memory and world models. We show that the coordination strategies, training recipes, and action representations developed for bimanual VLAs transfer to unmanned aerial systems and identify fourteen research directions across both domains.</div>
+  <div class="section-label">解读</div><div class="interp">这篇综述的核心贡献是把 VLA（视觉-语言-动作）模型在双臂操作和无人机机器人中的发展放到同一框架下比较，指出两者都面临“多自由度协同控制 + 视觉语言指令 grounding + 实时动作生成”的共性问题。  
+作者通过梳理 2017–2026 年的 183 篇工作，从模型架构、训练范式、动作表示、语言 grounding、记忆/世界模型等维度建立分类，并总结双臂操作中的经验如何迁移到 UAV 导航、控制和空中抓取。  
+它值得关注的地方在于：当前 VLA 研究多集中在桌面操作，这篇文章把视角扩展到无人机这一更受延迟、载荷和安全约束的场景，有助于判断 VLA 是否能真正走向更复杂的具身智能系统。  
+此外，文中提出的未来研究方向可作为理解“机器人基础模型”下一阶段瓶颈的路线图。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.06706v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.06706v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">3</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.07321v1" target="_blank">From Atomic Actions to Standard Operating Procedures: Iterative Tool Optimization for Self-Evolving LLM Agents</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 10.5</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span><span class="tag c3">cs.CL</span><span class="tag c2">cs.MA</span></div>
+  <div class="meta-row">Haipeng Ding, Yuexiang Xie, Zhewei Wei, Yaliang Li, Bolin Ding</div>
+  <div class="why">why: foundation_models:large language model, foundation_models:llm, agents_reasoning:llm agent, agents_reasoning:tool-use</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Tool utilization enables Large Language Model (LLM) agents to interact with the real world and resolve complex tasks. However, existing agent frameworks predominantly rely on static toolsets composed of granular atomic actions (e.g., basic file I/O or single-turn search), which forces agents to reinvent low-level logic for every recurring workflow, leading to increased reasoning overhead and failure rates. In this study, we propose that agents can achieve self-evolution by synthesizing these atomic actions into reusable Standard Operating Procedures (SOPs), which function as callable higher-order tools that encapsulate multi-step logic. We further introduce EvoSOP, a framework that empowers agents to extract SOPs from execution trajectories and iteratively optimize the toolset through a systematic lifecycle of construction, merging, evaluation, and pruning. Extensive experiments demonstrate that EvoSOP significantly boosts task success rates while substantially reducing the number of interaction rounds compared to baselines. Our analysis also reveals that iterative tool optimization fosters reliable and efficient tool-use patterns, providing a scalable pathway for the development of self-evolving agents.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把 LLM Agent 的“工具使用”从调用零散原子工具，提升为自动沉淀可复用的标准操作流程（SOP），让 Agent 能把常见多步任务封装成更高层工具。方法上，作者提出 EvoSOP：从 Agent 的执行轨迹中抽取候选 SOP，并通过构建、合并、评估和剪枝的迭代循环持续优化工具集。实验显示，这种机制不仅提高任务成功率，还减少了交互轮数，说明它能降低 Agent 反复规划低层步骤的成本。它值得关注，因为它提供了一条让 Agent 通过经验积累“自我进化”的实用路径，比单纯扩大模型或手工设计工具更具可扩展性。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.07321v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.07321v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">4</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.06820v1" target="_blank">Evaluating SageMath-Augmented LLM Agents for Computational and Experimental Mathematics</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 10.5</span><span class="sep">·</span><span>2026-07-07</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Pavel Snopov, German Magai</div>
+  <div class="why">why: foundation_models:llm, agents_reasoning:llm agent, agents_reasoning:agentic, agents_reasoning:theorem proving</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Recent advances in AI for Mathematics have focused largely on autoformalization and theorem proving, leaving the role of Computer Algebra Systems (CAS) in agentic LLM workflows underexplored. We propose a ReAct-style agentic setup that combines LLM reasoning with verifiable feedback from SageMath, together with Context7 for the up-to-date documentation. We evaluate this agentic setup across frontier models for solving research-level mathematical problems from the RealMath benchmark in a setting that emulates a computational-mathematics research loop. We also propose a refinement to the RealMath benchmark by introducing a multi-step post-processing procedure and a multi-stage validation pipeline, both of which improve the quality and reliability of the extracted problem set. Our experiments reveal substantial performance gains from SageMath access across all evaluated models on +9.7~pp on average, the gains range from 1.5~pp to 27.8~pp and narrow the gap between open-weight and closed models. Qwen~3.7-Max benefits from SageMath the most, while GPT-5.5 achieves the highest solve rate of $75.2\%$ and the lowest token usage among tool-enabled configurations. Our findings suggest that CAS-augmented agents represent a promising direction for assisting mathematicians in computational exploration, and we believe that this work is a step towards automated conjecture discovery. The project repository is available online.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文把关注点从“LLM 证明定理”转向“LLM + 计算机代数系统做实验数学”，系统评估了 SageMath 能否提升大模型解决研究级数学问题的能力。方法上，作者构建了一个 ReAct 式智能体：模型负责推理与规划，调用 SageMath 获得可验证计算反馈，并结合 Context7 查询最新文档；同时还改进了 RealMath 基准的数据清洗、后处理和多阶段验证流程。实验显示，接入 SageMath 后各类模型平均提升约 9.7 个百分点，尤其能缩小开源模型与闭源模型之间的差距，说明“工具增强”在数学任务中并非边际改进。它值得关注，因为这代表 AI 数学研究的一条更实用路线：不只追求形式化证明，而是让模型像数学研究者一样进行计算探索、验证猜想，并可能迈向自动化发现。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.06820v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.06820v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">5</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.07117v1" target="_blank">Tree-of-Thoughts Reasoning for Text-to-Image In-Context Learning</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 10.3</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c3">cs.CV</span><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Stepanida Alekseeva, Jenifer Kalafatovich, Seong-Whan Lee</div>
+  <div class="why">why: foundation_models:large language model, foundation_models:multimodal, agents_reasoning:chain-of-thought, generative_world_models:image generation</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">In text-to-image in-context learning (T2I-ICL), a model has to infer a latent compositional pattern from fewshot demonstrations for generating a query image. Recent studies show that state-of-the-art multimodal large language models struggle with this setting, particularly due to limited compositional reasoning and sensitivity to prompt construction. In this work, we propose a Tree-of-Thoughts (ToT) reasoning framework for T2I-ICL that introduces a multi-stage reasoning and selection layer that generates, evaluates, and selects among multiple candidate hypotheses before constructing the final prompt for image synthesis. By exploring alternative reasoning branches and selecting a coherent interpretation, the proposed approach mitigates prompt ambiguity and compositional errors. We implement the proposed approach in a complete ToT-T2IICL inference pipeline and evaluate it on the CoBSAT benchmark. Both qualitative and quantitative results show that structured multi-branch reasoning leads to more consistent and semantically aligned image generation compared to baseline and Chain-of-Thought prompting strategies, without any additional training or fine-tuning.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文关注的是文本到图像的上下文学习：模型需要从少量示例中推断出隐藏的组合规律，再生成符合规律的新图像。核心贡献是把 Tree-of-Thoughts 引入 T2I-ICL，在生成最终提示词前先并行提出多个可能的规律解释，再进行评估和筛选，从而减少单一路径推理带来的误判和提示歧义。方法上，它不训练新模型，而是在推理阶段增加“多分支假设生成—候选评估—最优解释选择—图像生成”的结构化流程，并在 CoBSAT 基准上优于普通提示和 Chain-of-Thought。它值得关注，因为它说明在多模态生成任务中，单纯依赖更强模型未必足够，推理时的搜索和选择机制也能显著提升组合泛化与语义一致性。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.07117v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.07117v1" target="_blank">PDF</a>
+  </div>
+</div></section>
+  </main>
+</div>
+</div>
+<footer>
+  <span>Generated by Zhisheng Zheng · 2026-07-09</span>
+  <a href="index.html">查看全部归档 →</a>
+</footer>
+</body>
+</html>
