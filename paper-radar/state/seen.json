@@ -1063,8 +1063,155 @@
     "title": "Agon: Competitive Cross-Model RL with Implicit Rival Grading of Reasoning",
     "url": "https://arxiv.org/abs/2607.07690v1"
   },
+  "2607.07748": {
+    "score": 16.0,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "Selective Left-Shift: Turning Test-Time Compute and Difficulty-based Curation into Training Data for Low-Resource Code Generation",
+    "url": "https://arxiv.org/abs/2607.07748v1"
+  },
+  "2607.07817": {
+    "score": 8.5,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "DreamCharacter-1: From 3D Generative Foundation Models to Product-Ready Character Generation",
+    "url": "https://arxiv.org/abs/2607.07817v1"
+  },
+  "2607.07847": {
+    "score": 13.5,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "When Does Continual Learning Require Learning",
+    "url": "https://arxiv.org/abs/2607.07847v1"
+  },
+  "2607.07858": {
+    "score": 14.1,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "Agentic AI and Retrieval-Augmented Models in Straight-Through Underwriting",
+    "url": "https://arxiv.org/abs/2607.07858v1"
+  },
+  "2607.07976": {
+    "score": 13.5,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "When Implausible Tokens Get Reinforced: Tail-Aware Credit Calibration for LLM Reinforcement Learning",
+    "url": "https://arxiv.org/abs/2607.07976v1"
+  },
+  "2607.07993": {
+    "score": 19.5,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "Hallucination Self-Play: Bootstrapping Reinforced Detector via Evolved Generator",
+    "url": "https://arxiv.org/abs/2607.07993v1"
+  },
+  "2607.08056": {
+    "score": 11.0,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "Reinforcing the Generation Order of Multimodal Masked Diffusion Models",
+    "url": "https://arxiv.org/abs/2607.08056v1"
+  },
+  "2607.08080": {
+    "score": 10.5,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "MASTE: A Multi-Agent Pipeline for Zero-Shot Aspect Sentiment Triplet Extraction",
+    "url": "https://arxiv.org/abs/2607.08080v1"
+  },
+  "2607.08124": {
+    "score": 10.5,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "TTHE: Test-Time Harness Evolution",
+    "url": "https://arxiv.org/abs/2607.08124v1"
+  },
+  "2607.08193": {
+    "score": 10.2,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "Open-ended Multi-agent Autocurricula via Visual Inspection of Policies with Multi-modal LLMs",
+    "url": "https://arxiv.org/abs/2607.08193v1"
+  },
+  "2607.08208": {
+    "score": 14.5,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "Diarization-Guided Qwen-ASR Adaptation for Multilingual Two-Speaker Conversational Speech",
+    "url": "https://arxiv.org/abs/2607.08208v1"
+  },
+  "2607.08255": {
+    "score": 19.5,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "Compete Then Collaborate: Frontier AI Teachers Build a Verifiable Curriculum to Improve a Coding Student Beyond Imitation",
+    "url": "https://arxiv.org/abs/2607.08255v1"
+  },
+  "2607.08256": {
+    "score": 13.5,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "Best-of-$N$ TTS Evaluation is Confounded by ASR Family Alignment",
+    "url": "https://arxiv.org/abs/2607.08256v1"
+  },
+  "2607.08375": {
+    "score": 14.5,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "WCog-VLA: A Dual-Level World-Cognitive Vision-Language-Action Model for End-to-End Autonomous Driving",
+    "url": "https://arxiv.org/abs/2607.08375v1"
+  },
+  "2607.08409": {
+    "score": 13.5,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "When Synthetic Speech Is All You Have: Better Call GRPO",
+    "url": "https://arxiv.org/abs/2607.08409v1"
+  },
+  "2607.08526": {
+    "score": 10.5,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "A Quantized Native Runtime for On-Device Semantic Audio Generation",
+    "url": "https://arxiv.org/abs/2607.08526v1"
+  },
+  "2607.08572": {
+    "score": 20.1,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "Switch-Reasoner: Learn When to Think in Multitask Mixtures via Reinforcement Learning",
+    "url": "https://arxiv.org/abs/2607.08572v1"
+  },
+  "2607.08662": {
+    "score": 10.5,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "WebSwarm: Recursive Multi-Agent Orchestration for Deep-and-Wide Web Search",
+    "url": "https://arxiv.org/abs/2607.08662v1"
+  },
+  "2607.08700": {
+    "score": 13.5,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "Do You Need a Frontier Model as a Citation Verifier? Benchmarking Rubric LLMs for Deep-Research Source Attribution",
+    "url": "https://arxiv.org/abs/2607.08700v1"
+  },
+  "2607.08724": {
+    "score": 8.0,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "Latent Memory Palace: Reasoning for Control as Autoregressive Variational Inference",
+    "url": "https://arxiv.org/abs/2607.08724v1"
+  },
+  "2607.08768": {
+    "score": 15.4,
+    "seen_at": "2026-07-10T17:09:18.721083+00:00",
+    "source": "arXiv",
+    "title": "UniClawBench: A Universal Benchmark for Proactive Agents on Real-World Tasks",
+    "url": "https://arxiv.org/abs/2607.08768v1"
+  },
   "_meta": {
-    "last_run_at": "2026-07-09T17:28:03.260957+00:00",
-    "last_run_date": "2026-07-09"
+    "last_run_at": "2026-07-10T17:09:18.721186+00:00",
+    "last_run_date": "2026-07-10"
   }
 }

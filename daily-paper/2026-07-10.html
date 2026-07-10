@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Paper Radar · 2026-07-10</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F4F2EC; --surface:#FFFFFF; --surface-2:#FBFAF6;
+  --ink:#1A1915; --ink-2:#57544B; --ink-3:#8A867A;
+  --accent:#CC785C; --accent-deep:#A8512F;
+  --border:#E4E0D4; --border-2:#D6D1C2; --tint:#F2EAE2;
+  --serif:"Tiempos Headline",ui-serif,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,Cambria,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans); color:var(--ink); line-height:1.7; -webkit-font-smoothing:antialiased;
+  padding:0 20px 80px; background-color:var(--bg);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+body::before{
+  content:""; position:fixed; top:0; left:0; right:0; height:3px; z-index:50;
+  background:linear-gradient(90deg,var(--accent),#E2A98E,var(--accent-deep));
+}
+.container{max-width:760px;margin:0 auto}
+a{color:var(--accent)}
+/* ---- Editorial header ---- */
+.hero{max-width:760px; margin:0 auto; padding:64px 0 32px}
+.eyebrow{
+  display:inline-block; font-size:.74rem; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin-bottom:20px;
+}
+.hero h1{
+  font-family:var(--serif); font-weight:600; font-size:2.7rem; line-height:1.1;
+  letter-spacing:-.018em; color:var(--ink); margin-bottom:16px;
+}
+.hero .sub{color:var(--ink-2); font-size:1rem; font-weight:400}
+.hero .sub b{color:var(--ink); font-weight:600}
+.rule{max-width:760px; margin:0 auto 40px; border:none; border-top:1px solid var(--border)}
+/* ---- Nav ---- */
+.nav{margin-bottom:40px}
+.nav a{
+  font-size:.88rem; text-decoration:none; color:var(--ink-2); transition:color .15s;
+}
+.nav a:hover{color:var(--accent)}
+.digest-layout{display:grid; gap:24px}
+.toc{display:flex; gap:8px; overflow-x:auto; padding:12px; border:1px solid var(--border); border-radius:10px; background:var(--surface-2)}
+.toc-label{flex:none; padding:7px 8px; color:var(--ink-3); font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase}
+.toc a{display:flex; align-items:baseline; gap:7px; flex:none; padding:7px 10px; border-radius:7px; color:var(--ink-2); font-size:.86rem; line-height:1.25; text-decoration:none; transition:background .15s,color .15s}
+.toc a:hover{background:var(--tint); color:var(--accent-deep)}
+.toc a span{color:var(--accent); font-family:var(--serif); font-size:1rem; font-weight:600}
+.toc a b{color:var(--ink-3); font-size:.72rem; font-weight:500}
+.digest-content{min-width:0}
+.topic{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:28px 30px; box-shadow:0 2px 10px rgba(39,34,23,.025)}
+.topic + .topic{margin-top:28px}
+.topic-head{display:flex; justify-content:space-between; align-items:baseline; gap:16px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border)}
+.topic-title{font-family:var(--serif); font-size:1.75rem; font-weight:600; line-height:1.2; letter-spacing:-.012em}
+.topic-count{flex:none; color:var(--accent); font-size:.9rem; font-weight:600}
+.topic .topic-head + .paper{border-top:none; padding-top:0}
+.topic-empty{text-align:left; padding:14px 0 22px}
+.empty{color:var(--ink-2); text-align:center; padding:72px 0; font-size:1.05rem}
+.empty .big{font-family:var(--serif); font-size:2rem; color:var(--ink-3); margin-bottom:10px}
+/* ---- Paper as article ---- */
+.paper{
+  position:relative; padding:32px 0; border-top:1px solid var(--border);
+}
+.paper:first-of-type{border-top:none; padding-top:0}
+.p-head{display:flex; gap:16px; align-items:baseline; margin-bottom:14px}
+.idx{
+  flex:none; font-family:var(--serif); font-size:2.1rem; font-weight:600;
+  color:#D8A286; line-height:1; min-width:1em;
+}
+.paper-title{font-family:var(--serif); font-size:1.5rem; font-weight:600; line-height:1.28; letter-spacing:-.012em}
+.paper-title a{color:var(--ink); text-decoration:none; transition:color .15s}
+.paper-title a:hover{color:var(--accent)}
+.meta-line{font-size:.8rem; color:var(--ink-2); margin:0 0 11px 0}
+.meta-line .sep{margin:0 9px; color:var(--border-2)}
+.score{font-weight:600; color:var(--accent)}
+.score.hot{color:var(--accent-deep)}
+.tags{display:flex; flex-wrap:wrap; gap:7px; margin:0 0 16px 0}
+.tag{font-size:.72rem; font-weight:600; letter-spacing:.02em; padding:3px 11px; border-radius:999px}
+.tag.c0{color:#A8512F; background:#F1E2D9}
+.tag.c1{color:#5E6B39; background:#E8EAD9}
+.tag.c2{color:#4D7287; background:#DEE8ED}
+.tag.c3{color:#94712C; background:#EFE6CE}
+.tag.c4{color:#855272; background:#EDE0E7}
+.meta-row{font-size:.92rem; color:var(--ink-2); margin:0 0 4px 0}
+.why{
+  font-size:.82rem; color:var(--ink-3); margin:0 0 20px 0; font-style:italic;
+}
+.section-label{
+  font-family:var(--sans); font-size:.72rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.1em; color:var(--ink-3); margin:0 0 8px 0;
+}
+.abstract{
+  font-size:1rem; color:var(--ink); margin:0 0 22px 0; white-space:pre-wrap; line-height:1.75;
+}
+.interp{
+  font-size:1rem; color:var(--ink); white-space:pre-wrap; line-height:1.78;
+  background:var(--tint); border-left:3px solid var(--accent);
+  padding:18px 22px; border-radius:2px 10px 10px 2px;
+}
+.interp .section-label{color:var(--accent-deep)}
+.links{display:flex; gap:20px; margin:20px 0 0 0}
+.links a{
+  font-size:.9rem; font-weight:500; text-decoration:none; color:var(--accent);
+}
+.links a:hover{color:var(--accent-deep); text-decoration:underline}
+footer{
+  max-width:760px; margin:64px auto 0; padding-top:28px; border-top:1px solid var(--border);
+  font-size:.84rem; color:var(--ink-3); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+}
+footer a{color:var(--ink-3); text-decoration:none} footer a:hover{color:var(--accent)}
+@media(max-width:560px){
+  .hero{padding:44px 0 24px} .hero h1{font-size:2rem}
+  .paper-title{font-size:1.28rem}
+  .topic{padding:22px 20px}
+}
+@media(min-width:980px){
+  .daily-container{max-width:1030px}
+  .digest-layout{grid-template-columns:205px minmax(0,1fr); align-items:start; gap:32px}
+  .toc{position:sticky; top:24px; display:flex; flex-direction:column; overflow:visible; padding:12px}
+  .toc a{justify-content:flex-start}
+}
+</style>
+</head>
+<body>
+<div class="hero">
+  <span class="eyebrow">Daily Radar</span>
+  <h1>AI Paper Radar</h1>
+  <div class="sub"><b>2026-07-10</b> &nbsp;·&nbsp; 21 篇精选论文</div>
+</div>
+<hr class="rule">
+<div class="container daily-container">
+<nav class="nav"><a href="index.html">← 全部归档</a></nav>
+<div class="digest-layout">
+  <aside class="toc" aria-label="论文栏目目录">
+    <span class="toc-label">目录</span>
+    <a href="#section-1"><span>1</span>RL + LLM/MLLM<b>12 篇</b></a>
+    <a href="#section-2"><span>2</span>Speech-Audio-Music<b>4 篇</b></a>
+    <a href="#section-3"><span>3</span>AI paper of the day<b>5 篇</b></a>
+  </aside>
+  <main class="digest-content">
+    <section class="topic" id="section-1"><div class="topic-head"><h2 class="topic-title">RL + LLM/MLLM</h2><span class="topic-count">12 篇</span></div><div class="paper">
+  <div class="p-head">
+    <span class="idx">1</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.08572v1" target="_blank">Switch-Reasoner: Learn When to Think in Multitask Mixtures via Reinforcement Learning</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 20.1</span><span class="sep">·</span><span>2026-07-09</span></div>
+  <div class="tags"><span class="tag c3">cs.CV</span></div>
+  <div class="meta-row">Yiyang Fang, Pei Fu, Jinjie Li, Jian Liang, Wenke Huang et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, verifiable_reasoning:grpo, llm_core:large language model, llm_core:large language models, llm_core:language model, mllm_vlm:multimodal large language model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Multimodal Large Language Models (MLLMs) often follow a fixed Think-then-Answer paradigm, which is inefficient in heterogeneous multitask settings because simple inputs may not require explicit reasoning while difficult ones can benefit substantially from it. Learning when to think is also unstable during post-training, where imbalanced rollouts can drive the model toward always-thinking or always-direct behavior. We propose Switch-Reasoner, a GRPO-based framework that learns to adaptively select reasoning modes for MLLMs. It treats thinking as a virtual tool invocation and allows the model to either answer directly or invoke explicit reasoning before answering. To stabilize this decision, we introduce a dual-level regulation mechanism that balances the overall use of Thinking Mode and Direct Mode while providing sample-level supervision based on the relative benefit of the two choices. Experiments on 11 multimodal tasks show that Switch-Reasoner reduces unnecessary reasoning while maintaining strong performance, achieving a better accuracy-efficiency trade-off.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文关注 MLLM 在多任务场景中“是否需要显式推理”的自适应决策问题，核心贡献是让模型不再固定走 Think-then-Answer，而是根据样本难度在直接回答和先推理再回答之间切换。方法上，它把“思考”设计成一种虚拟工具调用，并用 GRPO 强化学习训练该选择；同时加入全局层面的模式使用平衡约束，以及样本层面基于两种模式收益差异的监督信号，避免模型塌缩到总是思考或总是直答。实验覆盖 11 个多模态任务，显示该方法能减少不必要的推理成本，同时基本保持甚至提升任务表现。对 RL + LLM/MLLM 栏目而言，它值得关注，因为它把强化学习用于控制推理预算与行为策略，而不只是提升最终答案准确率，直接对应当前大模型“高性能但高成本”的关键问题。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.08572v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.08572v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">2</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.08255v1" target="_blank">Compete Then Collaborate: Frontier AI Teachers Build a Verifiable Curriculum to Improve a Coding Student Beyond Imitation</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 19.5</span><span class="sep">·</span><span>2026-07-09</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Miseong Shawn Kim</div>
+  <div class="why">why: rl_core:reinforcement learning, verifiable_reasoning:grpo, verifiable_reasoning:rlvr, verifiable_reasoning:reinforcement learning with verifiable rewards, llm_core:large language model, llm_core:large language models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Large language models increasingly serve as teachers generating training data for smaller students. Prior multi-teacher knowledge distillation methods merge outputs without determining which frontier model teaches best, often relying on an LLM judge biased toward its own outputs. We introduce a compete-then-collaborate framework where four frontier AI teachers (Claude, Codex-GPT, Grok, Gemini) are ranked head-to-head by an execution-based judge (unit tests and stdin-stdout checks) with fairness controls, and then collaborate to build a verifiable curriculum for a student (Qwen2.5-Coder). We report three findings. (1) Under execution verification, all teachers solve standard problems near-perfectly after self-correction (99-100%) due to a saturation effect, but harder competition problems separate them (Gemini 77% &gt; Claude 69% = Codex 69% &gt; Grok 50%); however, the robust student-side results do not depend on teacher ranking. (2) Imitation (SFT) on verified solutions does not improve, and can degrade, an already-competent student at 7B and 32B (e.g., from 76.7% to 72.7% on MBPP-test, and 5.9% to 2.9% on competition problems). (3) Using the same collaborative curriculum as a reinforcement learning with verifiable rewards (RLVR) environment improves the student (from 5.9% to 8.8% peak on competition problems, a +49% relative gain), reversing SFT's direction. The value of AI-teacher collaboration lies not in pooling answers to imitate, but in jointly constructing a verifiable environment where the student learns by doing. We release a reproducible on-prem pipeline (NVIDIA GB10) with framework patches for running GRPO on a bleeding-edge stack.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是指出：多教师蒸馏的关键不在于把强模型答案混在一起让学生模仿，而在于让强模型共同构造“可验证”的训练环境，让学生通过试错学习。方法上，作者先让 Claude、Codex-GPT、Grok、Gemini 在代码题上用单元测试/输入输出结果做客观裁判进行竞争排序，再将它们生成的高质量题目与验证器组成课程，用于训练 Qwen2.5-Coder。实验发现，单纯 SFT verified solutions 不仅收益有限，甚至会削弱已有能力；而把同一批课程转化为 RLVR/GRPO 环境后，学生在更难竞赛题上获得明显提升。它值得 RL + LLM 栏目关注，因为它把“AI 教师”的价值从生成示范数据转向构建可执行奖励环境，体现了代码领域中可验证强化学习相比 imitation learning 的优势。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.08255v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.08255v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">3</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.07993v1" target="_blank">Hallucination Self-Play: Bootstrapping Reinforced Detector via Evolved Generator</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 19.5</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Shiping Yang, Shining Liang, Weihao Liu, Wenbiao Ding, Linjun Shou et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, preference_alignment:rlaif, preference_alignment:reward model, preference_alignment:ai feedback, agentic_rl:self-play, llm_core:llm</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Identifying faithfulness hallucinations in LLM-generated outputs remains challenging due to the scarcity of high-quality annotated data. Recent work relies on advanced LLMs to synthesize training data, including rationales, labels, and hallucinated claims. However, these methods treat the generator as a static component, limiting iterative improvement of the detector. To address this limitation, we introduce Hallucination Self-Play (HSP), a novel framework that enables the detector to bootstrap with an evolved generator. HSP involves two roles initialized from the same base model, a detector that assesses the faithfulness of model outputs, and a generator that produces increasingly hard-to-detect hallucinated responses. Specifically, the detector is first fine-tuned on human-labeled data and then employed as a reward model to train the generator via reinforcement learning from AI feedback (RLAIF). In turn, the evolved generator synthesizes hallucination data to further optimize the detector through rule-based reinforcement learning. Experiments on RAGTruth benchmark and two model families demonstrate that the proposed framework can progressively enhance a small LLM to match or even outperform advanced LLMs without external supervision. Our code is available at https://anonymous.4open.science/r/Hallucination-Self-Play-50B5 .</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文提出了 **Hallucination Self-Play（HSP）**，核心贡献是把“幻觉检测器”和“幻觉生成器”做成一个相互博弈、共同进化的闭环，而不是依赖一次性生成的静态合成数据。方法上，先用少量人工标注数据训练检测器，再把检测器作为奖励模型，通过 RLAIF 训练生成器产出更难识别的幻觉样本；随后这些样本又被用于继续强化检测器，形成自举式迭代提升。实验显示，小模型在这种自博弈训练下可以逐步接近甚至超过更强 LLM 的幻觉检测能力，降低了对外部大模型和大量标注数据的依赖。它值得 RL + LLM/MLLM 栏目关注，因为它展示了强化学习、自我博弈和数据合成在提升 LLM 可信度评估能力上的结合范式。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.07993v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.07993v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">4</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.07748v1" target="_blank">Selective Left-Shift: Turning Test-Time Compute and Difficulty-based Curation into Training Data for Low-Resource Code Generation</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 16.0</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Didula Samaraweera, Anjana Supun, Srinath Perera</div>
+  <div class="why">why: rl_core:reinforcement learning, verifiable_reasoning:rlvr, verifiable_reasoning:verifiable reward, llm_core:large language model, llm_core:large language models, llm_core:language model</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Large Language Models achieve strong code generation for high resource languages like Python and Java but suffer sharp performance drops on Low-Resource Programming Languages~(LRPLs) such as Julia. Improving Small Language Models~(SLMs) for these languages faces a trilemma: Supervised Fine-Tuning~(SFT) is bottlenecked by data scarcity, inference-time scaling is too expensive for deployment, and Reinforcement Learning from scratch yields near zero advantages. We propose a three-phase pipeline that resolves this trilemma by decoupling syntax acquisition from algorithmic reasoning. First, we \emph{left-shift} inference-time compute to an offline data synthesis engine that uses iterative compiler and test feedback to generate verified training examples. Second, we fine-tune an SLM on this synthetic, verified data to embed strong syntactic priors. Third, we apply Reinforcement Learning with Verifiable Reward~(RLVR) grounded by language-agnostic Input/Output tests, where the SFT prior constrains exploration away from syntax errors. Applied to Qwen3-8B, our pipeline improves pass@1 by up to +7.6 points on MultiPL-E and +14.2 points on the Agnostics LiveCodeBench for Julia compared to SOTA results. Furthermore, the pipeline only used $\frac{1}{3}$ data and $\frac{1}{6}$ cost over the previous state-of-the-art. We further demonstrate that the pipeline generalizes to Ballerina achieving 49.7\% MultiPL-E Pass@1, a language with near-zero pretraining representation. Ablations confirm that both the SFT phase and execution-grounded rewards are necessary for stable training.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文针对 Julia、Ballerina 等低资源编程语言中“小模型不会写、测试时多采样又太贵、直接 RL 难以起步”的问题，提出了一套把测试时计算转化为训练数据的流程。方法上，它先用编译器和单元测试反馈离线生成可验证代码样本，再用这些数据对 Qwen3-8B 做 SFT 以学会语言语法与基本模式，最后用基于 I/O 测试的 RLVR 继续强化算法推理能力。实验显示，该方法在 Julia 代码生成上显著超过现有结果，同时减少数据和成本，并能迁移到几乎没有预训练覆盖的 Ballerina。对 RL + LLM/MLLM 栏目来说，它的价值在于展示了“先用可验证合成数据建立先验，再做 RL”的实用范式，解决了低资源场景下 RL 奖励稀疏和探索失败的问题。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.07748v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.07748v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">5</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.08768v1" target="_blank">UniClawBench: A Universal Benchmark for Proactive Agents on Real-World Tasks</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 15.4</span><span class="sep">·</span><span>2026-07-09</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span></div>
+  <div class="meta-row">Zhekai Chen, Chengqi Duan, Kaiyue Sun, Bohao Li, Yuqing Wang et al.</div>
+  <div class="why">why: preference_alignment:human feedback, llm_core:large language model, llm_core:large language models, llm_core:language model, mllm_vlm:multimodal large language model, mllm_vlm:multimodal large language models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">The rapid development of large language models and multimodal large language models has accelerated the emergence of proactive agents capable of operating everyday tools and assisting users in real-world environments. However, existing benchmarks struggle to evaluate such agents effectively, as they often rely on sandboxed environments and single-turn evaluation paradigms. Moreover, their scenario-based task taxonomies mix multiple model capabilities within the same task category, making it difficult to identify the root causes of agent failures. To address these limitations, we introduce UniClawBench, the first capability-driven benchmark designed to evaluate proactive agents in dynamic, real-world settings. UniClawBench is built around five foundational model capabilities: Skill Usage, Exploration, Long-Context Reasoning, Multimodal Understanding, and Cross-Platform Coordination. Based on these capabilities, we design 400 bilingual real-world tasks. Unlike previous benchmarks that rely on static, pre-recorded answers, our benchmark evaluates agents in live Docker containers using fine-grained, step-by-step completion checkpoints. Furthermore, we design a closed-loop evaluation strategy comprising an executor agent, a hidden supervisor agent, and a user agent to simulate realistic multi-turn human feedback without leaking grading criteria. To disentangle base model capabilities from framework-level design choices, we evaluate state-of-the-art models under multiple agent frameworks. Through comprehensive comparisons across both models and frameworks, we show how base model capabilities and agent framework designs jointly shape performance in real-world environments. To facilitate future research, we make our benchmark and code publicly available at https://github.com/HKU-MMLab/UniClawBench.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文提出了 UniClawBench，一个面向真实世界主动智能体的能力驱动型评测基准，重点不再按“场景”粗略分类任务，而是拆解为技能调用、探索、长上下文推理、多模态理解和跨平台协作五类核心能力，从而更容易定位智能体失败原因。方法上，它构建了 400 个中英双语真实任务，并在动态 Docker 环境中通过细粒度步骤检查点评估完成情况，同时引入执行者、隐藏监督者和用户代理组成的闭环交互机制，模拟多轮人类反馈且避免评分规则泄露。论文还在不同 agent 框架下测试多种前沿模型，用来区分基础模型能力与框架设计对最终表现的影响。对于 RL + LLM/MLLM 栏目而言，它值得关注在于提供了更接近真实交互环境的评测范式，可用于研究 LLM/MLLM agent 的长期任务执行、反馈利用、工具操作和跨环境泛化能力。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.08768v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.08768v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">6</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.08700v1" target="_blank">Do You Need a Frontier Model as a Citation Verifier? Benchmarking Rubric LLMs for Deep-Research Source Attribution</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 13.5</span><span class="sep">·</span><span>2026-07-09</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span></div>
+  <div class="meta-row">Ethan Leung, Elias Lumer, Corey Feld, Austin Huber, Vamse Kumar Subbiah et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, rl_core:reinforce, preference_alignment:reward model, llm_core:llm, llm_core:llms</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Reinforcement learning increasingly relies on an LLM judge to score each rubric criterion, and that judge acts as the reward model during training. Before such a signal can be trusted, we need to know how capable the judge must be and how biased it is. We study this calibration question for citation quality in deep-research systems, where a search-grounded LLM must support each claim it writes with a cited source. Citation quality is a structured rubric task in which each attribution-citation pair is judged along two dimensions that require an LLM, source relevance and factual support. On an adversarial long-form benchmark, we score 8 off-the-shelf LLM judges from 3 model families against gold labels over 1,248 rubric decisions, all of which were human-reviewed and 378 of which were hard cases adjudicated from judge disagreements. Cheaper judges remain competitive across both dimensions, with GPT-5-mini attaining the strongest source-relevance pass-class F1 at 0.908 ($κ$=0.636), while on factual support the judges are statistically indistinguishable (overlapping confidence intervals), so no single model dominates. At comparable F1, the judges still differ substantially in pass-rate drift, false positive rate, and false negative rate. Scalar F1 obscures this directional bias, yet it is exactly what a downstream reinforcement learning loop would reinforce. Calibrating the judge is therefore a prerequisite for using citation rubrics as reward signals, and our results show that this calibration does not require the most expensive available model.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把“引用是否真正支撑生成内容”作为一个结构化 LLM-as-judge 任务来系统校准，回答了是否必须使用最强/最贵前沿模型做 citation verifier 的问题。方法上，作者构建了一个带人工复核与争议样本裁决的长文本对抗基准，对 8 个现成 LLM judge 在“来源相关性”和“事实支撑”两类 rubric 上进行评测，并比较 F1、一致性、通过率偏移、假阳性/假阴性等指标。结果显示，较便宜的模型在不少场景下已能接近甚至达到最优表现，但不同 judge 的错误方向差异明显，单看 F1 会掩盖会被 RL 放大的偏置。它对 RL + LLM/MLLM 栏目值得关注，因为当前很多训练流程依赖 LLM judge 作为奖励信号，而这篇工作强调：在把 rubric 分数用于强化学习前，必须先校准 judge 的能力与偏差，否则优化到的可能是评审器偏好而不是真实引用质量。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.08700v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.08700v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">7</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.07976v1" target="_blank">When Implausible Tokens Get Reinforced: Tail-Aware Credit Calibration for LLM Reinforcement Learning</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 13.5</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span><span class="tag c3">cs.AI</span><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Xiuyi Lou, Zicheng Xu, Yu-Neng Chuang, Hoang Anh Duy Le, Zhaozhuo Xu et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, verifiable_reasoning:grpo, llm_core:large language model, llm_core:large language models, llm_core:llm</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Reinforcement learning (RL) has achieved remarkable success in enhancing the reasoning capabilities of large language models (LLMs). However, widely used critic-free RL methods rely on uniform credit assignment, broadcasting the same advantage to all tokens regardless of their differences. We identify a critical failure mode of this design, which we refer to as Positive-Credit Contamination: low-probability tail tokens that are contextually erroneous receive identical positive credit to plausible ones within the same trajectory, resulting in the indiscriminate reinforcement of flawed reasoning behavior. To mitigate this issue, we propose Tail-Aware Credit calibratiOn (TACO), a method that calibrates uniform credit assignment to suppress undesirable positive updates. TACO first computes a tail-risk score that incorporates the local generation context to assess each token's risk of falling into the unreliable tail, distinguishing unexpected rarity from uncertainty-driven exploration. TACO then uses this score to tune positive credit for risky tokens without removing their gradients entirely, so that recurring useful rare patterns can accumulate reinforcement while incidental noise is progressively dampened. Experimental results across three LLMs and eight benchmarks show that TACO consistently outperforms GRPO-style baselines. Notably, TACO improves training stability, supporting sustained performance gains in long-horizon RL. The source code is available at: https://github.com/xiuyilou/TACO.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文指出了 LLM 强化学习中一个容易被忽视的问题：当整条回答获得正奖励时，轨迹里那些本来概率很低、且可能是错误推理来源的 token 也会被一起强化，导致模型把偶然的坏模式学进去。  
+作者提出 TACO，对 token 级信用分配做“尾部风险”校准：结合局部上下文判断某个低概率 token 是有价值的探索，还是不可靠的异常噪声，并相应削弱其正向更新，而不是简单丢弃梯度。  
+实验显示，TACO 在多个模型和推理基准上优于 GRPO 类方法，尤其提升了长程 RL 训练的稳定性。  
+它值得 RL + LLM/MLLM 栏目关注，因为它不是改奖励模型或数据，而是直接修正当前 LLM RL 中广泛使用的粗粒度信用分配机制，对提升推理训练的可靠性有较强通用性。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.07976v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.07976v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">8</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.07847v1" target="_blank">When Does Continual Learning Require Learning</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 13.5</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Anne Harrington, Nayan Saxena, Michael Murphy, Anastasia Borovykh, Zeyu Yun et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, verifiable_reasoning:grpo, llm_core:large language model, llm_core:large language models, llm_core:llm</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">As large language models (LLMs) become increasingly capable, the next question is how can we enable models to continually learn? Today, the field largely frames this as a problem of context management and mitigating forgetting. We argue this framing is incomplete: continual learning is fundamentally about increasing model competence as the world changes. We disentangle this change along two axes -- space, where the model encounters new domains, and time, where the underlying data drifts under a fixed task. This framing lets us study continual learning under realistic conditions: new domains arrive over time, facts drift past their training cutoff, and agentic interactions accumulate state across episodes. To evaluate methods under this setting, we recast widely used LLM benchmarks as sequential problems and introduce a single mechanism-agnostic protocol that compares prompt-based methods (GEPA, ACE), supervised learning (SFT, SDFT), reinforcement learning (GRPO, SDPO), and context compression (Cartridges, In-place TTT). Prompt-based methods fit each new stage quickly but degrade on future tasks. Distillation-based methods accumulate knowledge stably but struggle to update outdated facts. Context compression improves efficiency without substantially improving the ability to learn new tasks. Online reinforcement learning adapts most effectively to knowledge updates but remains sensitive to noisy reward signals. Overall, our results suggest that continual learning is not a single capability: different patterns of environmental change require fundamentally different update behaviors, determining when adaptation must be learned inside model weights and when it can be achieved through external scaffolding. We hope that understanding where each method succeeds and fails will guide the design of stronger continual learning systems.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把 LLM 的持续学习从“如何管理上下文/避免遗忘”重新定义为“模型如何在环境变化中提升能力”，并将变化拆成新领域出现与既有任务数据随时间漂移两类。方法上，作者把常见 LLM 基准改造成序列式评测，并在统一协议下比较提示优化、SFT/蒸馏、RL、上下文压缩等多种更新机制，分析它们在新任务、知识更新和长期状态积累中的优劣。主要发现是：提示方法适应快但泛化到后续阶段差，蒸馏较稳定但难改旧知识，RL 更擅长在线知识更新但受奖励噪声影响明显。对 RL + LLM/MLLM 栏目值得关注，因为它直接讨论了何时需要“权重内学习”、何时外部工具或上下文就够，并为持续学习型智能体的训练范式选择提供了实证依据。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.07847v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.07847v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">9</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.08056v1" target="_blank">Reinforcing the Generation Order of Multimodal Masked Diffusion Models</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 11.0</span><span class="sep">·</span><span>2026-07-09</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span><span class="tag c3">cs.AI</span><span class="tag c3">stat.ML</span></div>
+  <div class="meta-row">Yidong Ouyang, Zhe Wang, Sourav Bhabesh, Dmitriy Bespalov</div>
+  <div class="why">why: rl_core:policy optimization, verifiable_reasoning:grpo, llm_core:language model, llm_core:language models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Diffusion Language Models (DLMs) have recently achieved substantial progress in natural language generation tasks. Recent research demonstrates that adaptive token generation ordering can significantly improve performance in mathematical reasoning and code synthesis applications. In this work, we investigate the optimization of generation order for both text-to-image synthesis and multimodal understanding. We first establish that, unlike structured problems in language generation such as Sudoku puzzles, model logits alone are insufficient for determining optimal generation sequences in text-to-image generation and multimodal understanding. To address this challenge, we introduce a learnable control module trained via Group Relative Policy Optimization (GRPO) to determine the generation order. Our results demonstrate that learning this control block substantially improves both text-to-image alignment and multimodal understanding in DLMs. In particular, it enhances the model's ability to capture fine-grained spatial relationships in generated images while also strengthening performance on multimodal reasoning and comprehension tasks. We evaluate our framework on GenEval, an object-focused benchmark for text-to-image alignment, where it achieves 4.08% relative improvements. In addition, experiments on VLMEvalKit confirm 4.85% relative improvements in multimodal understanding, highlighting the broad effectiveness of our approach.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文关注多模态 Masked Diffusion Model 中“先生成哪些 token/区域”的顺序问题，指出仅依赖模型自身 logits 难以在图文生成和多模态理解中找到好的生成路径。  
+作者引入一个可学习的控制模块，用 GRPO 强化学习来优化生成顺序，让模型在去噪/填充过程中更有策略地决定下一步生成内容。  
+实验显示，这种顺序控制能提升文生图的文本对齐，尤其是细粒度空间关系，同时也改善多模态推理与理解表现。  
+它值得 RL + LLM/MLLM 栏目关注，因为它把 RL 从“优化最终回答”推进到“优化生成过程本身”，为扩散式语言/多模态模型提供了新的训练与推理优化方向。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.08056v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.08056v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">10</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.08193v1" target="_blank">Open-ended Multi-agent Autocurricula via Visual Inspection of Policies with Multi-modal LLMs</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 10.2</span><span class="sep">·</span><span>2026-07-09</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Lorenzo Pantè, Andrea Fanti, Roberto Capobianco</div>
+  <div class="why">why: rl_core:reinforcement learning, llm_core:llms, llm_core:language model, mllm_vlm:vlm</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Open-ended curricula in Reinforcement Learning (RL) aim to train generally-capable agents by identifying tasks that facilitate learning increasingly complex skills. A major challenge when designing such curricula is assessing task difficulty relative to the agent's current learning progress. While previous work has explored using scalar task scores or textual summaries of the agent's behavior, here we study a different approach: directly inspecting policy behavior via recorded episode videos. We introduce a simple yet effective instantiation of this approach which leverages a Video Language Model (VLM) to both process these videos and provide curriculum recommendations, which we call Visual Inspection of Policies (VIP). Since videos can naturally contain any number of controllable agents, we empirically study VIP on the StarCraft Multi-Agent Challenge (SMAC). We show that even with a lightweight and openly accessible VLM (VideoLLaMa2-7B), VIP can use policy videos to generate more effective curricula than both its text-only ablation and methods that rely on scalar task scores.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是提出用多模态大模型直接“看”智能体执行任务的视频来评估当前策略能力，并据此自动生成更合适的开放式课程，而不是只依赖奖励分数或文本描述。方法上，作者设计了 VIP：记录多智能体 RL 策略在环境中的 episode 视频，输入给 VLM（如 VideoLLaMA2-7B），让模型判断哪些任务对当前策略既有挑战又可学习，从而推荐下一阶段训练任务。实验在 SMAC 多智能体星际争霸环境中验证，VIP 比纯文本版本和基于标量得分的课程生成方法更有效。它值得 RL + LLM/MLLM 栏目关注，因为它展示了 VLM 可作为“行为观察者/课程设计器”嵌入 RL 训练闭环，为开放式、多智能体自课程学习提供了新的接口。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.08193v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.08193v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">11</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.07817v1" target="_blank">DreamCharacter-1: From 3D Generative Foundation Models to Product-Ready Character Generation</a></div>
+  </div>
+  <div class="meta-line"><span class="score">score 8.5</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c3">cs.CV</span><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Weizhe Liu, Yunjie Wu, Xiangqian Shu, Guangwei Wang, Xiangyu Xu et al.</div>
+  <div class="why">why: preference_alignment:preference optimization, llm_core:foundation model, llm_core:foundation models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">We present DreamCharacter-1, a lightweight post-adaptation framework that calibrates pretrained 3D foundation models toward high-fidelity, production-ready 3D character generation. Building upon a 3D foundation backbone, our pipeline incorporates three task-oriented components: (1) geometry post-training, which enhances fine-grained surface details through geometric preference optimization; (2) texture post-training, which synthesizes high-resolution textures and refines the appearance of occluded regions; and (3) inference acceleration, which enables scalable deployment. Extensive quantitative and qualitative experiments demonstrate that DreamCharacter-1 produces visually compelling and structurally robust 3D character assets, consistently surpassing state-of-the-art character generation methods.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是提出了 DreamCharacter-1：不是从零训练 3D 角色生成模型，而是在已有 3D 生成基础模型上做轻量级后适配，使其更接近可直接用于生产的角色资产质量。方法上，它分别针对几何、纹理和推理效率做增强：用偏好优化提升表面细节与结构稳定性，用后训练改善高分辨率贴图和遮挡区域外观，并通过加速机制支持规模化生成。  
+它值得 RL + LLM/MLLM 栏目关注的点在于，“pretrained foundation model + preference/post-training” 的范式正在从语言/图像扩展到 3D 内容生产，体现了类似 RLHF/偏好优化思想在多模态生成资产中的迁移。对于未来由 LLM/MLLM 驱动的游戏、虚拟人和具身智能内容生成系统，这类可控、高质量、可部署的 3D 角色生成能力会是关键模块。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.07817v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.07817v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">12</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.08724v1" target="_blank">Latent Memory Palace: Reasoning for Control as Autoregressive Variational Inference</a></div>
+  </div>
+  <div class="meta-line"><span class="score">score 8.0</span><span class="sep">·</span><span>2026-07-09</span></div>
+  <div class="tags"><span class="tag c2">cs.LG</span><span class="tag c1">cs.RO</span></div>
+  <div class="meta-row">Chuning Zhu, Eva Xu, Jose Barreiros, Krishnan Srinivasan, Paarth Shah et al.</div>
+  <div class="why">why: rl_core:reinforcement learning, llm_core:language model, llm_core:language models</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Human decision-making is highly flexible -- some actions are taken immediately; others require longer deliberation. Language models have exhibited a similar capacity for adaptive &quot;reasoning.&quot; However, transferring this capability to continuous control policies has been challenging, as directly reasoning in language space may lack the granularity for spatial understanding and precise motions. In this work, we show that reasoning for control policies can emerge by organizing information in an autoregressive latent space reminiscent of a memory palace, where retrieval is iterative and adaptive. Our method, Latent Memory Palace (LMP), formulates reasoning as variational inference with an autoregressive latent distribution. We derive a latent-space reinforcement learning technique to tractably optimize its variational lower bound. The resulting policy, LMP-$π$, achieves strong empirical performance in simulation and real-world domains while exhibiting interpretable, adaptive allocation of test-time compute. We further show that the same framework yields a variable-length action tokenizer, LMP-$\texttt{tok}$, which significantly improves the performance of downstream autoregressive policies. Together, these results present a new perspective on latent reasoning for control through the lens of variational inference.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把“推理时多想几步”的能力从语言模型迁移到连续控制中，但不依赖自然语言，而是在潜在空间里进行可变长度的自回归思考。方法上，作者将控制策略的推理过程建模为变分推断：策略在执行前/执行中逐步生成和检索 latent memory，并通过一个面向潜在空间的强化学习目标来优化，从而让模型自适应分配测试时计算量。实验显示，该框架不仅能得到更强的控制策略 LMP-π，还能产生可变长度的动作 tokenizer LMP-tok，提升下游自回归策略表现。它值得 RL + LLM/MLLM 栏目关注，因为它提供了一种不靠语言链式推理、而用 latent autoregressive inference 实现“类思考”控制的新路径，连接了大模型的 test-time scaling 与机器人/连续控制决策。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.08724v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.08724v1" target="_blank">PDF</a>
+  </div>
+</div></section>
+<section class="topic" id="section-2"><div class="topic-head"><h2 class="topic-title">Speech-Audio-Music</h2><span class="topic-count">4 篇</span></div><div class="paper">
+  <div class="p-head">
+    <span class="idx">1</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.08208v1" target="_blank">Diarization-Guided Qwen-ASR Adaptation for Multilingual Two-Speaker Conversational Speech</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 14.5</span><span class="sep">·</span><span>2026-07-09</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span></div>
+  <div class="meta-row">Hao Wu, RongQi Han, Zhen Wang, Wei Liang, Wei Xu</div>
+  <div class="why">why: speech_audio_music:speech, speech_audio_music:audio, speech_audio_music:asr, audio_tasks:speaker diarization, audio_tasks:voice activity detection, audio_models:tts</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">This paper describes our self-designed system for Task 1 of the MLC-SLM 2026 Challenge for multilingual two-speaker conversational speech. The system combines a modular speaker diarization front end with a challenge-adapted Qwen3-ASR-1.7B recognizer. The diarization front end performs voice activity detection, subsegment generation, CAMPPlus speaker embedding extraction, two-speaker spectral clustering, and RTTM-based audio segmentation. The resulting speaker-attributed segments are grouped by language or region and decoded by the adapted ASR model. For ASR adaptation, we first perform supervised full fine-tuning on the official training data, then apply LoRA fine-tuning with synthetic speech generated by a three-pipeline TTS-based synthetic speech augmentation framework, and finally refine the model using GRPO reinforcement learning with rewards based on WER/CER and penalties for hallucination, repetition, and length deviation. On the official development set, the full system achieves an average tcpMER of 23.70, reducing the error rate by 6.83 absolute points relative to the released Qwen-ASR-1.7B performance. On the final evaluation set, the system achieves an average tcpMER of 17.97. Ablation results show that supervised fine-tuning provides the largest gain, while synthetic-speech LoRA adaptation and reinforcement learning further improve robustness.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是面向多语种双人对话语音，构建了一个“说话人分离 + ASR 自适应”的完整系统，在挑战赛评测中显著降低了 tcpMER。方法上，它先用 VAD、说话人嵌入和聚类完成两人说话人日志与分段，再将带说话人属性的片段送入经过定制训练的 Qwen3-ASR-1.7B 识别。ASR 适配采用了分阶段策略：官方数据全量微调、TTS 合成语音的 LoRA 增强，以及基于 WER/CER 和幻觉/重复惩罚的 GRPO 强化学习优化。它值得 Speech-Audio-Music 栏目关注，因为它展示了大模型 ASR 在真实多语种对话、说话人重叠/切换和低错误率要求场景中的系统级落地路径。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.08208v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.08208v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">2</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.08409v1" target="_blank">When Synthetic Speech Is All You Have: Better Call GRPO</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 13.5</span><span class="sep">·</span><span>2026-07-09</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Shashi Kumar, Yanis Labrak, Hasindri Watawana, Sergio Burdisso, Esaú Villatoro-Tello et al.</div>
+  <div class="why">why: speech_audio_music:speech, speech_audio_music:audio, speech_audio_music:text-to-speech, audio_models:text-to-speech, audio_models:tts</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">LLM-based ASR adapted to regulated domains such as banking is bottlenecked by privacy: real speech is costly and legally constrained to collect, making synthetic text-to-speech (TTS) an attractive substitute. Yet synthetic speech stays acoustically mismatched with real recordings, and work on this gap has stayed within supervised fine-tuning (SFT). We instead turn to reinforcement learning, and show that Group Relative Policy Optimization (GRPO) extracts far more from the same synthetic speech than SFT. Synthetic-only adaptation of the model with GRPO, a critic-free method rewarding low-WER hypotheses, reduces WER by 40\% relative to SFT (36.71\%$\to$22.09\%), and an SFT-then-GRPO combination pushes this further to 45\%. We trace the gain to behavior rather than representation: GRPO reduces insertion errors by improving stopping calibration and speech-to-text alignment by better anchoring attention to audio, leaving early-layer representations intact. When synthetic speech is the main resource, reinforcement learning should be preferred over supervised fine-tuning.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文关注受隐私限制的垂直领域 ASR 适配问题：当真实语音难以获取、只能依赖 TTS 合成语音时，传统监督微调并不能充分弥合合成与真实录音的声学差距。作者将强化学习中的 GRPO 用于 LLM-based ASR 训练，用低 WER 作为奖励信号，在无需 critic 的情况下优化识别输出；结果显示，纯合成数据上 GRPO 明显优于 SFT，SFT 后再接 GRPO 还能进一步降低错误率。分析表明，收益主要来自解码行为改进，例如减少插入错误、改善停止时机和音频注意力对齐，而不是底层声学表征发生大变化。对 Speech-Audio-Music 栏目而言，这项工作提示：在隐私敏感、真实语音稀缺的语音应用中，RL 可能成为比常规微调更有效的 ASR 适配范式。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.08409v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.08409v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">3</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.08256v1" target="_blank">Best-of-$N$ TTS Evaluation is Confounded by ASR Family Alignment</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 13.5</span><span class="sep">·</span><span>2026-07-09</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span><span class="tag c3">cs.AI</span><span class="tag c2">cs.LG</span><span class="tag c1">cs.SD</span></div>
+  <div class="meta-row">Taehyung Yu, Seongjae Kang</div>
+  <div class="why">why: speech_audio_music:speech, speech_audio_music:speech recognition, speech_audio_music:text-to-speech, audio_models:text-to-speech, audio_models:tts</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Best-of-$N$ (BoN) inference improves content consistency in zero-shot text-to-speech by selecting from $N$ candidates with an automatic speech recognition (ASR) verifier. We identify an underexplored evaluation confound: a verifier's apparent quality depends strongly on which ASR family judges it. On LibriSpeech-PC test-clean~\citep{librispeechpc} with F5-TTS~\citep{f5tts}, verifier rankings reverse across Whisper, wav2vec~2.0, and HuBERT evaluators, and same-family verifier-evaluator pairs recover 2-3$\times$ more oracle headroom than cross-family pairs despite near-identical representations (linear CKA $0.978$) -- a pattern consistent with identity- or lineage-level coupling rather than representational overlap. We propose two \textbf{cross-family rank ensembles} (rank-averaging and conjunctive max-rank) that attain the lowest mean WER across three independent evaluators -- $1.61\%$ at $N{=}10$ ($-12\%$ relative to F5-TTS) -- with no measurable degradation under automatic SIM-o/UTMOS metrics; the best single verifier drives WER from $2.06\%$ to $1.72\%$ ($-16.5\%$) under the official F5-TTS evaluator. We recommend cross-evaluator triangulation as default reporting practice.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文指出，零样本 TTS 中常用的 Best-of-N 选择策略存在一个重要评估偏差：用哪个 ASR 系列来做验证器/评测器，会显著影响看起来“最优”的语音候选，甚至导致不同 ASR 家族下的系统排名反转。作者通过 F5-TTS 在 LibriSpeech-PC 上实验，比较 Whisper、wav2vec 2.0、HuBERT 等 ASR 家族，发现同家族验证器和评测器会高估彼此效果，因此提出跨家族的排序集成方法，如 rank averaging 和 conjunctive max-rank，来降低这种“家族对齐”带来的偏差。实验显示，这类跨家族集成在多个独立评测器上获得更低 WER，同时不损害说话人相似度和自然度等自动指标。它值得 Speech-Audio-Music 栏目关注，因为它不仅改进了 TTS 推理选择策略，也提醒社区在语音生成评测中避免被单一 ASR 评测器误导。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.08256v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.08256v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">4</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.08526v1" target="_blank">A Quantized Native Runtime for On-Device Semantic Audio Generation</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 10.5</span><span class="sep">·</span><span>2026-07-09</span></div>
+  <div class="tags"><span class="tag c1">cs.SD</span><span class="tag c0">cs.PF</span></div>
+  <div class="meta-row">Matteo Spanio, Antonio Rodà</div>
+  <div class="why">why: speech_audio_music:audio, speech_audio_music:music, audio_models:audio generation, audio_models:text-to-music</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Semantic audio applications increasingly require controllable generation on commodity and embedded hardware rather than through framework-heavy datacenter stacks. We present \textit{aria}, a dependency-free native runtime that runs the complete text-to-music pipeline of Stable Audio~3 (SA3) on ordinary GPUs, CPU-only machines, and a Raspberry~Pi~5, with no Python or deep-learning framework underneath. Our main contribution is a study of quantization: running the model at lower numerical precision to fit tight memory budgets, saving memory in place rather than adding to it. Because the runtime owns every internal tensor, it also exposes activation steering, a low-cost way to steer what the model generates. We judge the quality cost with three independent measures of the output (prompt adherence, overall audio quality, taste preservation), each compared against the ordinary variation between random seeds. Eight-bit precision shows no measurable quality loss on any measure while sharply cutting memory, and it is the fastest mode on the GPU; four-bit adds a small, bounded cost but shrinks the footprint enough to run the $1.2$-billion-parameter model on an $8$\,GB Pi. Against the official implementation, aria matches or exceeds generation speed and starts about seven times faster. A case study of the steering interface generates music carrying taste associations (\emph{sonic seasoning}), with genuine but bounded control for a subset of attributes. These results make a compact, quantized runtime with built-in control a practical basis for on-device semantic audio in Internet-of-Sounds settings. The \textit{aria} runtime is released at https://github.com/matteospanio/aria.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是推出了 **aria**：一个无需 Python 和深度学习框架的原生运行时，可在普通 GPU、纯 CPU 甚至 Raspberry Pi 5 上完整运行 Stable Audio 3 的文本生成音乐流程。方法上，作者重点研究了模型量化带来的内存与质量权衡：8-bit 基本不损失音频质量且更快，4-bit 虽有轻微代价但能把 12 亿参数模型压到 8GB 设备可运行。由于运行时直接管理内部张量，它还支持 activation steering，用较低成本对生成音乐的风格或语义属性进行控制。对 Speech-Audio-Music 栏目而言，这项工作值得关注，因为它把高质量语义音频生成从数据中心框架推进到端侧和嵌入式设备，为物联网声音应用、个性化音乐生成和低延迟本地音频 AI 提供了实际可部署路径。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.08526v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.08526v1" target="_blank">PDF</a>
+  </div>
+</div></section>
+<section class="topic" id="section-3"><div class="topic-head"><h2 class="topic-title">AI paper of the day</h2><span class="topic-count">5 篇</span></div><div class="paper">
+  <div class="p-head">
+    <span class="idx">1</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.08375v1" target="_blank">WCog-VLA: A Dual-Level World-Cognitive Vision-Language-Action Model for End-to-End Autonomous Driving</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 14.5</span><span class="sep">·</span><span>2026-07-09</span></div>
+  <div class="tags"><span class="tag c3">cs.CV</span><span class="tag c3">cs.AI</span></div>
+  <div class="meta-row">Xuerun Yan, Zhexi Lian, Nuoheng Zhang, Shiyu Fang, Haoran Wang et al.</div>
+  <div class="why">why: agents_reasoning:multi-agent, agents_reasoning:chain-of-thought, generative_world_models:diffusion transformer, generative_world_models:world model, embodied_ai:vision-language-action, embodied_ai:autonomous driving</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Vision-Language-Action (VLA) models have advanced end-to-end autonomous driving. However, existing methods either lack comprehensive world cognition or suffer from fragmented world foresight, inherently confining these models to reactive driving. To address this limitation, we propose WCog-VLA, a novel dual-level World-Cognitive VLA framework that successfully bridges semantic world forecasting with generative world evolution to achieve proactive autonomous driving. At the semantic level, WCog-VLA unifies world cognition and reasoning by incorporating 3D spatial perception and injecting agent tokens to capture the world dynamics, while concurrently enabling Game-theoretic Chain-of-Thought (Game-CoT) reasoning. At the generative level, we introduce the Aligned Decoupled Diffusion Transformer (ADDT) as a powerful generative world model that synthesizes physically-plausible joint multi-agent trajectories. Through scene representation alignment, ADDT reduces the number of denoising steps required and thus significantly accelerates inference. To facilitate strategic reasoning, we further construct a large-scale dataset featuring 85k Game-CoT annotations. Extensive experiments on the NAVSIM benchmark demonstrate that WCog-VLA achieves a State-Of-The-Art (SOTA) PDMS score of 92.9.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把端到端自动驾驶 VLA 从“看到后反应”推进到“预判后决策”：模型不仅理解当前场景，还显式预测交通参与者未来演化并进行策略推理。方法上，WCog-VLA 设计了语义与生成双层世界认知框架：一层用 3D 感知、agent token 和博弈式 Chain-of-Thought 来建模交互关系，另一层用扩散式世界模型生成多智能体未来轨迹，并通过表示对齐提升推理效率。它还构建了包含 8.5 万条博弈推理标注的数据集，用来增强模型在复杂交通博弈中的决策能力。值得关注的是，该工作在 NAVSIM 上取得 92.9 的 SOTA PDMS 分数，代表 VLA 自动驾驶模型开始更系统地融合“世界模型 + 推理 + 行动”。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.08375v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.08375v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">2</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.07858v1" target="_blank">Agentic AI and Retrieval-Augmented Models in Straight-Through Underwriting</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 14.1</span><span class="sep">·</span><span>2026-07-08</span></div>
+  <div class="tags"><span class="tag c3">cs.AI</span><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Robert Richardson, Josh Meyers, Brian Hartman, David Sandberg</div>
+  <div class="why">why: foundation_models:large language model, foundation_models:llm, agents_reasoning:agentic, agents_reasoning:multi-agent, ai_systems:retrieval-augmented generation, ai_systems:rag</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Artificial intelligence (AI) is beginning to reshape actuarial practice, particularly in domains that require reasoning over unstructured documents, heterogeneous data sources, and regulated decision workflows. Actuaries now face a design space that ranges from traditional rule-based automation to large language models (LLMs), retrieval-augmented generation (RAG), and multi-agent ``agentic'' systems that plan, retrieve, call tools, and reflect. This paper examines how these emerging architectures can support actuarial priorities such as transparency, auditability, and human-in-the-loop governance, with a focus on straight-through decision processes. To make these ideas concrete, we develop and analyze an agentic AI framework for straight-through underwriting of small commercial Business Owner Policies (BOPs). We construct a synthetic but realistic experimental environment and compare three underwriting pipelines: (i) a single-LLM baseline, (ii) a naive RAG system, and (iii) a multi-agent ``Agentic RAG'' pipeline that combines targeted retrieval, third-party data checks, and explicit multi-step rule evaluation. The agentic system performs best overall, with the largest gains in multi-step and missing-information scenarios, where structured retrieval and reflection help the model avoid unsupported straight-through decisions.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是把“Agentic RAG”引入精算核保场景，具体展示它如何服务于小型商业 BOP 保单的直通式核保，并围绕透明性、可审计性和人机协同治理这些行业关键要求进行评估。方法上，作者构建了一个合成但贴近真实业务的实验环境，对比单一 LLM、简单 RAG 和多智能体 Agentic RAG 三类流程；后者通过定向检索、外部数据校验、分步骤规则判断与反思机制来降低错误自动放行。结果显示，Agentic RAG 尤其在多步骤推理和信息缺失情形下更稳健，能更好地识别“不应直通”的案例。它值得关注，因为论文把当前热门的智能体与 RAG 架构落到高度监管、强流程约束的保险核保任务中，为 AI 从“回答问题”走向“可审计决策流程”提供了一个具体范式。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.07858v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.07858v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">3</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.08662v1" target="_blank">WebSwarm: Recursive Multi-Agent Orchestration for Deep-and-Wide Web Search</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 10.5</span><span class="sep">·</span><span>2026-07-09</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span><span class="tag c3">cs.AI</span><span class="tag c2">cs.MA</span></div>
+  <div class="meta-row">Xiaoshuai Song, Liancheng Zhang, Kangzhi Zhao, Yutao Zhu, Zhongyuan Wang et al.</div>
+  <div class="why">why: foundation_models:large language model, foundation_models:llm, agents_reasoning:agentic, agents_reasoning:multi-agent</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Large language model (LLM)-based web search agents are transforming information seeking from simple factoid question answering into complex, deep-and-wide search and research-oriented tasks. A single ReAct-style agent is constrained by one long trajectory and limited context, making it difficult to handle depth and coverage simultaneously. Existing multi-agent systems improve search coverage through parallel execution and aggregation, but still exhibit clear limitations in recursive depth, collaboration adaptability, and evidence-grounded expansion. We propose WebSwarm, a progressive recursive delegation framework that jointly constructs task decomposition, recursive expansion, and agent collaboration during inference. WebSwarm dynamically instantiates agentic search nodes, each coupling a local objective with a search mode that specifies how the node should organize search and collaboration. Each node can either solve its objective itself or further delegate child nodes; after solving, it returns evidence and results upward, enabling parent nodes to further expand, revise, or aggregate the search process. To guide this process, WebSwarm first probes how task-relevant information is organized on the web to ground subsequent node expansion, and reuses process-level experience across homogeneous sibling nodes. Experiments on BrowseComp-Plus, WideSearch, DeepWideSearch, and GISA show that WebSwarm consistently outperforms single-agent and multi-agent baselines on deep, wide, and interleaved deep-and-wide tasks. Further analyses of ablation, task difficulty, web tool efficiency, and model generalization explain WebSwarm's effectiveness and provide insights for multi-agent search systems.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文的核心贡献是提出了 WebSwarm：一种面向复杂网络研究任务的递归式多智能体搜索框架，试图同时解决“查得深”和“覆盖广”这两个传统单代理难以兼顾的问题。它的思路不是预先固定一组代理并行搜索，而是在推理过程中动态生成搜索节点，每个节点根据局部目标决定自行检索、继续拆分子任务，或汇总下级证据，并利用网页信息结构和兄弟节点经验来指导后续扩展。实验显示它在深度搜索、广度搜索以及深广交织任务上都优于单代理和常见多代理基线，说明递归委派可能是复杂信息获取场景中的有效组织方式。对本栏目值得关注之处在于，它把 LLM 搜索代理从“更会用工具”推进到“更会组织研究流程”，对未来自动研究助手和复杂 Web QA 系统都有直接启发。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.08662v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.08662v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">4</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.08124v1" target="_blank">TTHE: Test-Time Harness Evolution</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 10.5</span><span class="sep">·</span><span>2026-07-09</span></div>
+  <div class="tags"><span class="tag c2">cs.SE</span><span class="tag c2">cs.LG</span></div>
+  <div class="meta-row">Jun Nie, Yonggang Zhang, Jun Song, Qianshu Cai, Dahai Yu et al.</div>
+  <div class="why">why: foundation_models:llm, agents_reasoning:llm agent, agents_reasoning:agentic, agents_reasoning:tool-use</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">The behavior of an LLM agent is determined not only by the underlying model, but also by its harness: the executable program that constructs context, invokes tools, verifies intermediate results, and recovers from failures. Existing approaches optimize such harnesses before deployment, searching training or development data for a fixed agent workflow that is then frozen at test time. This limits adaptation when the test distribution, failure modes, or tool interactions differ from those seen during development. We ask whether the harness can instead be optimized during evaluation itself, using only the unlabeled execution traces the agent produces on the test inputs. We introduce Test-Time Harness Evolution (TTHE), which treats the executable harness as the state of test-time adaptation. During evaluation, TTHE maintains a population of candidate harnesses and refines them through an agentic proposer that reasons over their execution traces, without gold labels or task-specific supervision; a judge then commits an improved harness from execution-derived proxy signals, and the selected program persists to govern subsequent inputs. Crucially, TTHE does not update model weights, require gold labels, or train a separate adaptation model: solver, proposers, and judge are different roles and harnesses around the same frozen LLM, so all adaptation occurs through changes to the surrounding program. Across text-to-SQL, competitive programming, software engineering, data-science coding, and agentic tool-use tasks, TTHE improves fixed ReAct-style baseline harnesses, yielding persistent, inspectable improvements rather than a pre-searched workflow or per-query retries. These results recast test-time adaptation for LLM agents as evolution over executable control programs and identify execution-derived proxy reliability as a central challenge for robust unsupervised agent improvement.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文把 LLM Agent 的“测试时自适应”从改模型参数转向改外层执行程序（harness），强调 Agent 表现不仅取决于模型，也取决于如何组织上下文、调用工具、校验结果和处理失败。  
+TTHE 在测试过程中维护一组候选 harness，利用同一个冻结 LLM 扮演求解器、改写提议者和评审者，根据无标签执行轨迹中的代理信号选择更好的 harness，并让改进持续影响后续样本。  
+它的价值在于：相比固定 ReAct 流程、离线搜索好的 workflow 或单题多次重试，TTHE 提供了一种可持续、可检查、无需标注的 Agent 运行时进化机制。  
+对 “AI paper of the day” 值得关注的是，它把 LLM Agent 优化的焦点从“更强模型”推进到“可进化的控制程序”，也指出了无监督代理信号可靠性将成为测试时自适应的关键问题。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.08124v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.08124v1" target="_blank">PDF</a>
+  </div>
+</div>
+<div class="paper">
+  <div class="p-head">
+    <span class="idx">5</span>
+    <div class="paper-title"><a href="https://arxiv.org/abs/2607.08080v1" target="_blank">MASTE: A Multi-Agent Pipeline for Zero-Shot Aspect Sentiment Triplet Extraction</a></div>
+  </div>
+  <div class="meta-line"><span class="score hot">score 10.5</span><span class="sep">·</span><span>2026-07-09</span></div>
+  <div class="tags"><span class="tag c3">cs.CL</span></div>
+  <div class="meta-row">Ao Hong, Lehang Wang, Zhirun Yue, Mingxin Wang, Zihan Wang et al.</div>
+  <div class="why">why: foundation_models:large language model, foundation_models:llm, agents_reasoning:multi-agent, agents_reasoning:chain-of-thought</div>
+  <div class="section-label">Abstract</div>
+  <div class="abstract">Aspect Sentiment Triplet Extraction (ASTE) requires jointly identifying (aspect, opinion, sentiment) triples from a given review sentence. While large language models (LLMs) achieve strong zero-shot performance on many NLP benchmarks, their effectiveness on ASTE remains limited, as single-pass generation forces the model to determine span boundaries, opinion grouping, and sentiment polarity in a single decoding step. Common remedies, such as few-shot in-context learning and chain-of-thought prompting, offer only marginal improvements and rely heavily on either in-domain demonstrations sampled from labeled training data or carefully engineered reasoning prompts, neither of which is broadly available in zero-shot deployment. Inspired by the classical agent paradigm, we propose MASTE, a multi-agent pipeline for zero-shot Aspect Sentiment Triplet Extraction. MASTE decomposes ASTE into four sequential stages, where specialized agents handle different compositional subtasks with explicit conditioning on prior outputs. This design enables entirely training-free zero-shot ASTE and generalizes across different backbones and datasets. Extensive experiments on four ASTE benchmarks show that MASTE substantially outperforms zero-shot and chain-of-thought LLM baselines under the same backbone, narrowing the gap to fully supervised methods without using any labeled triplets. Code is available at https://github.com/Hankerlove/MASTE.</div>
+  <div class="section-label">解读</div><div class="interp">这篇论文聚焦于零样本的方面级情感三元组抽取（ASTE），核心贡献是提出了 MASTE：不用标注样例、不训练模型，也能更稳定地抽取“方面—观点—情感”三元组。它的思路是把原本一次性生成的复杂任务拆成多个连续子任务，由不同“智能体”分别处理边界识别、观点匹配、情感判断等步骤，并让后一步显式依赖前一步结果，从而降低 LLM 在单轮生成中的组合错误。实验显示，在多个 ASTE 数据集和不同大模型骨干上，MASTE 都明显优于普通零样本提示和 CoT 提示，甚至缩小了与监督方法的差距。它值得关注，因为它展示了一种实用的“任务分解 + 多代理编排”范式，可在缺少标注数据的细粒度信息抽取场景中提升 LLM 可用性。</div>
+  <div class="links">
+    <a class="btn primary" href="https://arxiv.org/abs/2607.08080v1" target="_blank">arXiv ↗</a>
+    <a class="btn" href="https://arxiv.org/pdf/2607.08080v1" target="_blank">PDF</a>
+  </div>
+</div></section>
+  </main>
+</div>
+</div>
+<footer>
+  <span>Generated by Zhisheng Zheng · 2026-07-10</span>
+  <a href="index.html">查看全部归档 →</a>
+</footer>
+</body>
+</html>
