@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 130" role="img" aria-label="pitch (F0) placeholder for sample 5">
+  <rect x="0" y="0" width="300" height="130" rx="8" fill="#e2e8ef" opacity="0.35"/>
+  <line x1="40" y1="96" x2="288" y2="96" stroke="#d7d3c6" stroke-width="1"/>
+  <text x="10" y="20" font-family="sans-serif" font-size="10" font-weight="600" fill="#908f84">pitch (F0)</text>
+  <polyline points="40.0,74.3 89.6,57.4 139.2,63.4 188.8,47.8 238.4,60.0 288.0,47.6" fill="none" stroke="#b6b3a6" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="40.0,62.9 89.6,53.6 139.2,59.6 188.8,44.0 238.4,48.6 288.0,36.2" fill="none" stroke="#5f7896" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g font-family="sans-serif" font-size="9" font-weight="600">
+    <line x1="196" y1="112" x2="212" y2="112" stroke="#b6b3a6" stroke-width="2.5" stroke-dasharray="4 4"/>
+    <text x="216" y="115" fill="#908f84">original</text>
+    <line x1="248" y1="112" x2="264" y2="112" stroke="#5f7896" stroke-width="3"/>
+    <text x="268" y="115" fill="#5f7896">controlled</text>
+  </g>
+  <text x="290" y="20" text-anchor="end" font-family="sans-serif" font-size="8.5" fill="#b0ada0">placeholder</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 130" role="img" aria-label="loudness placeholder for sample 1">
+  <rect x="0" y="0" width="300" height="130" rx="8" fill="#f1e2d9" opacity="0.35"/>
+  <line x1="40" y1="96" x2="288" y2="96" stroke="#d7d3c6" stroke-width="1"/>
+  <text x="10" y="20" font-family="sans-serif" font-size="10" font-weight="600" fill="#908f84">loudness</text>
+  <polyline points="40.0,67.8 89.6,53.1 139.2,65.3 188.8,54.1 238.4,64.9 288.0,46.6" fill="none" stroke="#b6b3a6" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="40.0,52.7 89.6,28.1 139.2,40.2 188.8,29.0 238.4,49.8 288.0,31.5" fill="none" stroke="#cc785c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g font-family="sans-serif" font-size="9" font-weight="600">
+    <line x1="196" y1="112" x2="212" y2="112" stroke="#b6b3a6" stroke-width="2.5" stroke-dasharray="4 4"/>
+    <text x="216" y="115" fill="#908f84">original</text>
+    <line x1="248" y1="112" x2="264" y2="112" stroke="#cc785c" stroke-width="3"/>
+    <text x="268" y="115" fill="#cc785c">controlled</text>
+  </g>
+  <text x="290" y="20" text-anchor="end" font-family="sans-serif" font-size="8.5" fill="#b0ada0">placeholder</text>
+</svg>

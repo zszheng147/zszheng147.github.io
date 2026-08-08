@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 130" role="img" aria-label="duration placeholder for sample 3">
+  <rect x="0" y="0" width="300" height="130" rx="8" fill="#e7ebdb" opacity="0.35"/>
+  <text x="10" y="20" font-family="sans-serif" font-size="10" font-weight="600" fill="#908f84">duration (per-word)</text>
+  <rect x="58.2" y="40.0" width="13.3" height="9" rx="3" fill="#b6b3a6"/>
+  <rect x="58.2" y="62.0" width="13.3" height="9" rx="3" fill="#7c8a62"/>
+  <rect x="106.4" y="40.0" width="15.9" height="9" rx="3" fill="#b6b3a6"/>
+  <rect x="106.4" y="62.0" width="15.9" height="9" rx="3" fill="#7c8a62"/>
+  <rect x="157.5" y="40.0" width="13.0" height="9" rx="3" fill="#b6b3a6"/>
+  <rect x="154.4" y="62.0" width="19.3" height="9" rx="3" fill="#7c8a62"/>
+  <rect x="204.5" y="40.0" width="18.2" height="9" rx="3" fill="#b6b3a6"/>
+  <rect x="204.5" y="62.0" width="18.2" height="9" rx="3" fill="#7c8a62"/>
+  <rect x="255.4" y="40.0" width="15.6" height="9" rx="3" fill="#b6b3a6"/>
+  <rect x="255.4" y="62.0" width="15.6" height="9" rx="3" fill="#7c8a62"/>
+  <g font-family="sans-serif" font-size="9" font-weight="600">
+    <rect x="196" y="108" width="12" height="7" rx="2" fill="#b6b3a6"/>
+    <text x="212" y="115" fill="#908f84">original</text>
+    <rect x="248" y="108" width="12" height="7" rx="2" fill="#7c8a62"/>
+    <text x="264" y="115" fill="#7c8a62">controlled</text>
+  </g>
+  <text x="290" y="20" text-anchor="end" font-family="sans-serif" font-size="8.5" fill="#b0ada0">placeholder</text>
+</svg>

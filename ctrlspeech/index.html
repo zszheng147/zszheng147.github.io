@@ -412,6 +412,34 @@
       outline: none;
     }
 
+    .contents ul ul {
+      gap: 5px;
+      margin: 7px 0 3px;
+      padding-left: 11px;
+      border-left: 1px solid var(--line-soft);
+    }
+
+    .contents ul ul a {
+      padding: 2px 0 2px 10px;
+      color: var(--faint);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .contents ul ul a::before {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 8px;
+      border-radius: 2px;
+      vertical-align: 1px;
+    }
+
+    .contents .toc-pitch a::before { background: var(--slate); }
+    .contents .toc-loudness a::before { background: var(--clay); }
+    .contents .toc-duration a::before { background: var(--sage); }
+
     /* ---------- Figure ---------- */
     .figure-wrap {
       overflow-x: auto;
@@ -705,8 +733,170 @@
       font-size: clamp(24px, 3vw, 32px);
     }
 
+    .sample-note {
+      margin: 0 0 22px;
+      padding: 9px 14px;
+      border-left: 3px solid var(--clay);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.55;
+    }
+
     .global-sample-table audio {
       width: 220px;
+    }
+
+    /* ---------- Expressive sample groups ---------- */
+    .attr-group {
+      margin-top: 44px;
+      padding-top: 40px;
+      border-top: 1px solid var(--line);
+      scroll-margin-top: 24px;
+    }
+
+    .attr-group:first-of-type {
+      margin-top: 8px;
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .attr-header {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+      margin: 0 0 18px;
+    }
+
+    .attr-header .attr-swatch {
+      align-self: center;
+      flex: 0 0 auto;
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+    }
+
+    .attr-header h3 {
+      margin: 0;
+      font-size: clamp(22px, 2.6vw, 28px);
+    }
+
+    .attr-header .attr-desc {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .attr-pitch .attr-swatch { background: var(--slate); }
+    .attr-loudness .attr-swatch { background: var(--clay); }
+    .attr-duration .attr-swatch { background: var(--sage); }
+
+    .attr-pitch .sample-table-wrap { border-top: 3px solid var(--slate); }
+    .attr-loudness .sample-table-wrap { border-top: 3px solid var(--clay); }
+    .attr-duration .sample-table-wrap { border-top: 3px solid var(--sage); }
+
+    .curve-cell { width: 288px; }
+
+    .curve-fig {
+      display: block;
+      width: 260px;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--line-soft);
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+    }
+
+    /* ---------- Sample cards (wide control-curve figures) ---------- */
+    .group-note {
+      margin: -4px 0 20px;
+      max-width: 78ch;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .group-note strong {
+      color: var(--ink-soft);
+    }
+
+    .sample-card {
+      display: grid;
+      gap: 20px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .sample-card + .sample-card {
+      margin-top: 18px;
+    }
+
+    .attr-pitch .sample-card { border-top: 3px solid var(--slate); }
+    .attr-loudness .sample-card { border-top: 3px solid var(--clay); }
+    .attr-duration .sample-card { border-top: 3px solid var(--sage); }
+
+    .sample-card-head {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+    }
+
+    .sample-index {
+      flex: 0 0 auto;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .sample-card-text {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .sample-card-audio {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 30px;
+    }
+
+    .audio-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .curve-figure {
+      margin: 0;
+    }
+
+    .curve-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line-soft);
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+    }
+
+    .curve-figure figcaption {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
     }
 
     /* ---------- Samples table ---------- */
@@ -970,9 +1160,15 @@
             <svg viewBox="0 0 16 16" aria-hidden="true">
               <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
             </svg>
-            <span>Code</span>
+            <span>Code (Coming Soon)</span>
           </a>
-          <a class="link-button secondary" href="#">Poster</a>
+          <a class="link-button secondary" href="mailto:zszheng@utexas.edu" aria-label="Email the corresponding author">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path fill="none" stroke="currentColor" stroke-width="1.3" d="M1.6 4.2h12.8v7.6H1.6z"></path>
+              <path fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" d="m1.9 4.6 6.1 4.2 6.1-4.2"></path>
+            </svg>
+            <span>Contact</span>
+          </a>
         </div>
       </div>
     </header>
@@ -987,8 +1183,16 @@
           <li><a href="#system-overview">System Overview</a></li>
           <li><a href="#control-design">Coarse-to-Fine Control Design</a></li>
           <li><a href="#coarse-global-control">Coarse Global Control</a></li>
-          <li><a href="#demo">Expressive Control Samples</a></li>
+          <li>
+            <a href="#demo">Expressive Control Samples</a>
+            <ul>
+              <li class="toc-pitch"><a href="#pitch">Pitch</a></li>
+              <li class="toc-loudness"><a href="#loudness">Loudness</a></li>
+              <li class="toc-duration"><a href="#duration">Duration</a></li>
+            </ul>
+          </li>
           <li><a href="#bibtex">BibTeX</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
     </section>
@@ -1135,6 +1339,7 @@
       <div class="control-samples" id="coarse-global-control">
         <span class="eyebrow">Listen</span>
         <h3 class="subsection-title">Coarse Global Control</h3>
+        <p class="sample-note">Due to the characteristics of the training data, our model tends to generate cloned speech at a relatively fast speaking rate.</p>
         <div class="sample-table-wrap">
           <table class="global-sample-table">
             <thead>
@@ -1198,44 +1403,274 @@
     </section>
 
     <section class="section" id="demo">
+      <span class="eyebrow">Listen</span>
       <h2 class="section-title">Expressive Control Samples</h2>
-      <div class="sample-table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Case</th>
-              <th>Target Text</th>
-              <th>Reference</th>
-              <th>Neutral</th>
-              <th>Controlled</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="chip pitch">Pitch</span></td>
-              <td class="sample-text">The room grew quiet, and then everyone started laughing.</td>
-              <td><div class="audio-slot"><audio controls preload="none" src="audios/pitch/reference.wav"></audio><span>reference speaker</span></div></td>
-              <td><div class="audio-slot"><audio controls preload="none" src="audios/pitch/neutral.wav"></audio><span>baseline synthesis</span></div></td>
-              <td><div class="audio-slot"><audio controls preload="none" src="audios/pitch/controlled.wav"></audio><span>raised phrase-level pitch</span></div></td>
-            </tr>
-            <tr>
-              <td><span class="chip loudness">Loudness</span></td>
-              <td class="sample-text">I said we should leave now, not after the storm arrives.</td>
-              <td><div class="audio-slot"><audio controls preload="none" src="audios/loudness/reference.wav"></audio><span>reference speaker</span></div></td>
-              <td><div class="audio-slot"><audio controls preload="none" src="audios/loudness/neutral.wav"></audio><span>baseline synthesis</span></div></td>
-              <td><div class="audio-slot"><audio controls preload="none" src="audios/loudness/controlled.wav"></audio><span>emphasized word loudness</span></div></td>
-            </tr>
-            <tr>
-              <td><span class="chip duration">Duration</span></td>
-              <td class="sample-text">Please wait here for a moment before opening the door.</td>
-              <td><div class="audio-slot"><audio controls preload="none" src="audios/duration/reference.wav"></audio><span>reference speaker</span></div></td>
-              <td><div class="audio-slot"><audio controls preload="none" src="audios/duration/neutral.wav"></audio><span>baseline synthesis</span></div></td>
-              <td><div class="audio-slot"><audio controls preload="none" src="audios/duration/controlled.wav"></audio><span>lengthened local duration</span></div></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="caption"><strong>Table 2.</strong> Representative sample layout for pitch, loudness, and duration control experiments.</p>
+      <p class="sample-note">Each sample keeps the global speaker condition fixed and compares the <strong>original</strong> synthesis against the <strong>controlled</strong> result.</p>
+        <div class="attr-group attr-pitch" id="pitch">
+          <div class="attr-header">
+            <span class="attr-swatch" aria-hidden="true"></span>
+            <h3>Pitch</h3>
+            <span class="attr-desc">four requested contours on one utterance</span>
+          </div>
+          <p class="group-note">All four samples share the same speaker prompt and the same original synthesis of the target text <strong>The storm's rage lashed out unrelentingly at the shoreline.</strong> &mdash; only the requested pitch curve changes. In every figure, <strong>baseline</strong> (grey) is the pitch contour of the original synthesis, <strong>requested</strong> (purple) is the target curve given to the model, and <strong>achieved</strong> (dashed) is the contour measured from the controlled output.</p>
+          <div class="sample-card">
+            <div class="sample-card-head">
+              <span class="sample-index">Sample 1</span>
+              <p class="sample-card-text">Requested a steady <strong>rise</strong> from low to high across the utterance.</p>
+            </div>
+            <div class="sample-card-audio">
+              <div class="audio-slot">
+                <span class="audio-label">Original</span>
+                <audio controls preload="none" src="audios/pitch/pitch-target.wav"></audio>
+              </div>
+              <div class="audio-slot">
+                <span class="audio-label">Controlled</span>
+                <audio controls preload="none" src="audios/pitch/pitch-1-target2.wav"></audio>
+              </div>
+            </div>
+            <figure class="curve-figure">
+              <img src="audios/pitch/pitch-1.png" width="2310" height="616" loading="lazy"
+                alt="Pitch contours over time for sample 1: the requested curve rises steadily across the utterance and the achieved contour tracks it.">
+            </figure>
+          </div>
+          <div class="sample-card">
+            <div class="sample-card-head">
+              <span class="sample-index">Sample 2</span>
+              <p class="sample-card-text">Requested a steady <strong>fall</strong> from high to low across the utterance.</p>
+            </div>
+            <div class="sample-card-audio">
+              <div class="audio-slot">
+                <span class="audio-label">Original</span>
+                <audio controls preload="none" src="audios/pitch/pitch-target.wav"></audio>
+              </div>
+              <div class="audio-slot">
+                <span class="audio-label">Controlled</span>
+                <audio controls preload="none" src="audios/pitch/pitch-2-target2.wav"></audio>
+              </div>
+            </div>
+            <figure class="curve-figure">
+              <img src="audios/pitch/pitch-2.png" width="2310" height="616" loading="lazy"
+                alt="Pitch contours over time for sample 2: the requested curve falls steadily across the utterance and the achieved contour tracks it.">
+            </figure>
+          </div>
+          <div class="sample-card">
+            <div class="sample-card-head">
+              <span class="sample-index">Sample 3</span>
+              <p class="sample-card-text">Requested a <strong>flat</strong> contour, holding one level throughout for a monotone reading.</p>
+            </div>
+            <div class="sample-card-audio">
+              <div class="audio-slot">
+                <span class="audio-label">Original</span>
+                <audio controls preload="none" src="audios/pitch/pitch-target.wav"></audio>
+              </div>
+              <div class="audio-slot">
+                <span class="audio-label">Controlled</span>
+                <audio controls preload="none" src="audios/pitch/pitch-3-target2.wav"></audio>
+              </div>
+            </div>
+            <figure class="curve-figure">
+              <img src="audios/pitch/pitch-3.png" width="2310" height="616" loading="lazy"
+                alt="Pitch contours over time for sample 3: the requested curve is flat and the achieved contour stays close to that constant level.">
+            </figure>
+          </div>
+          <div class="sample-card">
+            <div class="sample-card-head">
+              <span class="sample-index">Sample 4</span>
+              <p class="sample-card-text">Requested a <strong>fall-then-rise</strong> contour, dipping mid-utterance before climbing back up.</p>
+            </div>
+            <div class="sample-card-audio">
+              <div class="audio-slot">
+                <span class="audio-label">Original</span>
+                <audio controls preload="none" src="audios/pitch/pitch-target.wav"></audio>
+              </div>
+              <div class="audio-slot">
+                <span class="audio-label">Controlled</span>
+                <audio controls preload="none" src="audios/pitch/pitch-4-target2.wav"></audio>
+              </div>
+            </div>
+            <figure class="curve-figure">
+              <img src="audios/pitch/pitch-4.png" width="2310" height="616" loading="lazy"
+                alt="Pitch contours over time for sample 4: the requested curve falls to a mid-utterance valley then rises again, and the achieved contour follows both movements.">
+            </figure>
+          </div>
+        </div>
+        <div class="attr-group attr-loudness" id="loudness">
+          <div class="attr-header">
+            <span class="attr-swatch" aria-hidden="true"></span>
+            <h3>Loudness</h3>
+            <span class="attr-desc">four requested contours on one utterance</span>
+          </div>
+          <p class="group-note">All four samples share the same speaker prompt and the same original synthesis of the target text <strong>Her voice barely rose above a whisper, each word a fragile step across thin ice.</strong> &mdash; only the requested loudness curve changes. In every figure, <strong>baseline</strong> (grey) is the loudness contour of the original synthesis, <strong>requested</strong> (teal) is the target curve given to the model, and <strong>achieved</strong> (dashed) is the contour measured from the controlled output.</p>
+          <div class="sample-card">
+            <div class="sample-card-head">
+              <span class="sample-index">Sample 1</span>
+              <p class="sample-card-text">Requested a steady <strong>rise</strong> from quiet to loud across the utterance.</p>
+            </div>
+            <div class="sample-card-audio">
+              <div class="audio-slot">
+                <span class="audio-label">Original</span>
+                <audio controls preload="none" src="audios/loudness/loudness-target.wav"></audio>
+              </div>
+              <div class="audio-slot">
+                <span class="audio-label">Controlled</span>
+                <audio controls preload="none" src="audios/loudness/loudness-1-target2.wav"></audio>
+              </div>
+            </div>
+            <figure class="curve-figure">
+              <img src="audios/loudness/loudness-1.png" width="2310" height="616" loading="lazy"
+                alt="Loudness contours over time for sample 1: the requested curve rises steadily across the utterance and the achieved contour tracks it.">
+            </figure>
+          </div>
+          <div class="sample-card">
+            <div class="sample-card-head">
+              <span class="sample-index">Sample 2</span>
+              <p class="sample-card-text">Requested a steady <strong>fall</strong>, fading from loud down to near silence by the end.</p>
+            </div>
+            <div class="sample-card-audio">
+              <div class="audio-slot">
+                <span class="audio-label">Original</span>
+                <audio controls preload="none" src="audios/loudness/loudness-target.wav"></audio>
+              </div>
+              <div class="audio-slot">
+                <span class="audio-label">Controlled</span>
+                <audio controls preload="none" src="audios/loudness/loudness-2-target2.wav"></audio>
+              </div>
+            </div>
+            <figure class="curve-figure">
+              <img src="audios/loudness/loudness-2.png" width="2310" height="616" loading="lazy"
+                alt="Loudness contours over time for sample 2: the requested curve falls steadily to near zero and the achieved contour tracks it.">
+            </figure>
+          </div>
+          <div class="sample-card">
+            <div class="sample-card-head">
+              <span class="sample-index">Sample 3</span>
+              <p class="sample-card-text">Requested a <strong>flat</strong> contour, holding one steady level in place of the baseline's swings.</p>
+            </div>
+            <div class="sample-card-audio">
+              <div class="audio-slot">
+                <span class="audio-label">Original</span>
+                <audio controls preload="none" src="audios/loudness/loudness-target.wav"></audio>
+              </div>
+              <div class="audio-slot">
+                <span class="audio-label">Controlled</span>
+                <audio controls preload="none" src="audios/loudness/loudness-3-target2.wav"></audio>
+              </div>
+            </div>
+            <figure class="curve-figure">
+              <img src="audios/loudness/loudness-3.png" width="2310" height="616" loading="lazy"
+                alt="Loudness contours over time for sample 3: the requested curve is flat and the achieved contour stays near that constant level instead of following the baseline's peaks and dips.">
+            </figure>
+          </div>
+          <div class="sample-card">
+            <div class="sample-card-head">
+              <span class="sample-index">Sample 4</span>
+              <p class="sample-card-text">Requested <strong>loud&ndash;quiet&ndash;loud</strong>, holding full level at the edges with a dip through the middle.</p>
+            </div>
+            <div class="sample-card-audio">
+              <div class="audio-slot">
+                <span class="audio-label">Original</span>
+                <audio controls preload="none" src="audios/loudness/loudness-target.wav"></audio>
+              </div>
+              <div class="audio-slot">
+                <span class="audio-label">Controlled</span>
+                <audio controls preload="none" src="audios/loudness/loudness-4-target2.wav"></audio>
+              </div>
+            </div>
+            <figure class="curve-figure">
+              <img src="audios/loudness/loudness-4.png" width="2310" height="616" loading="lazy"
+                alt="Loudness contours over time for sample 4: the requested curve dips through the middle of the utterance and returns to full level, and the achieved contour follows both movements.">
+            </figure>
+          </div>
+        </div>
+        <div class="attr-group attr-duration" id="duration">
+          <div class="attr-header">
+            <span class="attr-swatch" aria-hidden="true"></span>
+            <h3>Duration</h3>
+            <span class="attr-desc">per-word timing edits on one utterance</span>
+          </div>
+          <p class="group-note">All four samples share the same speaker prompt and the same original synthesis of the target text <strong>If you dream a thing more than once, it's sure to come true. Have faith in your dreams.</strong> &mdash; each one retimes a single word. In every figure, block width encodes each word's duration: <strong>baseline</strong> (bottom) is the original synthesis, <strong>requested</strong> (middle) is the target timing given to the model, and <strong>achieved</strong> (top) is the timing measured from the controlled output. The outlined block marks the edited word.</p>
+          <div class="sample-card">
+            <div class="sample-card-head">
+              <span class="sample-index">Sample 1</span>
+              <p class="sample-card-text"><strong>Lengthened</strong> the closing word <em>dreams</em> to roughly twice its baseline length.</p>
+            </div>
+            <div class="sample-card-audio">
+              <div class="audio-slot">
+                <span class="audio-label">Original</span>
+                <audio controls preload="none" src="audios/duration/duration-target.wav"></audio>
+              </div>
+              <div class="audio-slot">
+                <span class="audio-label">Controlled</span>
+                <audio controls preload="none" src="audios/duration/duration-1-target2.wav"></audio>
+              </div>
+            </div>
+            <figure class="curve-figure">
+              <img src="audios/duration/duration-1.png" width="2310" height="596" loading="lazy"
+                alt="Word-duration timeline for sample 1: the closing word dreams is stretched to about twice its baseline width, and the achieved timing closely matches the request.">
+            </figure>
+          </div>
+          <div class="sample-card">
+            <div class="sample-card-head">
+              <span class="sample-index">Sample 2</span>
+              <p class="sample-card-text"><strong>Lengthened</strong> <em>faith</em> in the final phrase, drawing the word out without disturbing its neighbours.</p>
+            </div>
+            <div class="sample-card-audio">
+              <div class="audio-slot">
+                <span class="audio-label">Original</span>
+                <audio controls preload="none" src="audios/duration/duration-target.wav"></audio>
+              </div>
+              <div class="audio-slot">
+                <span class="audio-label">Controlled</span>
+                <audio controls preload="none" src="audios/duration/duration-2-target2.wav"></audio>
+              </div>
+            </div>
+            <figure class="curve-figure">
+              <img src="audios/duration/duration-2.png" width="2310" height="596" loading="lazy"
+                alt="Word-duration timeline for sample 2: the word faith is widened relative to the baseline while the surrounding words keep their timing.">
+            </figure>
+          </div>
+          <div class="sample-card">
+            <div class="sample-card-head">
+              <span class="sample-index">Sample 3</span>
+              <p class="sample-card-text"><strong>Lengthened</strong> <em>dream</em> near the start of the utterance, showing the edit works away from phrase boundaries.</p>
+            </div>
+            <div class="sample-card-audio">
+              <div class="audio-slot">
+                <span class="audio-label">Original</span>
+                <audio controls preload="none" src="audios/duration/duration-target.wav"></audio>
+              </div>
+              <div class="audio-slot">
+                <span class="audio-label">Controlled</span>
+                <audio controls preload="none" src="audios/duration/duration-3-target2.wav"></audio>
+              </div>
+            </div>
+            <figure class="curve-figure">
+              <img src="audios/duration/duration-3.png" width="2310" height="596" loading="lazy"
+                alt="Word-duration timeline for sample 3: the second word dream is widened relative to the baseline and the achieved timing tracks the request.">
+            </figure>
+          </div>
+          <div class="sample-card">
+            <div class="sample-card-head">
+              <span class="sample-index">Sample 4</span>
+              <p class="sample-card-text"><strong>Shortened</strong> <em>once</em> to about half its baseline length, clipping the utterance shorter overall.</p>
+            </div>
+            <div class="sample-card-audio">
+              <div class="audio-slot">
+                <span class="audio-label">Original</span>
+                <audio controls preload="none" src="audios/duration/duration-target.wav"></audio>
+              </div>
+              <div class="audio-slot">
+                <span class="audio-label">Controlled</span>
+                <audio controls preload="none" src="audios/duration/duration-4-target2.wav"></audio>
+              </div>
+            </div>
+            <figure class="curve-figure">
+              <img src="audios/duration/duration-4.png" width="2310" height="596" loading="lazy"
+                alt="Word-duration timeline for sample 4: the word once is compressed to about half its baseline width and the achieved timing matches the request.">
+            </figure>
+          </div>
+        </div>
+      <p class="caption"><strong>Table 2.</strong> Phone-aligned control examples across pitch, loudness, and duration. Each attribute applies four different requested controls to a single utterance, holding the speaker prompt and the original synthesis fixed.</p>
     </section>
 
     <section class="section" id="bibtex">
@@ -1265,6 +1700,12 @@
   <span class="tok-field">year</span>      <span class="tok-punc">=</span> <span class="tok-punc">{</span><span class="tok-str">2026</span><span class="tok-punc">}</span>
 <span class="tok-punc">}</span></code></pre>
       </div>
+    </section>
+
+    <section class="section" id="contact">
+      <span class="eyebrow">Get in touch</span>
+      <h2 class="section-title">Contact</h2>
+      <p class="caption">Questions, feedback, or collaboration inquiries about CtrlSpeech are welcome — please email <a href="mailto:zszheng@utexas.edu">zszheng@utexas.edu</a>.</p>
       <div class="back-to-top">
         <a class="link-button secondary" href="#top">Back to Top</a>
       </div>
