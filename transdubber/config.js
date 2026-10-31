@@ -21,10 +21,10 @@ window.PAGE_CONFIG = {
 
   links: [
     { label: "arXiv",       icon: "arxiv",  url: "" },   /* https://arxiv.org/abs/XXXX.XXXXX */
-    { label: "Code",        icon: "code",   url: "" },
+    { label: "Code",        icon: "code",   url: "https://github.com/zszheng147/TransDubber" },
     { label: "Training Data", icon: "data", url: "" },
     { label: "Testset",       icon: "data", url: "https://huggingface.co/datasets/zhisheng01/TransDubber-testset" },
-    { label: "Models",      icon: "model",  url: "" }
+    { label: "Models",      icon: "model",  url: "https://huggingface.co/zhisheng01/TransDubber" }
   ],
 
   bibtex: [
