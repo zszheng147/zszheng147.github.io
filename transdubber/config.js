@@ -23,7 +23,7 @@ window.PAGE_CONFIG = {
     { label: "arXiv",       icon: "arxiv",  url: "" },   /* https://arxiv.org/abs/XXXX.XXXXX */
     { label: "Code",        icon: "code",   url: "" },
     { label: "Training Data", icon: "data", url: "" },
-    { label: "Testset",       icon: "data", url: "" },
+    { label: "Testset",       icon: "data", url: "https://huggingface.co/datasets/zhisheng01/TransDubber-testset" },
     { label: "Models",      icon: "model",  url: "" }
   ],
 
