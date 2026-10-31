@@ -1,0 +1,1001 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>DuetJudge — Reinforcement Learning for Music Generation with Pairwise Reward Modeling</title>
+  <meta name="description" content="DuetJudge: a pairwise music judge (A, B, or Tie; alignment first, quality second) whose RL rewards improve Audex-2B, Audex-30B-A3B, and ETTA on every metric.">
+  <meta name="theme-color" content="#fbfbf8">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="DuetJudge — Reinforcement Learning for Music Generation with Pairwise Reward Modeling">
+  <meta property="og:description" content="DuetJudge is a caption-conditioned pairwise reward model for text-to-music generation. It compares two clips and predicts A, B, or Tie under an alignment-first, quality-second criterion, reaching 71% agreement with human preferences; its pairwise probabilities give RL rewards that improve Audex-2B, Audex-30B-A3B, and ETTA on every automatic metric and both human ratings.">
+  <!-- TODO before release: social cards need absolute URLs. Replace SITE_URL with the final page URL (e.g. https://<user>.github.io/<repo>/)
+       and uncomment og:url / canonical; also fill ARXIV_ID in main.js and the eprint field of the BibTeX block. -->
+  <meta property="og:image" content="assets/figures/model.png">
+  <!-- <meta property="og:url" content="SITE_URL"> -->
+  <!-- <link rel="canonical" href="SITE_URL"> -->
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem('dj-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);var m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',t==='dark'?'#0d0d0d':'#fbfbf8')}catch(e){document.documentElement.setAttribute('data-theme','light')}})();</script>
+  <link rel="preconnect" href="https://images.nvidia.com" crossorigin>
+  <link rel="preload" href="https://images.nvidia.com/etc/designs/nvidiaGDC/clientlibs_base/fonts/nvidia-sans/NALA/var/NVIDIASansVF_NALA_W_Wght.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="samples.js"></script>
+  <script defer src="waveforms.js"></script>
+  <script defer src="main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="DuetJudge, back to top">
+        <svg class="brand-mark" viewBox="0 0 64 32" fill="none" aria-hidden="true">
+          <g stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><path d="M6 13v6"/><path d="M12 7v18"/><path d="M18 11v10"/><path d="M46 11v10"/><path d="M52 7v18"/><path d="M58 13v6"/></g>
+          <path d="m32 12 4 4-4 4-4-4Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+          <path class="mark-note" d="M50.25 11V7a1.75 1.75 0 0 1 3.5 0v4Z"/>
+        </svg>
+        <span class="brand-name">Duet<span class="nv">Judge</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Sections">
+        <a href="#listen">Listen</a>
+        <a href="#tldr">TL;DR</a>
+        <a href="#why">Why</a>
+        <a href="#judge">Judge</a>
+        <a href="#reward">Reward</a>
+        <a href="#results">Results</a>
+        <a href="#references">Cite</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn theme-toggle" type="button" id="theme-toggle" aria-label="Switch to dark mode">
+          <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+        <button class="icon-btn menu-toggle" type="button" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg class="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Sections" hidden>
+      <a href="#listen">Listen</a>
+      <a href="#tldr">TL;DR</a>
+      <a href="#why">Why pairwise</a>
+      <a href="#judge"><small>01</small>The judge</a>
+      <a href="#reward"><small>02</small>Rewards from pairs</a>
+      <a href="#results"><small>03</small>Results</a>
+      <a href="#references">Cite</a>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero-inner crop">
+          <p class="kicker">Text-to-music · Pairwise reward modeling · Reinforcement learning</p>
+          <h1 class="mega hero-title" id="hero-title">Duet<span class="nv">Judge</span></h1>
+          <p class="hero-sub">Reinforcement Learning for Music Generation with Pairwise Reward Modeling</p>
+
+          <p class="authors">
+            <span>Zhisheng Zheng<sup>1<span class="note-mark ast">*</span></sup></span>
+            <span>Zhifeng Kong<sup>2</sup></span>
+            <span>Sang-gil Lee<sup>2</sup></span>
+            <span>Jaehyeon Kim<sup>2</sup></span>
+            <span>Arushi Goel<sup>2</sup></span>
+            <span>David Harwath<sup>1</sup></span>
+            <span>Mohammad Shoeybi<sup>2</sup></span>
+            <span>Bryan Catanzaro<sup>2</sup></span>
+            <span>Wei Ping<sup>2<span class="note-mark dag">†</span></sup></span>
+          </p>
+          <p class="affils">
+            <span><sup>1</sup>The University of Texas at Austin</span>
+            <span><sup>2</sup>NVIDIA</span>
+          </p>
+          <p class="affil-notes">
+            <strong><sup class="ast">*</sup>Work done during an internship at NVIDIA</strong>
+            <strong><sup class="dag">†</sup>Leads the effort</strong>
+          </p>
+          <p class="affil-notes">
+            <span>Correspondence: <a href="mailto:zszheng@utexas.edu">zszheng@utexas.edu</a>, <a href="mailto:zkong@nvidia.com">zkong@nvidia.com</a>, <a href="mailto:sanggill@nvidia.com">sanggill@nvidia.com</a>, <a href="mailto:wping@nvidia.com">wping@nvidia.com</a></span>
+          </p>
+
+          <div class="hero-links">
+            <a class="pill is-pending" data-link="arxiv" aria-disabled="true" title="Coming soon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>
+              arXiv
+              <span class="tag">soon</span>
+            </a>
+            <a class="pill pill-primary" href="#listen" data-link="listen">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-3a8 8 0 0 1 16 0v3"/><path d="M4 13H3v7h4v-7H4zm16 0h1v7h-4v-7h3z"/></svg>
+              Listen to samples
+            </a>
+            <a class="pill" href="#bibtex" data-link="bibtex">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10a2 2 0 0 1 2 2v14l-7-3-7 3V6a2 2 0 0 1 2-2z"/></svg>
+              BibTeX
+            </a>
+          </div>
+        </div>
+      </div>
+      <span class="edge edge-l" aria-hidden="true">♩ ♪ ×</span>
+      <span class="edge edge-r" aria-hidden="true">× ♪ ♩</span>
+    </section>
+
+    <section class="section band-ink crop" id="listen" aria-labelledby="listen-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">Listen</p>
+          <h2 class="mega" id="listen-title">Hear the difference</h2>
+          <p class="lede">Hear it before you read it. Generations for Song Describer captions from the evaluation set: Base is the generator before RL, the other rows are the same generator after RL with different training rewards.</p>
+        </header>
+        <div class="judge-game reveal" data-judge-game></div>
+        <div class="comparison-board reveal" data-board aria-live="polite">
+          <noscript><p class="noscript-note" style="padding:22px">Enable JavaScript to switch generators and samples and to load the audio.</p></noscript>
+        </div>
+      </div>
+      <span class="edge edge-l" aria-hidden="true">♩ ♪ ×</span>
+      <span class="edge edge-r" aria-hidden="true">× ♪ ♩</span>
+    </section>
+
+
+    <section class="section band-green crop" id="tldr" aria-labelledby="tldr-title">
+      <div class="container">
+        <header class="section-head tldr-head">
+          <p class="kicker">TL;DR</p>
+          <h2 class="mega" id="tldr-title">Compare, <em>don’t score.</em></h2>
+          <p class="lede">DuetJudge listens to two clips conditioned on the same caption and answers A, B, or Tie — caption alignment first, perceptual quality second. Aggregating its pairwise probabilities gives a reinforcement-learning reward that improves Audex-2B, Audex-30B-A3B, and diffusion-based ETTA on all five automatic metrics and both human ratings.</p>
+        </header>
+
+        <div class="cols3">
+          <article class="col" style="--rd:0">
+            <span class="col-idx">01 · Standalone judge</span>
+            <h3>71% agreement with human preferences</h3>
+            <p class="col-sub">Exact-label agreement (A, B, or Tie) on same-caption Audex-2B pairs, in %. Pointwise scores are turned into decisions with a per-baseline tie threshold.</p>
+            <div class="hbars" style="--max:100">
+              <div class="hbar" style="--v:42.0; --d:0"><span class="hbar-label">Audiobox-CE</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="42.0">42.0</span></div>
+              <div class="hbar" style="--v:46.0; --d:1"><span class="hbar-label">Audiobox-PQ</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="46.0">46.0</span></div>
+              <div class="hbar" style="--v:42.0; --d:2"><span class="hbar-label">CMI-RM Musicality</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="42.0">42.0</span></div>
+              <div class="hbar" style="--v:41.0; --d:3"><span class="hbar-label">CMI-RM Alignment</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="41.0">41.0</span></div>
+              <div class="hbar" style="--v:54.0; --d:4"><span class="hbar-label">MuQ-MuLan</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="54.0">54.0</span></div>
+              <div class="hbar" style="--v:53.0; --d:5"><span class="hbar-label">TuneJury</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="53.0">53.0</span></div>
+              <div class="hbar hi" style="--v:71.0; --d:6"><span class="hbar-label">DuetJudge</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="71.0">71.0</span></div>
+            </div>
+            <div class="hbar-axis" aria-hidden="true"><span></span><span class="ticks"><span>0</span><span>50</span><span>100</span></span><span class="pad"></span></div>
+            <p class="col-foot">Also best on the tie subset (60.0% vs. 50.0% for the best baseline) and the non-tie subset (73.8% vs. 58.8%).</p>
+          </article>
+
+          <article class="col" style="--rd:1">
+            <span class="col-idx">02 · Alignment first</span>
+            <h3>Right priority under conflict</h3>
+            <p class="col-sub">Accuracy when the better-aligned clip is deliberately degraded, in %. Audio-only aesthetics pick the cleaner clip; DuetJudge keeps alignment first.</p>
+            <div class="hbars" style="--max:100">
+              <div class="hbar" style="--v:12.5; --d:0"><span class="hbar-label">Audiobox-PQ</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="12.5">12.5</span></div>
+              <div class="hbar" style="--v:18.8; --d:1"><span class="hbar-label">Audiobox-CE</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="18.8">18.8</span></div>
+              <div class="hbar" style="--v:26.3; --d:2"><span class="hbar-label">CMI-RM Musicality</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="26.3">26.3</span></div>
+              <div class="hbar" style="--v:28.7; --d:3"><span class="hbar-label">CMI-RM Alignment</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="28.7">28.7</span></div>
+              <div class="hbar" style="--v:46.3; --d:4"><span class="hbar-label">MuQ-MuLan</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="46.3">46.3</span></div>
+              <div class="hbar" style="--v:52.5; --d:5"><span class="hbar-label">TuneJury</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="52.5">52.5</span></div>
+              <div class="hbar hi" style="--v:66.3; --d:6"><span class="hbar-label">DuetJudge</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="66.3">66.3</span></div>
+            </div>
+            <div class="hbar-axis" aria-hidden="true"><span></span><span class="ticks"><span>0</span><span>50</span><span>100</span></span><span class="pad"></span></div>
+            <p class="col-foot">Not by ignoring quality: on same-source degradations DuetJudge is 86.3% accurate (Audiobox-PQ 95.0%, MuQ-MuLan 42.5%).</p>
+          </article>
+
+          <article class="col" style="--rd:2">
+            <span class="col-idx">03 · As an RL reward</span>
+            <h3>Listeners rate it higher</h3>
+            <p class="col-sub">Human overall quality (OVL, 1–5) of Audex-2B after RL with each training reward; pointwise scores are discretized into metric-specific bins (Table 2).</p>
+            <div class="hbars" style="--min:2; --max:3.5">
+              <div class="hbar" style="--v:2.697; --d:0"><span class="hbar-label">Base (no RL)</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="2.697">2.697</span></div>
+              <div class="hbar" style="--v:2.412; --d:1"><span class="hbar-label">Audiobox-CE</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="2.412">2.412</span></div>
+              <div class="hbar" style="--v:2.912; --d:2"><span class="hbar-label">Audiobox-PQ</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="2.912">2.912</span></div>
+              <div class="hbar" style="--v:2.636; --d:3"><span class="hbar-label">CMI-RM Musicality</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="2.636">2.636</span></div>
+              <div class="hbar" style="--v:2.606; --d:4"><span class="hbar-label">CMI-RM Alignment</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="2.606">2.606</span></div>
+              <div class="hbar" style="--v:2.697; --d:5"><span class="hbar-label">MuQ-MuLan</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="2.697">2.697</span></div>
+              <div class="hbar" style="--v:2.971; --d:6"><span class="hbar-label">TuneJury</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="2.971">2.971</span></div>
+              <div class="hbar hi" style="--v:3.147; --d:7"><span class="hbar-label">DuetJudge</span><span class="hbar-track"><span class="hbar-fill"></span></span><span class="hbar-val" data-count="3.147">3.147</span></div>
+            </div>
+            <div class="hbar-axis" aria-hidden="true"><span></span><span class="ticks"><span>2.0</span><span>2.75</span><span>3.5</span></span><span class="pad"></span></div>
+            <p class="col-foot">Caption relevance (REL) rises too, 2.606 → 2.927. DuetJudge is the only reward that improves all seven scores over Base.</p>
+          </article>
+        </div>
+
+        <article class="tl-spot">
+          <div>
+            <span class="tl-spot-label">04 · Same judge, same optimizer</span>
+            <h3>Keep the comparison <em>pairwise</em>.</h3>
+            <p class="tl-spot-sub">Converting the pairwise judgments into a scalar Bradley–Terry reward model (DuetJudge-BTRM) and optimizing Audex-2B with the same GSPO setup gives lower scores on all five automatic metrics than using DuetJudge’s pairwise probabilities directly.</p>
+          </div>
+          <div class="tl-spot-stats">
+            <div class="tl-stat"><b data-count="1.303" data-from="0.998">1.303</b><span class="tl-vs">vs. 0.998 with the scalar reward</span><span>CMI-RM Musicality</span></div>
+            <div class="tl-stat"><b data-count="1.435" data-from="1.229">1.435</b><span class="tl-vs">vs. 1.229 with the scalar reward</span><span>CMI-RM Alignment</span></div>
+            <div class="tl-stat"><b data-count="0.296" data-from="0.269">0.296</b><span class="tl-vs">vs. 0.269 with the scalar reward</span><span>MuQ-MuLan</span></div>
+          </div>
+          <p class="tl-spot-note"><a href="#results">Table 3</a> · Audex-2B · GSPO · DuetJudge-BTRM converts the same pairwise judgments into a scalar score per caption–audio pair.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== Why pairwise ===================== -->
+    <section class="section" id="why" aria-labelledby="why-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">Why</p>
+          <h2 class="mega" id="why-title">Judge the pair, not the clip.</h2>
+          <p class="lede">A polished, upbeat pop arrangement is not a successful response to “a slow, mournful solo cello piece,” yet matching the requested instrument and mood does not make audible artifacts irrelevant. A useful judge must consider both, with an explicit priority: caption alignment first, perceptual quality second.</p>
+        </header>
+
+        <figure class="fig-card reveal">
+          <div class="fig-media"><a href="assets/figures/model.png" aria-label="Open Figure 1 full size"><img src="assets/figures/model.png" width="2970" height="1512" loading="lazy" decoding="async" alt="Diagram: pointwise evaluators map one clip to one number; DuetJudge takes the caption plus two clips and outputs A, B, or Tie."></a></div>
+          <figcaption><b>Pointwise scoring vs. direct pairwise judgment.</b> Top: pointwise reward models evaluate each clip independently. Bottom: DuetJudge compares two candidates conditioned on the same caption, alignment first and quality second, with an explicit Tie option. Candidate B wins because it fulfills the requested instrument, tempo, and mood despite its rougher production.</figcaption>
+        </figure>
+
+        <div class="why-grid">
+          <div class="why reveal" style="--rd:0">
+            <span class="why-label">Problem</span>
+            <h3>Pointwise scores never see the alternative</h3>
+            <p>Existing evaluators score one clip at a time, even the ones trained on pairwise labels. A direct judge can inspect both clips and decide which audible differences matter under the caption.</p>
+          </div>
+          <div class="why reveal" style="--rd:1">
+            <span class="why-label">Criterion</span>
+            <h3>Make the priority explicit</h3>
+            <p>Overall listening appeal need not coincide with request fulfillment, so DuetJudge learns a task-specific rule: a meaningful advantage in caption alignment decides, and perceptual quality separates comparably aligned candidates.</p>
+          </div>
+          <div class="why reveal" style="--rd:2">
+            <span class="why-label">Payoff</span>
+            <h3>A reward you can optimize against</h3>
+            <p>The judge stays frozen while a generator is trained; comparisons among the generator’s own same-caption samples become the reward. Audex-2B, Audex-30B-A3B, and diffusion-based ETTA all improve.</p>
+          </div>
+        </div>
+
+        <details class="disclosure abstract-toggle reveal">
+          <summary><span class="disclosure-title">Paper abstract</span><span class="disclosure-hint">Full text</span></summary>
+          <div class="disclosure-body">
+            <p>Improving text-to-music models through reinforcement learning (RL) requires a reward model that can clearly quantify the quality of a text–music pair. In this domain, this usually includes (i) how high-quality the outputs sound, and (ii) how well they align with the provided text. We introduce DuetJudge, an on-policy pairwise reward model that learns to directly compare two instrumental pieces conditioned on the same caption, without assigning independent scalar scores to each. DuetJudge is functionally a ternary classifier that outputs either one piece wins or they are a tie. Particularly, DuetJudge prioritizes text–music alignment, and then considers perceptual quality of the music. DuetJudge achieves 71% agreement with human preferences on our internal test set, outperforming all existing score-based baselines. To use DuetJudge as a reward model in text-to-music RL, we (i) design a reward score based on aggregated pairwise preference probabilities, and (ii) introduce classifier-free guidance (CFG)-aware policy optimization for text-to-music models trained with CFG. We test DuetJudge using multiple in-distribution and out-of-distribution text-to-music models, and find systematic improvements in both automatic metrics and human ratings. Ablation studies further favor direct pairwise rewards over a Bradley–Terry scalar baseline under the same training settings. These results confirm the effectiveness of our proposed DuetJudge, our data curation and augmentation methods, our reward model training recipes, and our text-to-music RL training recipes.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ===================== 01 The judge ===================== -->
+    <section class="section" id="judge" aria-labelledby="judge-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">01 · The judge</p>
+          <h2 class="mega" id="judge-title">Compare both clips, answer A, B or Tie</h2>
+          <p class="lede">Built on Audex-2B with decision-only supervision: one context holds the caption and both clips, and only the A / B / Tie decision carries loss. No scalar head, no per-clip score.</p>
+        </header>
+
+        <div class="split split-45-55 judge-split">
+          <div class="jcard reveal" aria-label="DuetJudge reads the caption and two clips and outputs probabilities for A, B and Tie">
+            <div class="jcard-in">
+              <span class="jcard-label">Input</span>
+              <span class="chip cap-chip">“A slow, mournful solo cello piece”</span>
+              <div class="jcard-clips"><span class="clip-chip"><i class="wave" aria-hidden="true"></i>clip A</span><span class="clip-chip"><i class="wave" aria-hidden="true"></i>clip B</span></div>
+            </div>
+            <div class="jcard-model">
+              <div class="jcard-title">DuetJudge <small>single inference run · predicts A / B / Tie</small></div>
+              <span class="jcard-label">Learned preference criterion</span>
+              <ol class="jcard-crit" role="list">
+                <li><i>1</i><div><b>Caption alignment</b><small>has priority</small></div></li>
+                <li><i>2</i><div><b>Perceptual quality</b><small>if alignment is comparable</small></div></li>
+                <li><i>3</i><div><b>Tie</b><small>if both are comparable, or evidence is insufficient</small></div></li>
+              </ol>
+            </div>
+            <div class="jcard-out">
+              <span class="jcard-label">p(A), p(B), p(Tie)</span>
+              <div class="pbar"><span>A</span><i style="--v:.14"></i></div>
+              <div class="pbar on"><span>B</span><i style="--v:.76"></i></div>
+              <div class="pbar"><span>Tie</span><i style="--v:.10"></i></div>
+              <b class="jcard-verdict">B is better</b>
+            </div>
+          </div>
+
+          <div class="diagram reveal" data-diagram>
+            <div class="diagram-head"><div><div class="diagram-title">One criterion, three steps</div><div class="diagram-sub">The same rule drives the judge prompt, the expert labels, and the human-evaluation protocol.</div></div><button type="button" class="replay" aria-label="Replay the diagram animation">↻ Replay</button></div>
+            <div class="diagram-scroll narrow"><svg preserveAspectRatio="xMidYMid meet" class="chart" viewBox="0 0 925 505" aria-label="Decision flowchart" style="overflow:visible">
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" style="fill:var(--m-gray)"/></marker></defs>
+        <g style="font-size:22px">
+          <!-- step 1: diamond 1 + yes branch -->
+          <g class="ent">
+            <path d="M260 20 L470 120 L260 220 L50 120 Z" stroke-width="2" style="fill:var(--m-alt);stroke:var(--m-hair)"/>
+            <text x="260" y="105" text-anchor="middle" style="font-weight:500">Meaningful caption-</text>
+            <text x="260" y="135" text-anchor="middle" style="font-weight:500">alignment advantage?</text>
+          </g>
+          <line class="fragment draw" data-order="1" style="--d:.25s;--dur:.4s;stroke:var(--m-gray)" x1="470" y1="120" x2="620" y2="120" stroke-width="2.5"/>
+          <path class="fragment fade-in" data-order="1" style="--d:.62s;fill:var(--m-gray)" d="M602 110 L622 120 L602 130z"/>
+          <text class="fragment fade-in cap" data-order="1" style="--d:.4s" x="545" y="108" text-anchor="middle">yes</text>
+          <g class="fragment" data-order="1" style="--d:.55s">
+            <rect x="620" y="80" width="290" height="80" rx="12" style="fill:var(--green)"/>
+            <text x="765" y="112" text-anchor="middle" style="font-weight:700;fill:var(--m-on-green)">That candidate wins</text>
+            <text x="765" y="143" text-anchor="middle" style="font-size:22px;fill:var(--m-on-green)">regardless of polish</text>
+          </g>
+          <!-- step 2: no -> diamond 2 + yes branch -->
+          <line class="fragment draw" data-order="2" style="--dur:.3s;stroke:var(--m-gray)" x1="260" y1="220" x2="260" y2="268" stroke-width="2.5"/>
+          <path class="fragment fade-in" data-order="2" style="--d:.27s;fill:var(--m-gray)" d="M250 250 L260 270 L270 250z"/>
+          <text class="fragment fade-in cap" data-order="2" style="--d:.2s" x="282" y="252">no — alignment comparable</text>
+          <g class="fragment" data-order="2" style="--d:.3s">
+            <path d="M260 275 L470 375 L260 475 L50 375 Z" stroke-width="2" style="fill:var(--m-alt);stroke:var(--m-hair)"/>
+            <text x="260" y="365" text-anchor="middle" style="font-weight:500">Perceptual-quality</text>
+            <text x="260" y="395" text-anchor="middle" style="font-weight:500">difference?</text>
+          </g>
+          <line class="fragment draw" data-order="2" style="--d:.55s;--dur:.4s;stroke:var(--m-gray)" x1="470" y1="375" x2="620" y2="375" stroke-width="2.5"/>
+          <path class="fragment fade-in" data-order="2" style="--d:.92s;fill:var(--m-gray)" d="M602 365 L622 375 L602 385z"/>
+          <text class="fragment fade-in cap" data-order="2" style="--d:.7s" x="545" y="363" text-anchor="middle">yes</text>
+          <g class="fragment" data-order="2" style="--d:.85s">
+            <rect x="620" y="335" width="290" height="80" rx="12" stroke-width="2" style="fill:var(--m-green-tint);stroke:var(--m-green-line)"/>
+            <text x="765" y="367" text-anchor="middle" style="font-weight:700;fill:var(--m-green-text)">Better-sounding wins</text>
+            <text x="765" y="398" text-anchor="middle" style="font-size:22px;fill:var(--m-green-text)">quality decides</text>
+          </g>
+          <!-- step 3: no -> tie + evidence-insufficient side branch -->
+          <path class="fragment draw" data-order="3" style="--dur:.5s;stroke:var(--m-gray)" d="M260 475 L260 490 L620 490" fill="none" stroke-width="2.5"/>
+          <path class="fragment fade-in" data-order="3" style="--d:.47s;fill:var(--m-gray)" d="M602 480 L622 490 L602 500z"/>
+          <text class="fragment fade-in cap" data-order="3" style="--d:.3s" x="300" y="483">no — comparable in both</text>
+          <g class="fragment" data-order="3" style="--d:.5s">
+            <rect x="620" y="450" width="290" height="50" rx="12" stroke-width="2" style="fill:var(--m-alt);stroke:var(--m-hair)"/>
+            <text x="765" y="483" text-anchor="middle" style="font-weight:700;fill:var(--m-ink2)">TIE</text>
+          </g>
+          <path class="fragment fade-in" data-order="3" style="--d:.6s;stroke:var(--m-gray)" d="M50 120 L32 120 L32 490 L250 490" fill="none" stroke-width="2" stroke-dasharray="6 6"/>
+          <g class="fragment fade-in" data-order="3" style="--d:.9s"><text class="cap" x="24" y="300" transform="rotate(-90 24 300)" text-anchor="middle">evidence insufficient → Tie</text></g>
+        </g>
+      </svg></div>
+          </div>
+        </div>
+
+        <div class="subhead reveal"><span class="idx">1.1</span><h3>Three supervision families</h3></div>
+        <p class="lede reveal">Holistic pairs teach the whole rule; the other two isolate one factor. Counts are before order augmentation.</p>
+        <div class="cards cards-3 fams">
+          <article class="fam reveal" style="--rd:0">
+            <h4>Holistic preference</h4>
+            <p class="fam-cap">“Energetic funk groove with brass stabs and slap bass”</p>
+            <div class="fam-pair"><div class="cand a"><b>A · real</b><small>recording</small></div><div class="cand b"><b>B · synthetic</b><small>generated</small></div></div>
+            <div class="fam-labels"><span class="lbl on">A</span><span class="lbl on">B</span><span class="lbl on">Tie</span><span class="fam-how">← experts, alignment-first rule</span></div>
+            <p class="fam-teach"><b>Teaches:</b> overall preference on real–real, real–synthetic, and synthetic–synthetic pairs.</p>
+            <p class="fam-count"><b data-count="163327">163,327</b> pairs · 908 h</p>
+          </article>
+          <article class="fam reveal" style="--rd:1">
+            <h4>Fine-grained alignment</h4>
+            <p class="fam-cap">one attribute only: <b>“Tempo: 120 BPM”</b></p>
+            <div class="fam-pair"><div class="cand a"><b>A · matches ✓</b><small>120 BPM</small></div><div class="cand b"><b>B · mismatch ✗</b><small>82 BPM</small></div></div>
+            <div class="fam-labels"><span class="lbl on">A</span><span class="lbl">B</span><span class="lbl">Tie</span><span class="fam-how">← label by construction</span></div>
+            <p class="fam-teach"><b>Teaches:</b> did the clip follow the prompt? Tempo, key, chord, instrument, genre, mood.</p>
+            <p class="fam-count"><b data-count="65152">65,152</b> pairs · 362 h</p>
+          </article>
+          <article class="fam reveal" style="--rd:2">
+            <h4>Perceptual quality</h4>
+            <p class="fam-cap">same caption, <b>same source clip</b> for A and B</p>
+            <div class="fam-pair"><div class="cand a"><b>A · original</b><small>clean</small></div><div class="cand b"><b>B · degraded</b><small>codec · low-pass · noise · clipping</small></div></div>
+            <div class="fam-labels"><span class="lbl on">A</span><span class="lbl">B</span><span class="lbl">Tie</span><span class="fam-how">← label by construction</span></div>
+            <p class="fam-teach"><b>Teaches:</b> which clip sounds better when alignment is held fixed.</p>
+            <p class="fam-count"><b data-count="59239">59,239</b> pairs · 329 h</p>
+          </article>
+        </div>
+
+        <div class="subhead reveal"><span class="idx">1.2</span><h3>Two-stage training</h3></div>
+        <div class="flow reveal">
+          <ol class="flow-rail cols-4" aria-label="Training pipeline, four steps">
+            <li class="flow-node"><span class="flow-step">Start</span><span class="flow-title">Audex-2B</span><p>Audio-language model that both understands and generates music.</p></li>
+            <li class="flow-node"><span class="flow-step">Stage I</span><span class="flow-title">Music understanding</span><p>Supervised fine-tuning on music, audio, and text instruction data.</p></li>
+            <li class="flow-node"><span class="flow-step">Stage II</span><span class="flow-title">Pairwise specialization</span><p>Decision-only training on the three families, weighted by behavior rather than size.</p></li>
+            <li class="flow-node judge"><span class="flow-step">Result</span><span class="flow-title">Frozen DuetJudge</span><p>Used unchanged as the reward for every RL run below.</p></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 02 Reward ===================== -->
+    <section class="section" id="reward" aria-labelledby="reward-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">02 · From judgments to rewards</p>
+          <h2 class="mega" id="reward-title">Rewards from pairs</h2>
+          <p class="lede">The judge never changes. For every caption the generator samples a group of clips, DuetJudge compares every pair in both orders, and each clip’s reward is how often it is preferred over its siblings. No reference recordings are needed.</p>
+        </header>
+
+        <div class="diagram reveal" data-diagram>
+          <div class="diagram-head"><div><div class="diagram-title">From pairwise judgments to a reward</div><div class="diagram-sub">Order-averaged soft margins against every same-caption opponent</div></div><button type="button" class="replay" aria-label="Replay the diagram animation">↻ Replay</button></div>
+          <div class="diagram-scroll"><svg preserveAspectRatio="xMidYMid meet" class="mech" viewBox="0 0 1728 236" role="img" aria-label="Pipeline: caption c goes to the generator (Audex-2B, Audex-30B-A3B or ETTA), which samples G candidates; the frozen DuetJudge compares every pair in both orders; the probabilities p(A), p(B), p(Tie) give a soft margin m_ij averaged over the two orders; the reward r_i is the mean margin against the other candidates; a dashed loop returns to the generator as the policy update (GSPO for Audex, DiffusionNFT for ETTA).">
+    <g class="ent fade"><rect class="box" x="0" y="10" width="140" height="140" rx="14"/><text class="t26 md" x="70" y="88" text-anchor="middle">caption <tspan font-style="italic">c</tspan></text></g>
+    <path class="ar ent-draw" style="--d:.1s" d="M140 80 H180 L170 72 L180 80 L170 88"/>
+    <g class="ent fade" style="--d:.12s"><rect class="box" x="180" y="10" width="310" height="140" rx="14"/><text class="t26 bd" x="335" y="72" text-anchor="middle">Generator π<tspan class="sb" dy="5">θ</tspan></text><text class="ink2" x="335" y="108" text-anchor="middle">Audex (AR) · ETTA (diffusion)</text></g>
+    <path class="ar ent-draw" style="--d:.22s" d="M490 80 H530 L520 72 L530 80 L520 88"/>
+    <g class="ent fade" style="--d:.24s"><rect class="box" x="530" y="10" width="230" height="140" rx="14"/><text class="t26 bd" x="645" y="46" text-anchor="middle"><tspan font-style="italic">G</tspan> candidates</text>
+      <text class="ink2" x="556" y="80">x<tspan class="sb" dy="5">1</tspan></text><path class="wv" d="M584 68.1 V79.9 M588 69.5 V78.5 M592 65.4 V82.6 M596 70.2 V77.8 M600 66.4 V81.6 M604 67.8 V80.2 M608 70.3 V77.7 M612 66.6 V81.4 M616 70.5 V77.5 M620 67.2 V80.8 M624 70.2 V77.8 M628 70.0 V78.0 M632 67.3 V80.7 M636 63.9 V84.1 M640 69.8 V78.2 M644 68.9 V79.1 M648 65.6 V82.4 M652 62.9 V85.1 M656 66.0 V82.0 M660 67.5 V80.5 M664 62.7 V85.3 M668 70.4 V77.6 M672 63.7 V84.3 M676 68.4 V79.6 M680 69.6 V78.4 M684 69.8 V78.2 M688 68.2 V79.8 M692 64.0 V84.0 M696 69.3 V78.7 M700 66.0 V82.0 M704 65.5 V82.5 M708 67.7 V80.3 M712 66.3 V81.7 M716 70.3 V77.7 M720 70.3 V77.7 M724 69.1 V78.9"/>
+      <text class="ink2" x="556" y="108">x<tspan class="sb" dy="5">2</tspan></text><path class="wv" d="M584 93.2 V110.8 M588 95.3 V108.7 M592 96.2 V107.8 M596 93.9 V110.1 M600 95.0 V109.0 M604 96.3 V107.7 M608 92.2 V111.8 M612 93.0 V111.0 M616 96.8 V107.2 M620 94.0 V110.0 M624 94.4 V109.6 M628 91.5 V112.5 M632 92.7 V111.3 M636 96.4 V107.6 M640 90.7 V113.3 M644 97.8 V106.2 M648 95.3 V108.7 M652 92.5 V111.5 M656 97.5 V106.5 M660 94.7 V109.3 M664 98.5 V105.5 M668 93.3 V110.7 M672 92.5 V111.5 M676 94.0 V110.0 M680 91.5 V112.5 M684 96.2 V107.8 M688 93.0 V111.0 M692 93.9 V110.1 M696 94.0 V110.0 M700 95.0 V109.0 M704 91.8 V112.2 M708 91.0 V113.0 M712 94.9 V109.1 M716 93.3 V110.7 M720 98.3 V105.7 M724 93.0 V111.0"/>
+      <text class="ink2" x="556" y="136">x<tspan class="sb" dy="5">G</tspan></text><path class="wv" d="M584 121.4 V138.6 M588 118.6 V141.4 M592 120.0 V140.0 M596 124.4 V135.6 M600 123.6 V136.4 M604 121.3 V138.7 M608 126.6 V133.4 M612 123.0 V137.0 M616 125.4 V134.6 M620 125.8 V134.2 M624 126.3 V133.7 M628 120.4 V139.6 M632 125.7 V134.3 M636 124.7 V135.3 M640 123.6 V136.4 M644 119.6 V140.4 M648 126.1 V133.9 M652 123.1 V136.9 M656 122.2 V137.8 M660 119.5 V140.5 M664 120.0 V140.0 M668 119.6 V140.4 M672 124.5 V135.5 M676 123.4 V136.6 M680 123.8 V136.2 M684 119.5 V140.5 M688 118.9 V141.1 M692 125.5 V134.5 M696 125.3 V134.7 M700 124.9 V135.1 M704 124.9 V135.1 M708 122.8 V137.2 M712 121.9 V138.1 M716 124.6 V135.4 M720 126.8 V133.2 M724 123.3 V136.7"/>
+      <text class="mu" x="744" y="108" text-anchor="middle">⋮</text></g>
+    <path class="ar ent-draw" style="--d:.34s" d="M760 80 H800 L790 72 L800 80 L790 88"/>
+    <g class="ent pop" style="--d:.36s"><rect class="box g" x="800" y="10" width="310" height="140" rx="14"/><text class="t26 bd gr" x="955" y="72" text-anchor="middle">DuetJudge · frozen</text><text class="gr" x="955" y="108" text-anchor="middle">every pair (<tspan font-style="italic">i</tspan>, <tspan font-style="italic">j</tspan>), <tspan class="md">both</tspan> orders</text></g>
+    <path class="ar ent-draw" style="--d:.46s" d="M1110 80 H1150 L1140 72 L1150 80 L1140 88"/>
+    <g class="ent fade" style="--d:.48s"><rect class="box" x="1150" y="10" width="290" height="140" rx="14"/><text class="t26 bd" x="1295" y="72" text-anchor="middle">p(A), p(B), p(Tie)</text><text class="ink2" x="1295" y="108" text-anchor="middle">soft margin m<tspan class="sb" dy="5">ij</tspan></text></g>
+    <path class="ar ent-draw" style="--d:.58s" d="M1440 80 H1480 L1470 72 L1480 80 L1470 88"/>
+    <g class="ent fade" style="--d:.6s"><rect class="box" x="1480" y="10" width="248" height="140" rx="14"/><text class="t26 bd" x="1604" y="72" text-anchor="middle">reward r<tspan class="sb" dy="5">i</tspan></text><text class="ink2" x="1604" y="108" text-anchor="middle">mean<tspan class="sb" dy="5">j</tspan><tspan dy="-5"> m</tspan><tspan class="sb" dy="5">ij</tspan></text></g>
+    <!-- policy-update loop back into the generator -->
+    <path class="ar dash ent-draw" style="--d:.75s;transition-duration:1.1s" d="M1604 150 V196 H335 V160 L327 170 L335 160 L343 170"/>
+    <text class="ink2 ent fade" style="--d:1.3s" x="977" y="228" text-anchor="middle">policy update · GSPO for Audex, DiffusionNFT for ETTA</text>
+  </svg></div>
+          <div class="margin-row">
+            <div class="margin-notes">
+              <div class="mnote"><b>Soft, not hard.</b> A win counts +1, a loss −1, a tie 0, weighted by the judge’s probabilities, so an unsure judge produces a small margin instead of a coin flip.</div>
+              <div class="mnote"><b>Both orders.</b> Each pair is judged as (A, B) and (B, A); averaging removes position bias.</div>
+              <div class="mnote"><b>Relative, not absolute.</b> Opponents are the policy’s own same-caption samples, so rewards sum to zero within a group and need no reference audio.</div>
+            </div>
+            <div class="mtx-card">
+              <div class="mtx-title">Margin matrix <small>four candidates as an example</small></div>
+              <table class="mtx" aria-label="Antisymmetric margin matrix for four candidates with row means as rewards">
+                <thead><tr><th></th><th>x<sub>1</sub></th><th>x<sub>2</sub></th><th>x<sub>3</sub></th><th>x<sub>4</sub></th><th class="r">r<sub>i</sub></th></tr></thead>
+                <tbody>
+                  <tr><th>x<sub>1</sub></th><td class="dash">–</td><td><span class="fragment pop" data-order="1" style="--d:0s">m<sub>12</sub></span></td><td><span class="fragment pop" data-order="1" style="--d:.1s">m<sub>13</sub></span></td><td><span class="fragment pop" data-order="1" style="--d:.2s">m<sub>14</sub></span></td><td class="r"><span class="fragment pop" data-order="2" style="--d:0s">r<sub>1</sub></span></td></tr>
+                  <tr><th>x<sub>2</sub></th><td><span class="fragment pop" data-order="1" style="--d:.6s">−m<sub>12</sub></span></td><td class="dash">–</td><td><span class="fragment pop" data-order="1" style="--d:.3s">m<sub>23</sub></span></td><td><span class="fragment pop" data-order="1" style="--d:.4s">m<sub>24</sub></span></td><td class="r"><span class="fragment pop" data-order="2" style="--d:.1s">r<sub>2</sub></span></td></tr>
+                  <tr><th>x<sub>3</sub></th><td><span class="fragment pop" data-order="1" style="--d:.7s">−m<sub>13</sub></span></td><td><span class="fragment pop" data-order="1" style="--d:.8s">−m<sub>23</sub></span></td><td class="dash">–</td><td><span class="fragment pop" data-order="1" style="--d:.5s">m<sub>34</sub></span></td><td class="r"><span class="fragment pop" data-order="2" style="--d:.2s">r<sub>3</sub></span></td></tr>
+                  <tr><th>x<sub>4</sub></th><td><span class="fragment pop" data-order="1" style="--d:.9s">−m<sub>14</sub></span></td><td><span class="fragment pop" data-order="1" style="--d:1s">−m<sub>24</sub></span></td><td><span class="fragment pop" data-order="1" style="--d:1.1s">−m<sub>34</sub></span></td><td class="dash">–</td><td class="r"><span class="fragment pop" data-order="2" style="--d:.3s">r<sub>4</sub></span></td></tr>
+                </tbody>
+              </table>
+              <p class="mtx-foot fragment fade-in" data-order="2" style="--d:.5s">antisymmetric · each reward is a row mean · rewards sum to 0</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="diagram reveal" data-diagram>
+          <div class="diagram-head"><div><div class="diagram-title">CFG-aware policy optimization for Audex</div><div class="diagram-sub">Optimize the policy you sample from, and hold its baseline still</div></div><button type="button" class="replay" aria-label="Replay the diagram animation">↻ Replay</button></div>
+          <div class="diagram-scroll"><svg preserveAspectRatio="xMidYMid meet" class="mech lg" viewBox="0 0 1728 700" role="img" aria-label="Block diagram: caption and null prompt enter one shared Audex model; its conditional and null logits are mixed by the guidance scale into the guided policy, which samples the rollouts; the frozen DuetJudge compares them and the update loops back into Audex. The reward gradient returns along the conditional branch only; the null branch is cut. A number line shows CFG as extrapolation: the guided logits sit gamma times the gap beyond the null baseline, so when the null baseline drifts by delta the guided logits move (1 minus gamma) delta the other way. Two springs anchor the guided policy and the null baseline to the frozen SFT reference.">
+    <!-- entrance: forward pass, left to right (arrow heads are part of the shaft's subpath so they draw last) -->
+    <g class="ent fade"><rect class="box" x="0" y="104" width="190" height="60" rx="10"/><text class="md" x="95" y="144" text-anchor="middle">caption <tspan font-style="italic">c</tspan></text></g>
+    <g class="ent fade" style="--d:.05s"><rect class="box" x="0" y="224" width="190" height="60" rx="10"/><text class="md" x="95" y="264" text-anchor="middle">null prompt ∅</text></g>
+    <path class="ar ent-draw" style="--d:.1s" d="M190 134 H260 L250 126 L260 134 L250 142"/>
+    <path class="ar ent-draw" style="--d:.15s" d="M190 254 H260 L250 246 L260 254 L250 262"/>
+    <g class="ent fade" style="--d:.1s"><rect class="box" x="260" y="84" width="220" height="220" rx="14"/><text class="t32 bd" x="370" y="205" text-anchor="middle">Audex θ</text></g>
+    <path class="ar ink ent-draw" style="--d:.3s" d="M480 134 H760 L750 126 L760 134 L750 142"/>
+    <text class="ent fade" style="--d:.45s" x="620" y="122" text-anchor="middle">z<tspan class="sup">c</tspan> conditional</text>
+    <path class="ar ent-draw" style="--d:.35s" d="M480 254 H760 L750 246 L760 254 L750 262"/>
+    <text class="ink2 ent fade" style="--d:.5s" x="560" y="242" text-anchor="middle">z<tspan class="sup">∅</tspan> null</text>
+    <g class="ent fade" style="--d:.45s"><rect class="box" x="760" y="84" width="340" height="220" rx="14"/><text class="t32 bd" x="930" y="172" text-anchor="middle">CFG mix</text><text x="930" y="228" text-anchor="middle">z<tspan class="sup">cfg</tspan> = γ z<tspan class="sup">c</tspan> + (1 − γ) z<tspan class="sup">∅</tspan></text></g>
+    <path class="ar ent-draw" style="--d:.55s" d="M1100 194 H1150 L1140 186 L1150 194 L1140 202"/>
+    <g class="ent pop" style="--d:.6s"><rect class="box g" x="1150" y="134" width="180" height="120" rx="12"/><text class="t26 gr" x="1240" y="178" text-anchor="middle">guided policy</text><text class="t32 bd gr" x="1240" y="228" text-anchor="middle">π<tspan class="sup">cfg</tspan></text></g>
+    <path class="ar ent-draw" style="--d:.7s" d="M1330 194 H1370 L1360 186 L1370 194 L1360 202"/>
+    <g class="ent fade" style="--d:.75s"><rect class="box" x="1370" y="134" width="130" height="120" rx="12"/><text class="md" x="1435" y="204" text-anchor="middle">rollouts</text></g>
+    <!-- step 1: rollouts, frozen judge, update θ looping over the top back into Audex -->
+    <path class="ar fragment draw" data-order="1" style="--dur:.3s" d="M1500 194 H1540 L1530 186 L1540 194 L1530 202"/>
+    <g class="fragment pop" data-order="1" style="--d:.3s"><rect class="box g" x="1540" y="134" width="188" height="120" rx="12"/><text class="bd gr" x="1634" y="186" text-anchor="middle">DuetJudge</text><text class="t26 gr" x="1634" y="220" text-anchor="middle">frozen</text></g>
+    <path class="ar ink fragment draw" data-order="1" style="--d:.6s;--dur:.9s" d="M1634 134 V36 H370 V84 L362 74 L370 84 L378 74"/>
+    <text class="ink2 md fragment fade-in" data-order="1" style="--d:1.4s" x="1000" y="26" text-anchor="middle">update θ</text>
+    <!-- step 2: the reward gradient returns along the conditional branch only; the null logits are detached (cut) -->
+    <path class="ar g fragment draw" data-order="2" style="--dur:.6s" d="M760 169 H480 L490 161 L480 169 L490 177"/>
+    <text class="gr md fragment fade-in" data-order="2" style="--d:.5s" x="620" y="200" text-anchor="middle">reward gradient</text>
+    <g class="fragment pop" data-order="2" style="--d:.8s"><rect x="636" y="248" width="28" height="12" style="fill:var(--m-bg)"/><path d="M664 236 L636 272 M636 236 L664 272" fill="none" stroke-width="3" stroke-linecap="round" style="stroke:var(--m-ink)"/><circle cx="636" cy="230" r="6" fill="none" stroke-width="2.5" style="stroke:var(--m-ink)"/><circle cx="664" cy="230" r="6" fill="none" stroke-width="2.5" style="stroke:var(--m-ink)"/></g>
+    <text class="t26 ink2 fragment fade-in" data-order="2" style="--d:1s" x="680" y="246">cut</text>
+    <!-- step 3 (hero): CFG as extrapolation. Dots and bracket appear in the pre-drift geometry (translated / stretched by the drift variant), then glide to the post-drift geometry: the null baseline drifts by δ, the guided logits move (1 − γ) δ the other way (γ = 3 in the drawing); hollow rings mark the old positions -->
+    <g class="fragment fade-in" data-order="3"><rect x="0" y="484" width="1728" height="216" rx="16" style="fill:var(--m-alt)"/><path class="ar thin" d="M40 614 H1240 L1230 608 L1240 614 L1230 620"/></g>
+    <circle class="nl-drift pt fragment drift" data-order="3" style="--d:.25s;--dx:-60px;--dt:1.3s;fill:var(--m-gray)" cx="320" cy="614" r="16"/>
+    <circle class="pt fragment fade-in" data-order="3" style="--d:.35s;fill:var(--m-ink)" cx="520" cy="614" r="16"/>
+    <circle class="nl-drift pt fragment drift" data-order="3" style="--d:.45s;--dx:120px;--dt:1.3s;fill:var(--green)" cx="920" cy="614" r="18"/>
+    <text class="nl-drift ink2 fragment drift" data-order="3" style="--d:.5s;--dx:-60px;--dt:1.3s" x="320" y="666" text-anchor="middle">null</text>
+    <text class="fragment fade-in" data-order="3" style="--d:.5s" x="520" y="666" text-anchor="middle">conditional</text>
+    <text class="nl-drift bd gr fragment drift" data-order="3" style="--d:.5s;--dx:120px;--dt:1.3s" x="920" y="666" text-anchor="middle">guided</text>
+    <path class="nl-drift ar fragment drift" data-order="3" style="--d:.7s;--dx:-60px;--sx:1.3;--dt:1.3s" d="M320 548 V534 H920 V548"/>
+    <text class="nl-drift ink2 md fragment drift" data-order="3" style="--d:.75s;--dx:30px;--dt:1.3s" x="620" y="524" text-anchor="middle">γ × gap</text>
+    <circle class="nl-after fragment fade-in" data-order="3" style="--d:1.3s;stroke:var(--m-gray)" cx="260" cy="614" r="16" fill="none" stroke-width="2.5"/>
+    <circle class="nl-after fragment fade-in" data-order="3" style="--d:1.3s;stroke:var(--green)" cx="1040" cy="614" r="18" fill="none" stroke-width="2.5"/>
+    <path class="nl-after-draw ar fragment draw" data-order="3" style="--d:1.5s;--dur:.5s" d="M262 588 H316 L308 583 L316 588 L308 593"/>
+    <path class="nl-after-draw ar g fragment draw" data-order="3" style="--d:1.6s;--dur:.5s" d="M1038 588 H924 L932 583 L924 588 L932 593"/>
+    <text class="nl-after t26 ink2 fragment fade-in" data-order="3" style="--d:1.95s" x="289" y="576" text-anchor="middle">δ</text>
+    <text class="nl-after t26 gr md fragment fade-in" data-order="3" style="--d:2.05s" x="981" y="576" text-anchor="middle">(1−γ)δ</text>
+    <g class="fragment" data-order="3" style="--d:2.3s"><rect x="1300" y="568" width="4" height="106" style="fill:var(--m-red)"/><text class="rd md" x="1322" y="594">shared θ:</text><text class="rd md" x="1322" y="630">the baseline drifts,</text><text class="rd md" x="1322" y="666">guidance amplifies it</text></g>
+    <!-- step 4: two springs anchor the guided policy and the null baseline to the frozen SFT reference -->
+    <g class="fragment fade-in" data-order="4"><rect class="ghost" x="440" y="374" width="900" height="70" rx="12"/><text class="md ink2" x="890" y="418" text-anchor="middle">frozen SFT reference</text></g>
+    <path class="spring fragment draw" data-order="4" style="--d:.3s;--dur:.5s" d="M520 254 V268 L508 278 L532 294 L508 310 L532 326 L508 342 L532 358 L520 366 V374"/>
+    <text class="gr md fragment fade-in" data-order="4" style="--d:.7s" x="546" y="340">anchor null</text>
+    <path class="spring fragment draw" data-order="4" style="--d:.5s;--dur:.5s" d="M1240 254 V268 L1228 278 L1252 294 L1228 310 L1252 326 L1228 342 L1252 358 L1240 366 V374"/>
+    <text class="gr md fragment fade-in" data-order="4" style="--d:.9s" x="1266" y="340">anchor guided</text>
+  </svg></div>
+          <p class="diagram-note">Audex samples with classifier-free guidance, so the guided policy is what GSPO updates and scores. The reward gradient returns through the conditional branch only, but both branches share one model: the null baseline still drifts and guidance amplifies the drift. <b>Anchor both</b> the guided policy and the null baseline to the frozen SFT reference.</p>
+        </div>
+
+        <div class="diagram reveal" data-diagram>
+          <div class="diagram-head"><div><div class="diagram-title">Transfer to a diffusion generator: ETTA</div><div class="diagram-sub">Same judge, same reward; the generator learns from finished samples</div></div><button type="button" class="replay" aria-label="Replay the diagram animation">↻ Replay</button></div>
+          <div class="diagram-scroll"><svg preserveAspectRatio="xMidYMid meet" class="mech lg" viewBox="0 0 1790 650" role="img" aria-label="Pipeline: caption into ETTA, a diffusion model with CFG, gives G candidates, decoded and compared by the frozen DuetJudge, which never saw ETTA audio; the reward becomes a preference weight w between 0 and 1 on a thermometer, where 0.5 means no update. For one candidate: the clean latent is re-noised with fresh noise into z t, the model makes its guided prediction, which is pulled toward the clean latent with weight w and pushed away with weight 1 minus w; no sampler trajectories are needed. Three pills: above average pulls, average gives no update, below average pushes; the gradient is proportional to 2w minus 1. The prediction is anchored to the frozen initial ETTA.">
+    <defs>
+      <marker id="mech-chev" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M2 1 L10 6 L2 11" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--m-gray)"/></marker>
+      <marker id="mech-fpull" viewBox="0 0 16 16" refX="13" refY="8" markerWidth="16" markerHeight="16" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L16 8 L0 16z" style="fill:var(--green)"/></marker>
+      <marker id="mech-fpush" viewBox="0 0 16 16" refX="13" refY="8" markerWidth="16" markerHeight="16" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0 L16 8 L0 16z" style="fill:var(--m-ink2)"/></marker>
+    </defs>
+    <!-- entrance: pipeline (arrow heads are part of the shaft's subpath so they draw last) -->
+    <g class="ent fade"><rect class="box" x="0" y="0" width="190" height="120" rx="12"/><text class="md" x="95" y="69" text-anchor="middle">caption <tspan font-style="italic">c</tspan></text></g>
+    <path class="ar ent-draw" style="--d:.1s" d="M190 60 H240 L230 52 L240 60 L230 68"/>
+    <g class="ent fade" style="--d:.12s"><rect class="box" x="240" y="0" width="280" height="120" rx="12"/><text class="t32 bd" x="380" y="56" text-anchor="middle">ETTA</text><text class="t26 ink2" x="380" y="92" text-anchor="middle">diffusion with CFG</text></g>
+    <path class="ar ent-draw" style="--d:.22s" d="M520 60 H570 L560 52 L570 60 L560 68"/>
+    <g class="ent fade" style="--d:.24s"><rect class="box" x="570" y="0" width="220" height="120" rx="12"/><text class="bd" x="680" y="69" text-anchor="middle"><tspan font-style="italic">G</tspan> candidates</text></g>
+    <path class="ar ent-draw" style="--d:.34s" d="M790 60 H900 L890 52 L900 60 L890 68"/>
+    <text class="t26 mu ent fade" style="--d:.4s" x="845" y="44" text-anchor="middle">decode</text>
+    <g class="ent pop" style="--d:.46s"><rect class="box g" x="900" y="0" width="330" height="120" rx="12"/><text class="bd gr" x="1065" y="56" text-anchor="middle">DuetJudge · frozen</text><text class="t26 gr" x="1065" y="92" text-anchor="middle">never saw ETTA audio</text></g>
+    <path class="ar ent-draw" style="--d:.58s" d="M1230 60 H1280 L1270 52 L1280 60 L1270 68"/>
+    <g class="ent fade" style="--d:.6s"><rect class="box" x="1280" y="0" width="190" height="120" rx="12"/><text class="bd" x="1375" y="69" text-anchor="middle">reward r<tspan class="sb" dy="5">i</tspan></text></g>
+    <!-- step 1: reward to preference weight w on a thermometer (0.5 = average = no update); three illustrative candidates -->
+    <path class="ar fragment draw" data-order="1" style="--dur:.3s" d="M1470 60 H1520 L1510 52 L1520 60 L1510 68"/>
+    <text class="bd fragment fade-in" data-order="1" style="--d:.3s" x="1532" y="69">weight w</text>
+    <g class="fragment fade-in" data-order="1" style="--d:.6s">
+      <rect x="1582" y="138" width="36" height="142" style="fill:var(--m-green-tint)"/><rect x="1582" y="280" width="36" height="142" style="fill:var(--m-base-tint)"/>
+      <rect x="1582" y="120" width="36" height="320" rx="18" fill-opacity="0" stroke-width="2.5" style="fill:var(--m-bg);stroke:var(--m-gray)"/>
+      <path class="ar thin" d="M1618 120 H1634 M1582 280 H1634 M1618 440 H1634"/>
+      <text class="t26 ink2" x="1644" y="130">1</text><text class="t26 ink2" x="1644" y="290">0.5</text><text class="t26 ink2" x="1644" y="450">0</text>
+      <text class="t26 mu" x="1644" y="318">no update</text>
+    </g>
+    <circle class="pt fragment pop" data-order="1" style="--d:1s;fill:var(--green)" cx="1600" cy="170" r="13"/>
+    <circle class="pt fragment pop" data-order="1" style="--d:1.15s;fill:var(--m-gray)" cx="1600" cy="280" r="13"/>
+    <circle class="pt fragment pop" data-order="1" style="--d:1.3s;fill:var(--m-ink)" cx="1600" cy="400" r="13"/>
+    <!-- step 2 (hero): one finished candidate; re-noise, predict, pull toward the sample with weight w and push away with 1 − w -->
+    <path class="lead fragment fade-in" data-order="2" d="M680 120 V180 H140 V352"/>
+    <circle class="pt fragment pop" data-order="2" style="--d:.2s;fill:var(--m-ink)" cx="140" cy="370" r="14"/>
+    <text class="md fragment fade-in" data-order="2" style="--d:.3s" x="140" y="418" text-anchor="middle">clean latent z<tspan class="sb" dy="5">0</tspan></text>
+    <path class="arc fragment fade-in" data-order="2" style="--d:.45s" d="M158 370 H538" marker-end="url(#mech-chev)"/>
+    <text class="t26 ink2 fragment fade-in" data-order="2" style="--d:.55s" x="350" y="350" text-anchor="middle">re-noise, fresh noise</text>
+    <circle class="pt fragment pop" data-order="2" style="--d:.7s;fill:var(--m-gray)" cx="560" cy="370" r="14"/>
+    <text class="md fragment fade-in" data-order="2" style="--d:.8s" x="560" y="418" text-anchor="middle">z<tspan class="sb" dy="5">t</tspan></text>
+    <path class="ar gb fragment draw" data-order="2" style="--d:.9s;--dur:.6s" d="M576 370 H1162 L1152 362 L1162 370 L1152 378"/>
+    <circle class="hol fragment pop" data-order="2" style="--d:1.45s;stroke:var(--m-green-text)" cx="1180" cy="370" r="13"/>
+    <text class="md gr fragment fade-in" data-order="2" style="--d:1.5s" x="1180" y="338" text-anchor="middle">guided prediction ẑ<tspan class="sb" dy="5">0</tspan></text>
+    <path class="force pull fragment draw" data-order="2" style="--d:1.75s;--dur:.45s" d="M1168 406 H1010" marker-end="url(#mech-fpull)"/>
+    <path class="force push fragment draw" data-order="2" style="--d:1.75s;--dur:.45s" d="M1192 406 H1296" marker-end="url(#mech-fpush)"/>
+    <text class="t26 gr md fragment fade-in" data-order="2" style="--d:2.1s" x="1168" y="444" text-anchor="end">pull toward z<tspan class="sb" dy="5">0</tspan></text>
+    <text class="t26 gr md fragment fade-in" data-order="2" style="--d:2.1s" x="1168" y="472" text-anchor="end">weight w</text>
+    <text class="t26 ink2 md fragment fade-in" data-order="2" style="--d:2.1s" x="1192" y="444">push away</text>
+    <text class="t26 ink2 md fragment fade-in" data-order="2" style="--d:2.1s" x="1192" y="472">weight 1−w</text>
+    <g class="fragment" data-order="2" style="--d:2.5s"><rect class="chipr" x="0" y="456" width="490" height="48" rx="12"/><text class="t26 ink2" x="24" y="488">no sampler trajectories needed</text></g>
+    <!-- step 3: the net effect follows the advantage; the prediction is anchored to the frozen initial ETTA -->
+    <g class="fragment pop" data-order="3"><rect class="box g" x="0" y="580" width="360" height="60" rx="30"/><text class="md gr" x="180" y="619" text-anchor="middle">above average: pull</text></g>
+    <g class="fragment pop" data-order="3" style="--d:.15s"><rect class="box" x="400" y="580" width="360" height="60" rx="30"/><text class="md ink2" x="580" y="619" text-anchor="middle">average: no update</text></g>
+    <g class="fragment pop" data-order="3" style="--d:.3s"><rect class="box" x="800" y="580" width="360" height="60" rx="30" style="fill:var(--m-grid)"/><text class="md" x="980" y="619" text-anchor="middle">below average: push</text></g>
+    <text class="bd gr fragment fade-in" data-order="3" style="--d:.6s" x="1220" y="619">gradient ∝ (2w−1)</text>
+    <g class="fragment fade-in" data-order="3" style="--d:.9s"><rect class="ghost" x="670" y="220" width="400" height="60" rx="12"/><text class="t26 md ink2" x="870" y="259" text-anchor="middle">anchor: frozen initial ETTA</text></g>
+    <path class="ar dash fragment draw" data-order="3" style="--d:1.2s;--dur:.4s" d="M870 280 V354"/>
+  </svg></div>
+          <p class="diagram-note">ETTA’s audio never appears in the judge’s training data. Rewards become preference weights between 0 and 1; DiffusionNFT re-noises each finished sample, pulls the guided prediction toward it with weight w and pushes away with 1 − w, anchored to the frozen initial ETTA. <b>Same frozen judge, same reward; only the update rule changes.</b></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 03 Results ===================== -->
+    <section class="section" id="results" aria-labelledby="results-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker">03 · Results</p>
+          <h2 class="mega" id="results-title">Judge, then reward</h2>
+        </header>
+
+        <div class="subhead reveal"><span class="idx">3.1</span><h3>As a judge: 71.0% agreement with human preferences</h3></div>
+        <div class="duo">
+          <div class="diagram reveal" data-diagram>
+            <div class="diagram-head"><div><div class="diagram-title">Agreement with human A / B / Tie labels</div><div class="diagram-sub">Same-caption Audex-2B pairs, percent. The best pointwise evaluator reaches 54.0.</div></div><button type="button" class="replay" aria-label="Replay the chart animation">↻ Replay</button></div>
+            <div class="diagram-scroll narrow" id="agreebar"></div>
+            <p class="diagram-note">DuetJudge also leads on the tie subset (60.0 vs. 50.0) and the non-tie subset (73.8 vs. 58.8). Same-caption, same-generator pairs are <b>exactly the regime of the RL rollouts</b>.</p>
+          </div>
+          <div class="diagram reveal" data-diagram>
+            <div class="diagram-head"><div><div class="diagram-title">Alignment first, without going deaf to quality</div><div class="diagram-sub">Two controlled tests on the same pairs, percent correct</div></div><button type="button" class="replay" aria-label="Replay the chart animation">↻ Replay</button></div>
+            <div class="tests">
+              <div class="test"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>Conflict test</b><span>Degrade the better-aligned winner. Still picked?</span><div class="vs"><i class="chip on">aligned + degraded</i><em>vs.</em><i class="chip">less aligned, clean</i></div></div>
+              <div class="test"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10a6 6 0 0 1 12 0c0 3-2 4-3 6s-1 5-4 5-3-3-3-3"/><path d="M10 10a2 2 0 0 1 4 0"/></svg>Quality test</b><span>Degraded copy vs. original. Original picked?</span><div class="vs"><i class="chip">degraded copy</i><em>vs.</em><i class="chip on">original</i></div></div>
+            </div>
+            <div class="diagram-scroll narrow" id="scatter"></div>
+            <p class="diagram-note"><b>Only DuetJudge is upper-right:</b> it wins the conflicts (66.3) while still hearing the defects (86.3). Audio-only aesthetics hear defects but are alignment-blind; text-similarity scores are near chance on quality.</p>
+          </div>
+        </div>
+
+        <div class="subhead reveal"><span class="idx">3.2</span><h3>As a reward: every metric up, on three generators</h3></div>
+        <p class="lede reveal">Each pointwise evaluator is also used as a training reward for Audex-2B and ETTA. DuetJudge is the only reward that improves all five automatic metrics and both human ratings over Base on Audex-2B, and the same frozen judge improves Audex-30B-A3B and ETTA on all seven scores.</p>
+        <div class="rtabs reveal anim">
+          <div class="seg seg-lg" role="tablist" aria-label="Generator">
+            <button type="button" role="tab" id="rtab-audex-2b" aria-controls="rpanel-audex-2b" aria-selected="true" tabindex="0">Audex-2B</button>
+            <button type="button" role="tab" id="rtab-audex-30b" aria-controls="rpanel-audex-30b" aria-selected="false" tabindex="-1">Audex-30B-A3B</button>
+            <button type="button" role="tab" id="rtab-etta" aria-controls="rpanel-etta" aria-selected="false" tabindex="-1">ETTA <small>out-of-domain</small></button>
+          </div>
+          <div class="rpanel" id="rpanel-audex-2b" role="tabpanel" aria-labelledby="rtab-audex-2b">
+            <div class="table-wrap" tabindex="0" role="region" aria-label="Audex-2B results table"><table class="data-table anim-rows"><thead>
+        <tr>
+          <th scope="col" rowspan="2">Training reward</th>
+          <th scope="col" colspan="2">Audiobox Aesthetics ↑ (1–10)</th>
+          <th scope="col" colspan="2">CMI-RM ↑ (1–5)</th>
+          <th scope="col" rowspan="2">MuQ ↑</th>
+          <th scope="col" colspan="2">Human Evaluation ↑ (1–5)</th>
+        </tr>
+        <tr>
+          <th scope="col">CE</th>
+          <th scope="col">PQ</th>
+          <th scope="col">Musicality</th>
+          <th scope="col">Alignment</th>
+          <th scope="col">OVL</th>
+          <th scope="col">REL</th>
+        </tr>
+      </thead><tbody>
+<tr class="row-ref">
+          <th scope="row">Reference Audio</th>
+          <td class="num">7.368</td>
+          <td class="num">7.862</td>
+          <td class="num">1.883</td>
+          <td class="num">1.698</td>
+          <td class="num">0.301</td>
+          <td class="num">3.765</td>
+          <td class="num">3.606</td>
+        </tr>
+<tr class="row-base">
+          <th scope="row">Base (no RL)</th>
+          <td class="num">6.852</td>
+          <td class="num">7.257</td>
+          <td class="num">0.651</td>
+          <td class="num">1.006</td>
+          <td class="num">0.209</td>
+          <td class="num">2.697</td>
+          <td class="num">2.606</td>
+        </tr>
+<tr>
+          <th scope="row">Audiobox-CE</th>
+          <td class="num"><b>8.137</b><sup class="mark-target" title="Training-reward metric">†</sup></td>
+          <td class="num">8.022</td>
+          <td class="num">0.718</td>
+          <td class="num">1.025</td>
+          <td class="num"><span class="down">0.142<sup class="mark-down" title="Below Base">↓</sup></span></td>
+          <td class="num"><span class="down">2.412<sup class="mark-down" title="Below Base">↓</sup></span></td>
+          <td class="num"><span class="down">2.206<sup class="mark-down" title="Below Base">↓</sup></span></td>
+        </tr>
+<tr>
+          <th scope="row">Audiobox-PQ</th>
+          <td class="num">7.944</td>
+          <td class="num"><b>8.478</b><sup class="mark-target" title="Training-reward metric">†</sup></td>
+          <td class="num">0.831</td>
+          <td class="num">1.041</td>
+          <td class="num"><span class="down">0.151<sup class="mark-down" title="Below Base">↓</sup></span></td>
+          <td class="num">2.912</td>
+          <td class="num">2.697</td>
+        </tr>
+<tr>
+          <th scope="row">CMI-RM Musicality</th>
+          <td class="num">8.009</td>
+          <td class="num">8.342</td>
+          <td class="num"><b>1.961</b><sup class="mark-target" title="Training-reward metric">†</sup></td>
+          <td class="num">1.643</td>
+          <td class="num"><span class="down">0.168<sup class="mark-down" title="Below Base">↓</sup></span></td>
+          <td class="num"><span class="down">2.636<sup class="mark-down" title="Below Base">↓</sup></span></td>
+          <td class="num"><span class="down">2.312<sup class="mark-down" title="Below Base">↓</sup></span></td>
+        </tr>
+<tr>
+          <th scope="row">CMI-RM Alignment</th>
+          <td class="num">7.697</td>
+          <td class="num">7.782</td>
+          <td class="num">1.900</td>
+          <td class="num"><b>2.067</b><sup class="mark-target" title="Training-reward metric">†</sup></td>
+          <td class="num"><span class="down">0.076<sup class="mark-down" title="Below Base">↓</sup></span></td>
+          <td class="num"><span class="down">2.606<sup class="mark-down" title="Below Base">↓</sup></span></td>
+          <td class="num">2.656</td>
+        </tr>
+<tr>
+          <th scope="row">MuQ-MuLan</th>
+          <td class="num">7.367</td>
+          <td class="num">7.737</td>
+          <td class="num">0.793</td>
+          <td class="num">1.082</td>
+          <td class="num">0.264<sup class="mark-target" title="Training-reward metric">†</sup></td>
+          <td class="num">2.697</td>
+          <td class="num"><b>3.030</b></td>
+        </tr>
+<tr>
+          <th scope="row">TuneJury</th>
+          <td class="num">7.994</td>
+          <td class="num">8.205</td>
+          <td class="num">1.283</td>
+          <td class="num">1.200</td>
+          <td class="num"><span class="down">0.145<sup class="mark-down" title="Below Base">↓</sup></span></td>
+          <td class="num">2.971</td>
+          <td class="num">2.758</td>
+        </tr>
+<tr class="row-ours">
+          <th scope="row">DuetJudge (ours)</th>
+          <td class="num">7.717</td>
+          <td class="num">8.123</td>
+          <td class="num">1.303</td>
+          <td class="num">1.435</td>
+          <td class="num"><b>0.296</b></td>
+          <td class="num"><b>3.147</b></td>
+          <td class="num">2.927</td>
+        </tr>
+</tbody></table></div>
+            <p class="table-note">↓ marks scores below Base; † marks the training-reward metric; bold is best among rewards. <b>The only row that improves all seven:</b> OVL 2.697 → 3.147, REL 2.606 → 2.927.</p>
+          </div>
+          <div class="rpanel" id="rpanel-audex-30b" role="tabpanel" aria-labelledby="rtab-audex-30b" hidden>
+            <div class="table-wrap" tabindex="0" role="region" aria-label="Audex-30B-A3B results table"><table class="data-table anim-rows"><thead>
+        <tr>
+          <th scope="col" rowspan="2">Training reward</th>
+          <th scope="col" colspan="2">Audiobox Aesthetics ↑ (1–10)</th>
+          <th scope="col" colspan="2">CMI-RM ↑ (1–5)</th>
+          <th scope="col" rowspan="2">MuQ ↑</th>
+          <th scope="col" colspan="2">Human Evaluation ↑ (1–5)</th>
+        </tr>
+        <tr>
+          <th scope="col">CE</th>
+          <th scope="col">PQ</th>
+          <th scope="col">Musicality</th>
+          <th scope="col">Alignment</th>
+          <th scope="col">OVL</th>
+          <th scope="col">REL</th>
+        </tr>
+      </thead><tbody>
+<tr class="row-ref">
+          <th scope="row">Reference Audio</th>
+          <td class="num">7.368</td>
+          <td class="num">7.862</td>
+          <td class="num">1.883</td>
+          <td class="num">1.698</td>
+          <td class="num">0.301</td>
+          <td class="num">3.765</td>
+          <td class="num">3.606</td>
+        </tr>
+<tr class="row-base">
+          <th scope="row">Base (no RL)</th>
+          <td class="num">7.210</td>
+          <td class="num">7.631</td>
+          <td class="num">1.029</td>
+          <td class="num">1.351</td>
+          <td class="num">0.299</td>
+          <td class="num">2.818</td>
+          <td class="num">3.112</td>
+        </tr>
+<tr class="row-ours">
+          <th scope="row">DuetJudge (ours)</th>
+          <td class="num"><b>7.743</b></td>
+          <td class="num"><b>8.163</b></td>
+          <td class="num"><b>1.634</b></td>
+          <td class="num"><b>1.686</b></td>
+          <td class="num"><b>0.350</b></td>
+          <td class="num"><b>3.545</b></td>
+          <td class="num"><b>3.375</b></td>
+        </tr>
+</tbody></table></div>
+            <p class="table-note"><b>Scale:</b> the same frozen judge lifts all seven scores, and the optimized 30B model beats the optimized 2B model on every metric.</p>
+          </div>
+          <div class="rpanel" id="rpanel-etta" role="tabpanel" aria-labelledby="rtab-etta" hidden>
+            <div class="table-wrap" tabindex="0" role="region" aria-label="ETTA results table"><table class="data-table anim-rows"><thead>
+        <tr>
+          <th scope="col" rowspan="2">Training reward</th>
+          <th scope="col" colspan="2">Audiobox Aesthetics ↑ (1–10)</th>
+          <th scope="col" colspan="2">CMI-RM ↑ (1–5)</th>
+          <th scope="col" rowspan="2">MuQ ↑</th>
+          <th scope="col" colspan="2">Human Evaluation ↑ (1–5)</th>
+        </tr>
+        <tr>
+          <th scope="col">CE</th>
+          <th scope="col">PQ</th>
+          <th scope="col">Musicality</th>
+          <th scope="col">Alignment</th>
+          <th scope="col">OVL</th>
+          <th scope="col">REL</th>
+        </tr>
+      </thead><tbody>
+<tr class="row-ref">
+          <th scope="row">Reference Audio</th>
+          <td class="num">7.368</td>
+          <td class="num">7.862</td>
+          <td class="num">1.883</td>
+          <td class="num">1.698</td>
+          <td class="num">0.301</td>
+          <td class="num">3.765</td>
+          <td class="num">3.606</td>
+        </tr>
+<tr class="row-base">
+          <th scope="row">Base (no RL)</th>
+          <td class="num">7.075</td>
+          <td class="num">7.549</td>
+          <td class="num">1.126</td>
+          <td class="num">1.358</td>
+          <td class="num">0.279</td>
+          <td class="num">2.879</td>
+          <td class="num">3.100</td>
+        </tr>
+<tr>
+          <th scope="row">Audiobox-CE</th>
+          <td class="num"><b>7.342</b><sup class="mark-target" title="Training-reward metric">†</sup></td>
+          <td class="num">7.822</td>
+          <td class="num">1.287</td>
+          <td class="num">1.431</td>
+          <td class="num">0.287</td>
+          <td class="num">3.319</td>
+          <td class="num"><span class="down">2.842<sup class="mark-down" title="Below Base">↓</sup></span></td>
+        </tr>
+<tr>
+          <th scope="row">Audiobox-PQ</th>
+          <td class="num">7.108</td>
+          <td class="num"><b>8.142</b><sup class="mark-target" title="Training-reward metric">†</sup></td>
+          <td class="num">1.155</td>
+          <td class="num"><span class="down">1.227<sup class="mark-down" title="Below Base">↓</sup></span></td>
+          <td class="num">0.283</td>
+          <td class="num"><b>3.519</b></td>
+          <td class="num"><span class="down">2.842<sup class="mark-down" title="Below Base">↓</sup></span></td>
+        </tr>
+<tr>
+          <th scope="row">CMI-RM Musicality</th>
+          <td class="num"><span class="down">6.984<sup class="mark-down" title="Below Base">↓</sup></span></td>
+          <td class="num">7.760</td>
+          <td class="num">1.276<sup class="mark-target" title="Training-reward metric">†</sup></td>
+          <td class="num">1.380</td>
+          <td class="num">0.293</td>
+          <td class="num">3.039</td>
+          <td class="num"><span class="down">2.947<sup class="mark-down" title="Below Base">↓</sup></span></td>
+        </tr>
+<tr>
+          <th scope="row">CMI-RM Alignment</th>
+          <td class="num">7.256</td>
+          <td class="num">7.818</td>
+          <td class="num"><b>1.359</b></td>
+          <td class="num"><b>1.489</b><sup class="mark-target" title="Training-reward metric">†</sup></td>
+          <td class="num">0.295</td>
+          <td class="num">3.279</td>
+          <td class="num">3.211</td>
+        </tr>
+<tr>
+          <th scope="row">MuQ-MuLan</th>
+          <td class="num"><span class="down">6.866<sup class="mark-down" title="Below Base">↓</sup></span></td>
+          <td class="num">7.714</td>
+          <td class="num"><span class="down">1.049<sup class="mark-down" title="Below Base">↓</sup></span></td>
+          <td class="num"><span class="down">1.233<sup class="mark-down" title="Below Base">↓</sup></span></td>
+          <td class="num"><b>0.348</b><sup class="mark-target" title="Training-reward metric">†</sup></td>
+          <td class="num">3.319</td>
+          <td class="num"><b>3.474</b></td>
+        </tr>
+<tr>
+          <th scope="row">TuneJury</th>
+          <td class="num">7.244</td>
+          <td class="num">7.772</td>
+          <td class="num">1.262</td>
+          <td class="num">1.414</td>
+          <td class="num">0.291</td>
+          <td class="num">3.239</td>
+          <td class="num">3.105</td>
+        </tr>
+<tr class="row-ours">
+          <th scope="row">DuetJudge (ours)</th>
+          <td class="num">7.143</td>
+          <td class="num">7.724</td>
+          <td class="num">1.268</td>
+          <td class="num">1.419</td>
+          <td class="num">0.311</td>
+          <td class="num">3.399</td>
+          <td class="num">3.316</td>
+        </tr>
+</tbody></table></div>
+            <p class="table-note">↓ marks scores below Base; † marks the training-reward metric; bold is best among rewards. <b>Transfer:</b> ETTA audio was excluded from judge training, yet DuetJudge improves all seven scores and ranks second on OVL and REL among the rewards.</p>
+          </div>
+        </div>
+
+        <div class="subhead reveal"><span class="idx">3.3</span><h3>Keep the comparison pairwise</h3></div>
+        <p class="lede reveal">Under the same GSPO setup on Audex-2B, direct pairwise rewards beat a Bradley–Terry scalar reward model built from the same judgments (DuetJudge-BTRM) on all five automatic metrics. DPO on the judgment pairs helps too, but moving online with a scalar reward loses alignment.</p>
+        <div class="diagram reveal" data-diagram>
+          <div class="diagram-head"><div><div class="diagram-title">Pairwise vs. scalar under the same GSPO</div><div class="diagram-sub">Audex-2B after RL; higher is better</div></div><button type="button" class="replay" aria-label="Replay the chart animation">↻ Replay</button></div>
+          <div class="duo-charts">
+            <div><div class="chart-title">CMI-RM Musicality</div><div class="diagram-scroll" id="gbMus"></div></div>
+            <div><div class="chart-title">CMI-RM Alignment</div><div class="diagram-scroll" id="gbAli"></div></div>
+          </div>
+          <p class="diagram-note"><b>Pairwise beats BTRM on all five metrics.</b> Online alone is not enough: going from offline DPO to online GSPO with the scalar reward loses alignment.</p>
+        </div>
+        <div class="reveal anim">
+          <figure class="table-card">
+  <figcaption class="table-title"><b>Pointwise vs. pairwise rewards under GSPO</b>, with DPO as an additional comparison, for Audex-2B. DuetJudge-BTRM assigns a scalar score to each caption–audio pair using Bradley–Terry reward modeling; DPO uses the non-tie judgment pairs.</figcaption>
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Pointwise versus pairwise table">
+    <table class="data-table anim-rows">
+      <thead>
+        <tr>
+          <th scope="col" rowspan="2">Optimization</th>
+          <th scope="col" rowspan="2">Reward model</th>
+          <th scope="col" colspan="2">Audiobox Aesthetics ↑ (1–10)</th>
+          <th scope="col" colspan="2">CMI-RM ↑ (1–5)</th>
+          <th scope="col" rowspan="2">MuQ ↑</th>
+        </tr>
+        <tr>
+          <th scope="col">CE</th>
+          <th scope="col">PQ</th>
+          <th scope="col">Musicality</th>
+          <th scope="col">Alignment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-base"><th scope="row">Base (no RL)</th><td>–</td><td class="num">6.852</td><td class="num">7.257</td><td class="num">0.651</td><td class="num">1.006</td><td class="num">0.209</td></tr>
+        <tr><th scope="row">DPO</th><td>–</td><td class="num">7.292</td><td class="num">7.701</td><td class="num">0.987</td><td class="num">1.325</td><td class="num">0.288</td></tr>
+        <tr><th scope="row">GSPO</th><td>DuetJudge-BTRM</td><td class="num">7.698</td><td class="num">8.035</td><td class="num">0.998</td><td class="num">1.229</td><td class="num">0.269</td></tr>
+        <tr class="row-ours"><th scope="row">GSPO</th><td><span class="ours">DuetJudge</span></td><td class="num"><b>7.717</b></td><td class="num"><b>8.123</b></td><td class="num"><b>1.303</b></td><td class="num"><b>1.435</b></td><td class="num"><b>0.296</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+</figure>
+          <details class="disclosure">
+            <summary><span class="disclosure-title">Which parts of the recipe matter?</span><span class="disclosure-hint">Ablations</span></summary>
+            <div class="disclosure-body">
+              <p>Every ablation lowers Audiobox-PQ, CMI-RM Musicality, CMI-RM Alignment, and MuQ: explicit tie labels, swap augmentation, order averaging, soft probability margins, and comparing against the policy’s own same-caption samples all contribute.</p>
+              <figure class="table-card">
+  <figcaption class="table-title"><b>Ablations of judge training and reward construction</b> for Audex-2B RL. The full recipe uses tie-supervised, swap-augmented judge training and intra-group comparisons with order-averaged probability-margin rewards.</figcaption>
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Ablation table">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th scope="col" rowspan="2">Configuration</th>
+          <th scope="col" colspan="2">Audiobox Aesthetics ↑ (1–10)</th>
+          <th scope="col" colspan="2">CMI-RM ↑ (1–5)</th>
+          <th scope="col" rowspan="2">MuQ ↑</th>
+        </tr>
+        <tr>
+          <th scope="col">CE</th>
+          <th scope="col">PQ</th>
+          <th scope="col">Musicality</th>
+          <th scope="col">Alignment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-ours"><th scope="row">Full recipe (default)</th><td class="num">7.717</td><td class="num"><b>8.123</b></td><td class="num"><b>1.303</b></td><td class="num"><b>1.435</b></td><td class="num"><b>0.296</b></td></tr>
+        <tr class="row-sub"><th colspan="6">Judge-training changes</th></tr>
+        <tr><th scope="row">w/o tie-labeled pairs</th><td class="num">7.771</td><td class="num">8.119</td><td class="num">1.133</td><td class="num">1.315</td><td class="num">0.278</td></tr>
+        <tr><th scope="row">w/o swap augmentation</th><td class="num">7.670</td><td class="num">8.019</td><td class="num">1.054</td><td class="num">1.252</td><td class="num">0.289</td></tr>
+        <tr class="row-sub"><th colspan="6">Reward-construction changes</th></tr>
+        <tr><th scope="row">w/o order averaging</th><td class="num">7.747</td><td class="num">8.020</td><td class="num">1.248</td><td class="num">1.406</td><td class="num">0.295</td></tr>
+        <tr><th scope="row">Hard-decision rewards</th><td class="num">7.588</td><td class="num">7.939</td><td class="num">1.165</td><td class="num">1.368</td><td class="num">0.283</td></tr>
+        <tr class="row-sub"><th colspan="6">Joint changes</th></tr>
+        <tr><th scope="row">w/o swap augmentation and order averaging</th><td class="num">7.682</td><td class="num">8.006</td><td class="num">0.944</td><td class="num">1.177</td><td class="num">0.264</td></tr>
+        <tr><th scope="row">w/o swap augmentation; hard-decision rewards</th><td class="num"><b>7.818</b></td><td class="num">8.107</td><td class="num">1.059</td><td class="num">1.235</td><td class="num">0.262</td></tr>
+        <tr class="row-sub"><th colspan="6">Comparison-set changes</th></tr>
+        <tr><th scope="row">Real-audio references only</th><td class="num">7.504</td><td class="num">7.753</td><td class="num">1.107</td><td class="num">1.345</td><td class="num">0.293</td></tr>
+        <tr><th scope="row">Intra-group + real-audio references</th><td class="num">7.721</td><td class="num">8.051</td><td class="num">1.173</td><td class="num">1.380</td><td class="num">0.283</td></tr>
+      </tbody>
+    </table>
+  </div>
+</figure>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===================== Cite ===================== -->
+    <section class="section" id="references" aria-labelledby="references-title">
+      <div class="container">
+        <header class="section-head left reveal">
+          <p class="kicker">Citation</p>
+          <h2 class="mega" id="references-title">Cite</h2>
+        </header>
+        <div class="bibtex" id="bibtex">
+          <button type="button" class="copy-btn" data-copy="#bibtex-code"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span>Copy BibTeX</span></button><span id="copy-status" class="visually-hidden" role="status" aria-live="polite"></span>
+          <pre tabindex="0" aria-label="BibTeX entry"><code id="bibtex-code">@misc{zheng2026duetjudge,
+  title         = {Reinforcement Learning for Music Generation with Pairwise Reward Modeling},
+  author        = {Zheng, Zhisheng and Kong, Zhifeng and Lee, Sang-gil and Kim, Jaehyeon and
+                   Goel, Arushi and Harwath, David and Shoeybi, Mohammad and Catanzaro, Bryan and Ping, Wei},
+  year          = {2026},
+  eprint        = {XXXX.XXXXX},
+  archivePrefix = {arXiv},
+  note          = {arXiv identifier to be added}
+}</code></pre>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer crop">
+    <div class="container">
+      <div class="footer-row">
+        <a class="brand" href="#top" aria-label="Back to top">
+          <img class="footer-logo" src="assets/nvidia-logo.png" width="1085" height="210" loading="lazy" decoding="async" alt="NVIDIA">
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-name">Duet<span class="nv">Judge</span></span>
+        </a>
+        <nav aria-label="Footer">
+          <a class="is-pending" data-link="arxiv" aria-disabled="true" hidden>arXiv</a>
+          <a href="https://research.nvidia.com/" target="_blank" rel="noopener">NVIDIA Research</a>
+          <a href="https://www.cs.utexas.edu/" target="_blank" rel="noopener">UT Austin CS</a>
+        </nav>
+        <p>© 2026 NVIDIA Corporation · The University of Texas at Austin</p>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Full-size figure">
+    <button type="button" class="lightbox-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <img alt="">
+  </dialog>
+</body>
+</html>

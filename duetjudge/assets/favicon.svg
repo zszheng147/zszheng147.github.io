@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- DuetJudge mark: two candidates, a comparison node, one preference -->
+  <rect width="64" height="64" rx="14" fill="#76b900"/>
+  <g stroke="#0b0b0b" stroke-width="4" stroke-linecap="round">
+    <path d="M11 29v6"/><path d="M18 22v20"/><path d="M25 26v12"/>
+    <path d="M39 26v12"/><path d="M46 22v20"/><path d="M53 29v6"/>
+  </g>
+  <path d="m32 27 5 5-5 5-5-5Z" fill="#0b0b0b"/>
+</svg>
