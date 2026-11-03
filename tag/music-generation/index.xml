@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Music Generation | Zhisheng Zheng</title>
+    <link>https://zhishengzheng.com/tag/music-generation/</link>
+      <atom:link href="https://zhishengzheng.com/tag/music-generation/index.xml" rel="self" type="application/rss+xml" />
+    <description>Music Generation</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Tue, 03 Nov 2026 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://zhishengzheng.com/media/icon_hu977392f85b73bd77f194883392866898_93804_512x512_fill_lanczos_center_3.png</url>
+      <title>Music Generation</title>
+      <link>https://zhishengzheng.com/tag/music-generation/</link>
+    </image>
+    
+    <item>
+      <title>Reinforcement Learning for Music Generation with Pairwise Reward Modeling</title>
+      <link>https://zhishengzheng.com/publication/zheng2026duetjudge/</link>
+      <pubDate>Tue, 03 Nov 2026 00:00:00 +0000</pubDate>
+      <guid>https://zhishengzheng.com/publication/zheng2026duetjudge/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

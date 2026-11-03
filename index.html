@@ -1435,12 +1435,6 @@
 
   <span class="author-highlighted">
       Zhisheng Zheng</span>, <span >
-      Xiaohang Sun</span>, <span >
-      Zhu Liu</span>, <span >
-      Caren Chen</span>, <span >
-      Rohith Kumar</span>, <span >
-      Manoj Aggarwal</span>, <span >
-      Gerard Medioni</span>, <span >
       David Harwath</span>
   </div>
   
@@ -1453,7 +1447,7 @@
   
   <span class="pub-publication">
     
-      Interspeech 2026
+      arXiv 2026
     
   </span>
   
@@ -1475,25 +1469,30 @@
   
   
   
+  
+  
     
     
     
-    <a href="/publication/zheng2026ctrlspeech/" >
+      
+    
+    
+    <a href="/publication/zheng2026transdubber/" >
       <div class="img-hover-zoom">
-        <img src="/publication/zheng2026ctrlspeech/featured_hu713f471158ebcc8c537dbbcae8a27cca_463599_c71547b194dc6e0309bc1a18ffe2b9ce.webp" height="910" width="1616"
-            class="article-banner" alt="CtrlSpeech: Coarse-to-Fine Control for Expressive Speech Synthesis" loading="lazy">
+        <img src="/publication/zheng2026transdubber/featured_hu2f19e7ebec12abff0ee41d1ca6889f5a_238090_e96928ccd74adbb68be2d3b407cefe6b.webp" height="652" width="1616"
+            class="article-banner" alt="TransDubber: Learning Timeline-Preserving Speech-to-Speech Translation" loading="lazy" style="height: auto;">
       </div>
     </a>
   
 
   <div class="section-subheading article-title mb-1 mt-3">
-    <a href="/publication/zheng2026ctrlspeech/" >CtrlSpeech: Coarse-to-Fine Control for Expressive Speech Synthesis</a>
+    <a href="/publication/zheng2026transdubber/" >TransDubber: Learning Timeline-Preserving Speech-to-Speech Translation</a>
   </div>
 
   
-  <a href="/publication/zheng2026ctrlspeech/"  class="summary-link">
+  <a href="/publication/zheng2026transdubber/"  class="summary-link">
     <div class="article-style">
-      <p>Recent Text-To-Speech (TTS) systems have achieved strong naturalness and zero-shot voice cloning performance, but fine-grained control of expressive speech at the word or phoneme level remains challenging. We propose CtrlSpeech, a controllable, expressive TTS framework with coarse-to-fine control. Built on the DiTAR architecture, CtrlSpeech combines global speaker conditioning with phone-aligned pitch, loudness, and duration signals, enabling localized prosodic control while preserving the target speaker&rsquo;s timbre. This design allows users to adjust expressive attributes at a fine temporal granularity, making speech refinement more flexible and controllable. Experimental results show that CtrlSpeech achieves competitive zero-shot TTS performance and improves controllability over expressive attributes, demonstrating its effectiveness for flexible and practical expressive speech synthesis.</p>
+      <p>Speech-to-speech translation (S2ST) increasingly preserves what is said and how it sounds, but not necessarily when speech and silence occur. For dubbing and other temporally grounded applications, matching total duration is not enough: speech and pauses must also occur at corresponding moments. We formulate timeline-preserving S2ST, which aims to preserve the source endpoint and salient internal pauses on a shared absolute timeline. We present TransDubber, an end-to-end autoregressive system that learns this temporal structure directly from aligned target waveforms, without inference-time frame-level timing control or post-hoc temporal correction. To provide this supervision, we construct 642K exactly duration-matched English-Chinese speech pairs by translating and synthesizing target speech on source-defined temporal scaffolds. Training combines a progressive supervised curriculum with verifier-guided reinforcement learning to balance translation quality and temporal alignment. On a 4,353-utterance test set spanning read and spontaneous speech, TransDubber increases the proportion of translations within 2% of the source duration from 25.6% to 61.5% and pause-alignment F1 from 0.118 to 0.550 compared with UniSS, while maintaining competitive translation quality. Our analysis shows that aligned supervision establishes timeline following, while reinforcement learning refines temporal precision and partially offsets the translation-quality cost of strict synchronization. Together, these results demonstrate the effectiveness of our data and training framework for timeline-preserving S2ST.</p>
     </div>
   </a>
   
@@ -1515,7 +1514,7 @@
 
 
 
-<a class="btn btn-outline-primary btn-page-header btn-sm" href="https://arxiv.org/abs/2608.08362" target="_blank" rel="noopener">
+<a class="btn btn-outline-primary btn-page-header btn-sm" href="https://arxiv.org/abs/2611.00690" target="_blank" rel="noopener">
   PDF
 </a>
 
@@ -1526,14 +1525,14 @@
   
     
   
-<a class="btn btn-outline-primary btn-page-header btn-sm" href="https://github.com/zszheng147/ctrlspeech" target="_blank" rel="noopener">
+<a class="btn btn-outline-primary btn-page-header btn-sm" href="https://github.com/zszheng147/TransDubber" target="_blank" rel="noopener">
   Code
 </a>
 
 
 
 
-<a class="btn btn-outline-primary btn-page-header btn-sm" href="https://zhishengzheng.com/ctrlspeech/" target="_blank" rel="noopener">
+<a class="btn btn-outline-primary btn-page-header btn-sm" href="https://zhishengzheng.com/transdubber/" target="_blank" rel="noopener">
   Demo
 </a>
 
@@ -1557,8 +1556,22 @@
   
     
   
-  <a class="btn btn-outline-primary btn-page-header btn-sm" href="https://huggingface.co/zhisheng01/CtrlSpeech" target="_blank" rel="noopener">
+  <a class="btn btn-outline-primary btn-page-header btn-sm" href="https://huggingface.co/zhisheng01/TransDubber" target="_blank" rel="noopener">
     Model</a>
+
+  
+  
+  
+    
+  
+  
+  
+  
+  
+    
+  
+  <a class="btn btn-outline-primary btn-page-header btn-sm" href="https://huggingface.co/datasets/zhisheng01/TransDubber-testset" target="_blank" rel="noopener">
+    Testset</a>
 
 
   </div>
@@ -1637,7 +1650,12 @@
   
   
   
+  
+  
     
+    
+    
+      
     
     
     <a href="/publication/zheng2024bat/" >

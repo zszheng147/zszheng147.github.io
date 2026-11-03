@@ -10,27 +10,63 @@
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
+    <loc>https://zhishengzheng.com/publication-type/3/</loc>
+    <lastmod>2026-11-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/tag/music-generation/</loc>
+    <lastmod>2026-11-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/publication_types/</loc>
+    <lastmod>2026-11-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/publication/</loc>
+    <lastmod>2026-11-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/tag/reinforcement-learning/</loc>
+    <lastmod>2026-11-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/publication/zheng2026duetjudge/</loc>
+    <lastmod>2026-11-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/tag/reward-modeling/</loc>
+    <lastmod>2026-11-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/tags/</loc>
+    <lastmod>2026-11-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/tag/text-to-music/</loc>
+    <lastmod>2026-11-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/tag/s2st/</loc>
+    <lastmod>2026-10-31T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/tag/speech-synthesis/</loc>
+    <lastmod>2026-10-31T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/tag/speech-translation/</loc>
+    <lastmod>2026-10-31T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://zhishengzheng.com/publication/zheng2026transdubber/</loc>
+    <lastmod>2026-10-31T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
     <loc>https://zhishengzheng.com/publication-type/1/</loc>
     <lastmod>2026-01-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://zhishengzheng.com/publication/zheng2026ctrlspeech/</loc>
-    <lastmod>2026-01-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://zhishengzheng.com/publication_types/</loc>
-    <lastmod>2026-01-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://zhishengzheng.com/publication/</loc>
-    <lastmod>2026-01-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://zhishengzheng.com/tag/speech-synthesis/</loc>
-    <lastmod>2026-01-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://zhishengzheng.com/tags/</loc>
     <lastmod>2026-01-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
@@ -44,10 +80,6 @@
   </url><url>
     <loc>https://zhishengzheng.com/tag/llm/</loc>
     <lastmod>2024-02-02T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>https://zhishengzheng.com/publication-type/3/</loc>
-    <lastmod>2023-12-23T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://zhishengzheng.com/publication/ma2023emotion2vec/</loc>
