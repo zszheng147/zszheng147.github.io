@@ -20,7 +20,7 @@ window.PAGE_CONFIG = {
   ],
 
   links: [
-    { label: "arXiv",       icon: "arxiv",  url: "" },   /* https://arxiv.org/abs/XXXX.XXXXX */
+    { label: "arXiv",       icon: "arxiv",  url: "https://arxiv.org/abs/2611.00690" },
     { label: "Code",        icon: "code",   url: "https://github.com/zszheng147/TransDubber" },
     { label: "Training Data", icon: "data", url: "" },
     { label: "Testset",       icon: "data", url: "https://huggingface.co/datasets/zhisheng01/TransDubber-testset" },
@@ -31,7 +31,7 @@ window.PAGE_CONFIG = {
     "@article{transdubber2026,",
     "  title   = {Learning Timeline-Preserving Speech-to-Speech Translation},",
     "  author  = {Zheng, Zhisheng and Harwath, David},",
-    "  journal = {arXiv preprint arXiv:XXXX.XXXXX},",
+    "  journal = {arXiv preprint arXiv:2611.00690},",
     "  year    = {2026}",
     "}"
   ].join("\n")
